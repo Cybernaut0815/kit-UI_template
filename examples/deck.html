@@ -214,7 +214,7 @@ body { font-size: clamp(1rem, 0.65rem + 0.7vw, 1.15rem); line-height: 1.55; }
   // Hero: a fan of parametric curves stroked in the live accent pair (read from the tokens, so it follows data-kit).
   var canvas = document.getElementById('curves'), ctx = canvas.getContext('2d');
   var cs = getComputedStyle(document.documentElement);
-  var from = cs.getPropertyValue('--accent-fill').trim(), to = cs.getPropertyValue('--accent-2').trim();
+  var from = cs.getPropertyValue('--accent').trim(), to = cs.getPropertyValue('--accent-2').trim();
   var W = 0, H = 0, t = 0, raf = 0, dpr = Math.min(devicePixelRatio || 1, 2);
   function size() {
     var r = canvas.getBoundingClientRect(); W = r.width; H = r.height;

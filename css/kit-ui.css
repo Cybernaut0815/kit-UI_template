@@ -64,7 +64,7 @@
   letter-spacing: var(--tracking-body); cursor: pointer; border: 1px solid transparent;
   text-decoration: none; color: inherit; /* anchor-safe: <a class="btn"> keeps no link underline or colour */
   transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
-.btn--primary { background: var(--accent-fill); color: var(--accent-on); } /* AA-safe fill, never bare --accent */
+.btn--primary { background: var(--accent-fill); color: var(--accent-on); } /* the kit gradient's centre colour with its AA text colour; never text on bare --accent */
 .btn--primary:where(:not(:disabled)):hover { background: var(--accent-hover); }
 .btn--secondary { background: var(--bg-surface-1); border-color: var(--border-default); color: var(--text-default); }
 .btn--secondary:where(:not(:disabled)):hover { background: var(--bg-surface-2); }
@@ -122,9 +122,9 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 @keyframes kit-shimmer { 100% { transform: translateX(100%); } }
 
 /* Focus is an outline, not a shadow: it follows the element's own radius and survives forced colours.
-   --accent-fill clears 3:1 against every surface, so the ring meets WCAG non-text contrast by construction. */
-:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
-.input:focus-visible, .select:focus-visible { outline-offset: 0; border-color: var(--accent-fill); }
+   --accent (the bright tone in dark, the deep one in light) clears 4.5:1 on every surface, so the ring meets WCAG non-text contrast by construction. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.input:focus-visible, .select:focus-visible { outline-offset: 0; border-color: var(--accent); }
 * { scrollbar-width: thin; scrollbar-color: var(--border-default) transparent; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
@@ -164,7 +164,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 :where(h2) { font-size: var(--fs-h1); }
 :where(h3) { font-size: var(--fs-h2); }
 :where(h4) { font-size: var(--fs-h3); }
-:where(a) { color: var(--accent-fill); text-decoration: underline; text-underline-offset: 0.15em; } /* underlined everywhere: colour alone is no link cue (WCAG 1.4.1) */
+:where(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 0.15em; } /* underlined everywhere: colour alone is no link cue (WCAG 1.4.1) */
 :where(strong, b) { font-weight: 600; }
 :where(small) { font-size: var(--fs-small); }
 :where(code, kbd, samp, pre) { font-family: var(--font-mono); font-size: 0.92em; }
@@ -195,10 +195,10 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .grad-glow     { background-image: radial-gradient(ellipse 90% 70% at 50% -10%, var(--accent-subtle) 0%, transparent 70%); }
 /* gradient headline with a solid fallback */
 .grad-text { inline-size: fit-content; background-image: var(--grad-spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; } /* fit-content: on a block the sweep would span the whole row and the text would show only its orange end */
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) { .grad-text { background: none; color: var(--accent-fill); } }
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) { .grad-text { background: none; color: var(--accent); } }
 @media print {
   .grad-spectrum, .grad-ember, .grad-dusk, .grad-kit, .grad-aurora, .grad-wash, .grad-glow { background: #fff none; }
-  .grad-text { background: none; color: var(--accent-fill); } /* print skips background images: clipped text would vanish */
+  .grad-text { background: none; color: var(--accent); } /* print skips background images: clipped text would vanish */
 }
 @media (forced-colors: active) {
   .grad-spectrum, .grad-ember, .grad-dusk, .grad-kit, .grad-aurora, .grad-wash, .grad-glow { background-image: none; } /* forced colours keep images; drop them */
@@ -223,12 +223,20 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* 1.3 not 1: overflow:hidden clips descenders at line-height 1 */
 @media (max-width: 640px) { .app-bar .app-bar__app { display: none; } }
 /* kit lockup - KIT-SIM, KIT-FORGE, KIT-VIZ in Tektur. Type it lowercase (screen readers say "kit sim", not letters); the class sets the caps.
-   The family stays neutral; the kit name wears the kit's --grad-mark, whose stops all clear 3:1 on the black bar (large text). */
-.kit-mark { font: 600 var(--fs-display) / 1 var(--font-mark); letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-strong); white-space: nowrap; }
-.kit-mark__name { background-image: var(--grad-mark); -webkit-background-clip: text; background-clip: text; color: transparent; }
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) { .kit-mark__name { background: none; color: var(--accent); } }
-@media (forced-colors: active) { .kit-mark__name { background: none; color: CanvasText; } }
-@media print { .kit-mark__name { background: none; color: var(--accent-fill); } } /* print skips background images: clipped text would vanish */
+   One text-clipped background in two layers: the neutral text colour over "KIT-" and the kit's own --grad-kit over the word.
+   --kit-family is the measured width of "KIT-" in Tektur 600 at this tracking - the same for every kit word. On hover or keyboard
+   focus the neutral layer retracts and the gradient stretches left over KIT- too. A logotype: exempt from text contrast, so the
+   gradient keeps its dark end. */
+.kit-mark { --kit-family: 2.06em;
+  font: 600 var(--fs-display) / 1 var(--font-mark); letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap;
+  background: linear-gradient(var(--text-strong), var(--text-strong)) left / var(--kit-family) 100% no-repeat,
+    var(--grad-kit) right / calc(100% - var(--kit-family)) 100% no-repeat;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  transition: background-size var(--motion-slow) var(--ease-out); }
+.kit-mark:hover, :where(a:hover, a:focus-visible) > .kit-mark { background-size: 0 100%, 100% 100%; }
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) { .kit-mark { background: none; color: var(--text-strong); } .kit-mark__name { color: var(--accent); } }
+@media (forced-colors: active) { .kit-mark { background: none; color: CanvasText; } }
+@media print { .kit-mark { background: none; color: var(--text-strong); } .kit-mark__name { color: var(--accent); } } /* print skips background images: clipped text would vanish */
 .app-bar__spacer { flex: 1; }
 .app-bar__nav-toggle { display: none; } /* the phone drawer's button; after .icon-btn in the cascade, so it wins the tie */
 .divider { border: none; block-size: 1px; background: var(--border-subtle); margin-block: var(--space-4); margin-inline: 0; }
@@ -402,7 +410,7 @@ fieldset.field legend { padding: 0; margin-block-end: var(--space-2); font-size:
 .segmented input { position: absolute; opacity: 0; pointer-events: none; }
 .segmented label { display: inline-flex; align-items: center; justify-content: center; padding: var(--space-1) var(--space-3); border-radius: var(--radius); color: var(--text-muted); font-size: var(--fs-body); cursor: pointer; transition: color var(--motion-fast) var(--ease-out); }
 .segmented label:has(:checked) { background: var(--bg-surface-1); color: var(--text-strong); box-shadow: var(--shadow-low); }
-.segmented label:has(:focus-visible) { outline: 2px solid var(--accent-fill); outline-offset: 2px; } /* the real radio is invisible: forward the ring to the label - do not remove */
+.segmented label:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; } /* the real radio is invisible: forward the ring to the label - do not remove */
 
 /* ── feedback ─────────────────────────────────────────────────────────────── */
 .alert { display: flex; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 1px solid var(--border-subtle); border-inline-start: 3px solid var(--text-muted);
@@ -413,10 +421,10 @@ fieldset.field legend { padding: 0; margin-block-end: var(--space-2); font-size:
 .alert--warning { border-inline-start-color: var(--intent-warning-text); } .alert--warning .alert__icon { color: var(--intent-warning-text); }
 .alert--error { border-inline-start-color: var(--intent-error-text); } .alert--error .alert__icon { color: var(--intent-error-text); }
 .alert--info { border-inline-start-color: var(--intent-info-text); } .alert--info .alert__icon { color: var(--intent-info-text); }
-.progress { appearance: none; -webkit-appearance: none; inline-size: 100%; block-size: 8px; border: none; border-radius: var(--radius); background: var(--bg-surface-3); accent-color: var(--accent-fill); overflow: hidden; }
+.progress { appearance: none; -webkit-appearance: none; inline-size: 100%; block-size: 8px; border: none; border-radius: var(--radius); background: var(--bg-surface-3); accent-color: var(--accent); overflow: hidden; }
 .progress::-webkit-progress-bar { background: var(--bg-surface-3); border-radius: var(--radius); }
-.progress::-webkit-progress-value { background: var(--accent-fill); border-radius: var(--radius); }
-.progress::-moz-progress-bar { background: var(--accent-fill); }
+.progress::-webkit-progress-value { background: var(--accent); border-radius: var(--radius); }
+.progress::-moz-progress-bar { background: var(--accent); }
 .empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--space-3); padding: var(--space-12) var(--space-6); }
 .empty-state__icon { inline-size: 48px; block-size: 48px; border-radius: var(--radius); background: var(--bg-surface-2); border: 1px solid var(--border-subtle); }
 .empty-state h3 { margin: 0; font-size: var(--fs-h2); color: var(--text-strong); }
@@ -430,7 +438,7 @@ fieldset.field legend { padding: 0; margin-block-end: var(--space-2); font-size:
 .toast > .alert { box-shadow: var(--shadow-high); }
 /* spinner - an unknown wait (.skeleton is for a known shape); square like everything else */
 .spinner { display: inline-block; inline-size: 1.25em; block-size: 1.25em; border: 2px solid var(--border-subtle);
-  border-block-start-color: var(--accent-fill); border-radius: var(--radius); animation: kit-spin .8s linear infinite; }
+  border-block-start-color: var(--accent); border-radius: var(--radius); animation: kit-spin .8s linear infinite; }
 @keyframes kit-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 1.5s !important; animation-iteration-count: infinite !important; } } /* slower, not frozen: a wait still needs a signal */
 

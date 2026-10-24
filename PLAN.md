@@ -15,3 +15,4 @@
 - 2026-10-24 kit-ui: renamed from kit-forge-ui; dark by default and following the system; burgundy and a deeper purple in the ramp; multi-stop oklch gradients; data-kit presets sim (orange), forge (red), viz (purple) replace data-accent, with a per-kit .grad-kit
 - 2026-10-24 .kit-mark lockup (KIT-SIM / KIT-FORGE / KIT-VIZ, kit word in the kit accent), .viewport with run bar and info, .split--fill full-height tool layout; one test page per kit (simulation, generation, visualization)
 - 2026-10-24 always-black app bar, gradient kit word (--grad-mark), Tektur lockup, Space Mono headings, edge-to-edge tool layout (.panel, gapless .split--fill, borderless viewport)
+- 2026-10-24 button fills = centre colour of each kit gradient (--accent-fill per kit, gate-checked), --accent split off for links and focus; lockup uses --grad-kit itself (--grad-mark removed) with a hover sweep over KIT-

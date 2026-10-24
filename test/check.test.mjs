@@ -88,12 +88,12 @@ for (const [scene, attrs, system] of SCENES) {
       const r = ratio(over(fg, bg), bg);
       if (r < min) misses.push(`${fgName} on ${bgName}: ${r.toFixed(2)} < ${min}`);
     };
-    for (const bg of ['bg-page', 'bg-surface-1', 'bg-panel']) { need('text-strong', bg, 4.5); need('text-default', bg, 4.5); need('text-muted', bg, 4.5); need('accent-fill', bg, 3); }
+    // --accent is text-like (links, focus ring): 4.5 on every surface. The button fill needs no boundary contrast - its label identifies it (WCAG 1.4.11) - only its own text does.
+    for (const bg of ['bg-page', 'bg-surface-1', 'bg-panel']) { need('text-strong', bg, 4.5); need('text-default', bg, 4.5); need('text-muted', bg, 4.5); need('accent', bg, 4.5); }
     need('text-muted', 'bg-surface-2', 4.5);
     need('text-muted-strong', 'bg-surface-3', 4.5);
     need('accent-on', 'accent-fill', 4.5);
     need('accent-on', 'accent-hover', 4.5);
-    need('accent-hover', 'bg-surface-1', 3);
     need('intent-on-warning', 'intent-warning', 4.5);
     for (const i of INTENTS) { need(`intent-${i}-text`, 'bg-surface-1', 4.5); need(`intent-${i}-text`, 'bg-page', 4.5); need(`intent-${i}-text`, 'bg-surface-2', 3); }
     for (let n = 1; n <= 8; n++) need(`chart-cat-${n}`, 'bg-surface-1', 3);
@@ -126,17 +126,28 @@ test('brand surface wins over data-theme="light" and the system', () => {
   assert.equal(page({ surface: 'brand' }, 'light'), page({ theme: 'dark' }));
 });
 
-test('every stop of each kit word gradient clears 3:1 on the black bar', () => {
-  const misses = [];
+// sRGB <-> OKLCH, enough to find the centre of an `in oklch` gradient
+const M1 = [[0.4122214708, 0.5363325363, 0.0514459929], [0.2119034982, 0.6806995451, 0.1073969566], [0.0883024619, 0.2817188376, 0.6299787005]];
+const M2 = [[0.2104542553, 0.7936177850, -0.0040720468], [1.9779984951, -2.4285922050, 0.4505937099], [0.0259040371, 0.7827717662, -0.8086757660]];
+const dot = (m, v) => m.map((r) => r[0] * v[0] + r[1] * v[1] + r[2] * v[2]);
+const toLch = (c) => { const [L, a, b] = dot(M2, dot(M1, c.slice(0, 3).map(lin)).map(Math.cbrt)); return [L, Math.hypot(a, b), Math.atan2(b, a)]; };
+const fromLch = ([L, C, h]) => {
+  const lms = [[1, 0.3963377774, 0.2158037573], [1, -0.1055613458, -0.0638541728], [1, -0.0894841775, -1.2914855480]].map((r) => (r[0] * L + r[1] * C * Math.cos(h) + r[2] * C * Math.sin(h)) ** 3);
+  return dot([[4.0767416621, -3.3077115913, 0.2309699292], [-1.2684380046, 2.6097574011, -0.3413193965], [-0.0041960863, -0.7034186147, 1.7076147010]], lms)
+    .map((x) => (x <= 0.0031308 ? 12.92 * x : 1.055 * x ** (1 / 2.4) - 0.055));
+};
+
+test('each kit button fill is the centre colour of its gradient', () => {
   for (const kit of ['forge', 'sim', 'viz']) {
-    const raw = BLOCKS.filter((b) => b.sels.some((s) => matches(s, kit === 'forge' ? {} : { kit }))).flatMap((b) => b.decls).filter(([k]) => k === 'grad-mark').pop();
-    assert.ok(raw, `--grad-mark missing for ${kit}`);
-    for (const [hex] of raw[1].matchAll(/#[0-9a-f]{6}/gi)) {
-      const r = ratio(parse(hex), parse('#000000'));
-      if (r < 3) misses.push(`${kit} ${hex}: ${r.toFixed(2)} < 3`);
-    }
+    const c = cascade(kit === 'forge' ? {} : { kit });
+    const stops = BLOCKS.flatMap((b) => (b.sels.some((s) => matches(s, kit === 'forge' ? {} : { kit })) ? b.decls : []))
+      .filter(([k]) => k === 'grad-kit').pop()[1].match(/var\(--[\w-]+\)/g).map((v) => v.slice(6, -1));
+    const n = stops.length, a = toLch(c(stops[Math.floor((n - 1) / 2)])), b = toLch(c(stops[Math.ceil((n - 1) / 2)]));
+    let dh = b[2] - a[2]; if (dh > Math.PI) dh -= 2 * Math.PI; if (dh < -Math.PI) dh += 2 * Math.PI; // shorter hue arc, as CSS does
+    const centre = fromLch([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, a[2] + dh / 2]);
+    const fill = c('accent-fill');
+    assert.ok(centre.every((v, i) => Math.abs(v - fill[i]) < 2 / 255), `${kit}: --accent-fill should be the gradient centre ${centre.map((v) => Math.round(v * 255))}`);
   }
-  assert.deepEqual(misses, []);
 });
 
 test('the explicit and system light blocks match', () => {

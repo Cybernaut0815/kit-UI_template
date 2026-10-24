@@ -7,13 +7,13 @@ Every class and the grouped variables. `css/tokens.css` is the source of truth f
 - **Surfaces:** `--bg-page --bg-panel --bg-surface-1 --bg-surface-2 --bg-surface-3` (`--bg-panel`: tool sidebars, black in dark, white in light)
 - **Text:** `--text-strong --text-default --text-muted --text-muted-strong --text-disabled`
 - **Borders:** `--border-subtle --border-default --border-strong`
-- **Accent:** `--accent` (lines, underlines, stripes), `--accent-fill` (button fill, links, focus ring), `--accent-on` (text on the fill), `--accent-hover`, `--accent-subtle` (tint), `--accent-2` (gradient partner). Never put text on bare `--accent`; use `.btn--primary`.
+- **Accent:** `--accent` (links, focus ring, underlines, stripes: the bright tone in dark, the deep one in light; AA on every surface), `--accent-fill` (button, pressed chip and current-page fill: the centre colour of the kit gradient, the same in every theme), `--accent-on` (text on the fill: white for forge and viz, black for sim), `--accent-hover`, `--accent-subtle` (tint), `--accent-2` (gradient partner). Never put text on `--accent-fill` except `--accent-on`; use `.btn--primary`.
 - **Intent:** `--intent-{error,success,warning,info}` (fills), `--intent-on-*` (text on those fills), `--intent-*-text` (AA text on surface-1 and page)
 - **Palette:** `--color-{orange,red,purple}-{400,500,600}`, `--color-burgundy-{500,600}` (gradients and identity, never an accent), `--color-green --color-amber --color-blue --color-black --color-ink --color-white`. Reach for a role token first; the palette is for swatches and charts.
 - **Chips:** `--chip-{orange,red,purple,green,amber,blue}-text`
 - **Charts:** `--chart-cat-1..8 --chart-cat-other`, `--chart-seq-1..6`, `--chart-div-neg-3..-1 --chart-div-mid --chart-div-pos-1..3`, `--chart-text --chart-text-strong --chart-grid --chart-axis`
 - **Gradients:** `--grad-spectrum --grad-ember --grad-dusk --grad-aurora --grad-kit` (multi-stop, `in oklch`; apply through the classes)
-- **Kit:** `--accent-base --accent-bright` (the kit's deep and bright tones; themes pick one as `--accent-fill`), `--accent-2`, `--grad-kit`, `--grad-mark` (the kit word's gradient on the black bar). Set by `data-kit="sim|forge|viz"`, never by hand
+- **Kit:** `--accent-base --accent-bright` (the kit's deep and bright tones; themes pick one as `--accent`), `--accent-fill --accent-on --accent-hover --accent-subtle`, `--accent-2`, `--grad-kit` (also the lockup's gradient). Set by `data-kit="sim|forge|viz"`, never by hand
 - **Space:** `--space-1 2 3 4 5 6 8 10 12 16` (4-64 px), tiers `--space-section --space-block --space-inline`, `--gutter`
 - **Shape:** `--radius` (0; the one corner knob)
 - **Controls:** `--control-h --control-pad-y --row-h`
@@ -104,7 +104,7 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.app-bar` | 56 px top bar, solid black in every theme (a dark island: its text, borders and accent take the dark values) |
 | `.app-bar__brand` | Home link: product wordmark in 600 weight, tight tracking |
 | `.kit-mark` | The kit lockup: `<span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span>` renders KIT-SIM. Type it lowercase; the class sets the caps |
-| `.kit-mark__name` | The kit word inside `.kit-mark`, in the kit's `--grad-mark` gradient (follows `data-kit`); the lockup is Tektur caps |
+| `.kit-mark__name` | The kit word inside `.kit-mark`: wears the kit's `--grad-kit` (follows `data-kit`), while KIT- stays neutral. On hover or keyboard focus the gradient sweeps left over KIT- too. Tektur caps; a logotype, so exempt from text contrast |
 | `.app-bar__app` | App name beside the wordmark; muted, ellipsizes, hides ≤ 640 px |
 | `.app-bar__spacer` | Pushes the actions to the end |
 | `.app-bar__nav-toggle` | Phone drawer button (`.icon-btn--ghost`); shown ≤ 768 px only |

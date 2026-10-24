@@ -66,7 +66,7 @@ Everything inside inherits. An element with its own `data-theme` is an island (a
   - Geist Mono (code)
   - Space Mono bold (headings)
   - Tektur (the KIT lockup only)
-- **App bar**: solid black in every theme. The lockup sets KIT- in white and the kit word in its own gradient.
+- **App bar**: solid black in every theme. The lockup sets KIT- in white and the kit word in the kit's gradient, and the gradient sweeps left over KIT- on hover. Buttons take the centre colour of the kit gradient.
 - **Tool layout**: `.split--fill` with `.panel` sidebars and a `.viewport` runs edge to edge under the bar.
 
 Corners are square: `--radius` is `0`. Set `--radius: 2px` on `<html>` to soften a whole app, never per component. The danger button is outlined, so it never reads as the red primary.
