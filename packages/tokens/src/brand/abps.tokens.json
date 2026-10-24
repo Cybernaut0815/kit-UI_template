@@ -1,0 +1,12 @@
+{
+  "accent": {
+    "DEFAULT": { "$type": "color", "$value": "{color.typology.orange}", "$description": "Provisional placeholder accent - not yet chosen by this team; randomized for now and adjustable per team preference." },
+    "fill":    { "$type": "color", "$value": "#d63c18" },
+    "on":      { "$type": "color", "$value": "{color.neutral.white}" },
+    "hover":   { "$type": "color", "$value": "color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong))" },
+    "subtle":  { "$type": "color", "$value": "rgba(231,77,43,0.12)" }
+  },
+  "brand": {
+    "name": { "$type": "other", "$value": "ABPS" }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "zha-examples-checks",
+  "private": true,
+  "version": "0.0.4",
+  "type": "module",
+  "scripts": {
+    "build": "node --test ../drift-guard.test.mjs && node hub-check.mjs"
+  },
+  "dependencies": {
+    "@gitzhacode/zha-ui-css": "workspace:*"
+  }
+}

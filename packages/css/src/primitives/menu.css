@@ -1,0 +1,62 @@
+/* menu primitives - styles the NATIVE [popover] element (top layer, light-dismiss).
+   JS owns positioning; toggling is declarative (popovertarget); Tab/Space are native
+   (see DESIGN.md JS boundary); this primitive owns only the paint. */
+
+.menu {
+  position: fixed; inset: auto; margin: 0;          /* neutralize UA centering; hook sets top/left */
+  min-inline-size: 12rem;
+  max-inline-size: min(92vw, 22rem);
+  max-block-size: min(70vh, 28rem);
+  overflow: auto;
+  padding: var(--space-1);
+  background: var(--bg-surface-1); color: var(--text-default);
+  border: 1px solid var(--border-default); border-radius: var(--radius-m);
+  box-shadow: var(--shadow-mid);
+}
+
+.menu__search {
+  position: sticky; inset-block-start: calc(-1 * var(--space-1));
+  padding: var(--space-1); margin-block-end: var(--space-1);
+  background: var(--bg-surface-1);
+}
+.menu__search .input { min-block-size: 36px; }     /* compact vs the default 44px control height */
+.menu__list { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.menu__section {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: var(--fs-label); color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: var(--tracking-label);
+}
+.menu__item {                                       /* a <label> OR a <button> (expandable section) */
+  display: flex; align-items: center; gap: var(--space-2);
+  inline-size: 100%; padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-s); cursor: pointer; color: inherit; font: inherit;
+  background: none; border: 0; text-align: start;  /* strip UA chrome for the <button> form */
+}
+.menu__item:where(:not(:disabled, :has(:disabled))):hover, .menu__item:has(:focus-visible) { background: var(--bg-surface-2); } /* :where() guard, like every control hover (Spec 3 5.5): a disabled row (button form, or a label wrapping a disabled input) never answers the pointer, at no specificity cost */
+.menu__item:disabled, .menu__item:has(:disabled) { opacity: .45; cursor: not-allowed; } /* one disabled value across the package */
+.menu__item span { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.menu__check {                                      /* the native <input type="checkbox"> */
+  flex: none; inline-size: 16px; block-size: 16px;
+  accent-color: var(--accent-fill); cursor: inherit; margin: 0;
+}
+.menu__separator { block-size: 1px; background: var(--border-subtle); margin: var(--space-1) 0; }
+.menu__caret { flex: none; margin-inline-start: auto; inline-size: 8px; block-size: 8px;
+  border-inline-end: 2px solid var(--text-muted); border-block-end: 2px solid var(--text-muted);
+  transform: rotate(-45deg); transition: transform var(--motion-base) var(--ease-out); } /* points right (collapsed) */
+[aria-expanded="true"] > .menu__caret { transform: rotate(45deg); } /* child combinator: only the caret of the row that OWNS the state rotates, never nested rows' */
+.menu__footer {
+  position: sticky; inset-block-end: calc(-1 * var(--space-1));
+  display: flex; justify-content: flex-end;
+  padding: var(--space-2); margin-block-start: var(--space-1);
+  border-block-start: 1px solid var(--border-subtle); background: var(--bg-surface-1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (transition-behavior: allow-discrete) {
+    .menu { opacity: 0;
+      transition: opacity var(--motion-fast) var(--ease-out), overlay var(--motion-fast) allow-discrete, display var(--motion-fast) allow-discrete; }
+    .menu:popover-open { opacity: 1; }
+    @starting-style { .menu:popover-open { opacity: 0; } }
+  }
+}
+@media (forced-colors: active) { .menu { border: 1px solid CanvasText; } }

@@ -1,0 +1,10 @@
+# Git hooks are #!/bin/sh - keep LF so the shebang never gets a CRLF (breaks the interpreter)
+.githooks/post-commit text eol=lf
+.githooks/post-merge  text eol=lf
+
+# Treat font binaries as binary - no EOL conversion, no text diff
+*.ttf  binary
+*.otf  binary
+*.woff binary
+*.woff2 binary
+*.webp binary

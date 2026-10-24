@@ -1,0 +1,17 @@
+{
+  "accent": {
+    "DEFAULT": { "$type": "color", "$value": "{color.accent.teal}", "$description": "Confirmed ES brand accent (teal)." },
+    "fill":    { "$type": "color", "$value": "{color.accent.teal-fill}" },
+    "on":      { "$type": "color", "$value": "{color.neutral.white}" },
+    "hover":   { "$type": "color", "$value": "color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong))" },
+    "subtle":  { "$type": "color", "$value": "rgba(4,140,156,0.12)" },
+    "2": {
+      "DEFAULT": { "$type": "color", "$value": "{color.accent.magenta}", "$description": "Confirmed ES secondary accent (magenta) - gradient endpoint + tint." },
+      "fill":    { "$type": "color", "$value": "{color.accent.magenta}" },
+      "subtle":  { "$type": "color", "$value": "rgba(203,0,146,0.12)" }
+    }
+  },
+  "brand": {
+    "name": { "$type": "other", "$value": "ES" }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "bg":   { "page": { "$type": "color", "$value": "{color.paper.page}" },
+            "surface-1": { "$type": "color", "$value": "{color.paper.surface-1}" },
+            "surface-2": { "$type": "color", "$value": "{color.paper.surface-2}" },
+            "surface-3": { "$type": "color", "$value": "{color.paper.surface-3}" } },
+  "text": { "strong": { "$type": "color", "$value": "{color.neutral.ink}" },
+            "default": { "$type": "color", "$value": "#312E2B" },
+            "muted": { "$type": "color", "$value": "#6A6764" },
+            "muted-strong": { "$type": "color", "$value": "{color.neutral.gray-33}" },
+            "disabled": { "$type": "color", "$value": "#A19E9E" } },
+  "border": { "subtle": { "$type": "color", "$value": "rgba(29,29,27,0.08)" },
+              "default": { "$type": "color", "$value": "rgba(29,29,27,0.14)" },
+              "strong": { "$type": "color", "$value": "rgba(29,29,27,0.22)" } },
+  "accent": { "DEFAULT": { "$type": "color", "$value": "{color.neutral.ink}" },
+              "fill":   { "$type": "color", "$value": "{color.neutral.ink}" },
+              "on":     { "$type": "color", "$value": "{color.neutral.white}" },
+              "hover":  { "$type": "color", "$value": "{color.neutral.gray-33}", "$description": "Primary button hover fill (zha-app: ink lifts to Slate Gray). A team brand derives its own from its fill." },
+              "subtle": { "$type": "color", "$value": "rgba(29,29,27,0.12)" } },
+  "scrim": { "$type": "color", "$value": "rgba(0,0,0,0.5)" },
+  "intent": {
+    "error-text":   { "$type": "color", "$value": "#C2143C" },
+    "success-text": { "$type": "color", "$value": "#147A4F" },
+    "warning-text": { "$type": "color", "$value": "#7A5B00" },
+    "info-text":    { "$type": "color", "$value": "#1466C8" }
+  },
+  "chart": {
+    "cat": {
+      "1": { "$type": "color", "$value": "{color.typology.teal}", "$description": "Generic-series slot 1 (teal, brand-first). Fixed order, assigned in sequence, never cycled or re-painted. Spec: docs/specs/2026-07-22-zha-ui-viz-chart-tokens-design.md" },
+      "2": { "$type": "color", "$value": "{color.typology.ultramarine}" },
+      "3": { "$type": "color", "$value": "#7C9F00" },
+      "4": { "$type": "color", "$value": "{color.typology.blue}" },
+      "5": { "$type": "color", "$value": "#9E9700" },
+      "6": { "$type": "color", "$value": "{color.typology.purple}" },
+      "7": { "$type": "color", "$value": "#D97D00" },
+      "8": { "$type": "color", "$value": "{color.typology.magenta}" },
+      "other": { "$type": "color", "$value": "{text.disabled}", "$description": "The 9th and later series are grouped as 'Other', a neutral below the contrast floor so it stays in the background (never a ninth identity)." }
+    },
+    "seq": {
+      "1": { "$type": "color", "$value": "#54BFD0", "$description": "Sequential (magnitude) ramp, teal, low end. 'More' = higher contrast vs the surface in BOTH themes." },
+      "2": { "$type": "color", "$value": "#3AA9B9" },
+      "3": { "$type": "color", "$value": "#1993A3" },
+      "4": { "$type": "color", "$value": "#007D8C" },
+      "5": { "$type": "color", "$value": "#006773" },
+      "6": { "$type": "color", "$value": "#00525C" }
+    },
+    "div": {
+      "neg-3": { "$type": "color", "$value": "#0052A8", "$description": "Diverging (polarity) ramp, blue arm strong end." },
+      "neg-2": { "$type": "color", "$value": "#1774E0" },
+      "neg-1": { "$type": "color", "$value": "#509CFF" },
+      "mid":   { "$type": "color", "$value": "#B9B7B5", "$description": "Neutral gray midpoint - never a hue." },
+      "pos-1": { "$type": "color", "$value": "#FF586F" },
+      "pos-2": { "$type": "color", "$value": "#DD0447" },
+      "pos-3": { "$type": "color", "$value": "#A10031", "$description": "Diverging ramp, cool-red arm strong end." }
+    },
+    "text":        { "$type": "color", "$value": "{text.muted}", "$description": "Axis tick + legend labels. Chart text never uses a series colour." },
+    "text-strong": { "$type": "color", "$value": "{text.default}", "$description": "Axis titles, direct labels." },
+    "grid":        { "$type": "color", "$value": "{border.subtle}", "$description": "Gridlines - recessive, behind marks." },
+    "axis":        { "$type": "color", "$value": "{border.default}", "$description": "Axis/domain lines." }
+  },
+  "typology": {
+    "purple":      { "text": { "$type": "color", "$value": "#6B21D4" } },
+    "ultramarine": { "text": { "$type": "color", "$value": "#2736E4" } },
+    "blue":        { "text": { "$type": "color", "$value": "#0057B2" } },
+    "teal":        { "text": { "$type": "color", "$value": "#006470" } },
+    "dark-green":  { "text": { "$type": "color", "$value": "#006A42" } },
+    "light-green": { "text": { "$type": "color", "$value": "#546C00" } },
+    "lime":        { "text": { "$type": "color", "$value": "#6C6700" } },
+    "yellow":      { "text": { "$type": "color", "$value": "#816100" } },
+    "apricot":     { "text": { "$type": "color", "$value": "#915200" } },
+    "orange":      { "text": { "$type": "color", "$value": "#AC2500" } },
+    "cool-red":    { "text": { "$type": "color", "$value": "#AD0035" } },
+    "magenta":     { "text": { "$type": "color", "$value": "#9E0071" } }
+  }
+}

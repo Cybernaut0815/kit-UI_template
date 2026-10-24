@@ -1,0 +1,5 @@
+{
+  "brand": {
+    "name": { "$type": "other", "$value": "ZHA", "$description": "zha-app, the firm brand and the :root default. Its accent is per-theme and lives in the light, dark and brand-surface theme files, so this block carries the name only: an accent here would win over data-theme=dark (equal specificity, emitted later) and paint ink buttons on dark pages. Known limit: a nested data-brand=zha-app island inside a team-branded page keeps the team accent." }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "accent": {
+    "DEFAULT": { "$type": "color", "$value": "{color.typology.blue}", "$description": "Provisional placeholder accent - not yet chosen by this team; randomized for now and adjustable per team preference." },
+    "fill":    { "$type": "color", "$value": "{color.typology.blue}" },
+    "on":      { "$type": "color", "$value": "{color.neutral.white}" },
+    "hover":   { "$type": "color", "$value": "color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong))" },
+    "subtle":  { "$type": "color", "$value": "rgba(19,114,222,0.12)" }
+  },
+  "brand": {
+    "name": { "$type": "other", "$value": "ANALYTICS" }
+  }
+}

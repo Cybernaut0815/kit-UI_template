@@ -1,0 +1,12 @@
+{
+  "name": "zha-ui-brand-deck",
+  "private": true,
+  "version": "0.0.6",
+  "type": "module",
+  "scripts": {
+    "build": "node check.mjs"
+  },
+  "dependencies": {
+    "@gitzhacode/zha-ui-css": "workspace:*"
+  }
+}

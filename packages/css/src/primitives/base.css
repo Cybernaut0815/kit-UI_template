@@ -1,0 +1,151 @@
+/* @gitzhacode/zha-ui-css primitives - resolve against @gitzhacode/zha-ui-tokens semantic vars. */
+
+/* Inter - self-hosted fallback for the primary UI font: variable weight 100-900, upright.
+   Neue Haas Unica remains the NAMED primary (--font-primary) and renders where it is licensed/
+   installed (e.g. ZHA machines with Adobe CC); everyone else falls back to bundled Inter, so text
+   never drops to a bare system face. The NHU webfont licence is still pending. Two subsets
+   (latin + latin-ext) cover European diacritics from the bundle. Source: @fontsource-variable/inter@5.2.8.
+   ponytail: normal only - rare italic synthesises oblique; add an italic woff2 if real italics are needed. */
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/inter-latin.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/inter-latin-ext.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Native-widget ownership. UA chrome (scrollbars, form-control wells, <select> popups)
+   follows the theme axes; [data-surface="brand"] is black-first in BOTH themes. All
+   selectors are (0,1,0) - source order is the tiebreaker, MIRRORING the token cascade
+   (tokens.css emits dark → brand-surface → light): an explicit [data-theme="light"]
+   wins last, so light islands inside dark apps AND light+brand combos keep light
+   chrome exactly where they keep light tokens. */
+:root { color-scheme: light; }
+[data-theme="dark"], [data-surface="brand"] { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }
+:where(input[type="checkbox"], input[type="radio"], input[type="range"]) { accent-color: var(--accent-fill); } /* :where() = 0 specificity: brands the native tick but any consumer rule can override */
+
+.surface { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-l); }
+.card { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-l); color: var(--text-default); text-decoration: none; padding: var(--space-5); } /* border-first: hairline only, no resting shadow. Default padding: with inline styles banned, nothing else can pad a card. Anchor cards: no hover underline through the card's text */
+.card--flush { padding: 0; } /* media and table cards */
+.card--interactive { transition: box-shadow var(--motion-base) var(--ease-out), transform var(--motion-base) var(--ease-out); cursor: pointer; }
+.card--interactive:hover { box-shadow: var(--shadow-mid); transform: translateY(-2px); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; gap: var(--space-2); min-height: var(--control-h, 44px);
+  padding: 0 var(--space-4); border-radius: var(--radius-m); font: var(--fw-medium, 500) var(--fs-body) / 1 var(--font-primary);
+  letter-spacing: var(--tracking-body); cursor: pointer; border: 1px solid transparent;
+  text-decoration: none; color: inherit; /* anchor-safe: <a class="btn"> must not keep link underline/colour */
+  transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.btn--primary { background: var(--accent-fill); color: var(--accent-on); }   /* AA-safe fill, never bare --accent */
+.btn--primary:where(:not(:disabled)):hover { background: var(--accent-hover); } /* per theme and per brand: the gate checks the default cascades' hover; team hovers are a color-mix toward --text-strong it cannot evaluate - render-verified */
+.btn--secondary { background: var(--bg-surface-1); border-color: var(--border-default); color: var(--text-default); }
+.btn--secondary:where(:not(:disabled)):hover { background: var(--bg-surface-2); }
+.btn--ghost { background: transparent; color: var(--text-muted); border-color: transparent; } /* keeps .btn's 1px transparent border → same height as siblings, no size jump when toggled */
+.btn--ghost:where(:not(:disabled)):hover { background: var(--bg-surface-2); }
+.btn--danger { background: var(--intent-error); color: var(--intent-on-error); }
+.btn--danger:where(:not(:disabled)):hover { background: color-mix(in srgb, var(--intent-error) 88%, var(--text-strong)); }
+/* shared press + disabled states - one value across the package (Spec 3 §5.5). Every control hover above carries
+   :where(:not(:disabled)): a disabled control never answers the pointer, and :where() adds no specificity, so the
+   .btn:where([aria-pressed="true"]):hover arm below still wins its (0,2,0) tie against the ghost hover. */
+.btn:active, .icon-btn:active, button.chip:active, .tabs__tab:active, .pagination button:active { transform: translateY(1px); }
+.btn:disabled, .icon-btn:disabled, button.chip:disabled, .chip__remove:disabled, .tabs__tab:disabled, .input:disabled, .select:disabled { opacity: .45; cursor: default; }
+.btn[aria-disabled="true"], .icon-btn[aria-disabled="true"] { opacity: .45; cursor: default; pointer-events: none; } /* a link styled as a control cannot be :disabled; pointer-events: none also silences its hover. Drop the href too, or the keyboard still follows it */
+
+/* quiet persistent toggle (view switchers, layer toggles). All .btn variants carry a 1px
+   border (transparent by default), so border-color alone paints on every variant incl. ghost.
+   Text stays text-strong: accent-family text on the subtle wash fails AA at body size. Hover
+   restates the wash so a later --secondary/--ghost hover can't wash the state out.
+   .is-active is the strong opt-in; the aria-pressed arm is :where()-demoted to 0 specificity
+   so a consumer's own aria-pressed styling (e.g. a quiet glyph toggle) stays in control. */
+.btn.is-active, .btn:where([aria-pressed="true"]) { background: var(--accent-subtle); border-color: var(--accent); color: var(--text-strong); }
+.btn.is-active:hover, .btn:where([aria-pressed="true"]):hover { background: var(--accent-subtle); }
+
+.input, .select { width: 100%; min-height: var(--control-h, 44px); padding: var(--control-pad-y, 9px) var(--space-3); font: var(--fs-body) / 1.2 var(--font-primary);
+  background: var(--bg-surface-1); border: 1px solid var(--border-default); border-radius: var(--radius-m); color: var(--text-default); }
+.input::placeholder { color: var(--text-muted); }
+.input:where(:not(:disabled)):hover, .select:where(:not(:disabled)):hover { border-color: var(--border-strong); }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; font: var(--fw-medium,500) var(--fs-label) / 1 var(--font-primary);
+  padding: 4px 10px; border: 1px solid transparent; border-radius: var(--radius-s); background: var(--bg-surface-3); color: var(--text-default); }
+.chip[aria-pressed="true"], .chip.is-active { background: var(--accent-fill); border-color: var(--accent-fill); color: var(--accent-on); }
+button.chip { cursor: pointer; } /* .chip already paints font/background/border on the button form */
+button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):hover { border-color: var(--border-default); } /* :not(): the bare hover (0,2,1) would outrank the pressed state (0,2,0) */
+
+/* Typology-tinted chips - categorical labels (typology tags, dataset keys). Background is the
+   hue's 25% tint; text is the SAME hue's per-theme AA form. Keep tinted chips on surface-1/page -
+   the contrast gate validates the text against the tint composited over bg-surface-1. */
+.chip--purple      { background: var(--typology-purple-25);      color: var(--typology-purple-text); }
+.chip--ultramarine { background: var(--typology-ultramarine-25); color: var(--typology-ultramarine-text); }
+.chip--blue        { background: var(--typology-blue-25);        color: var(--typology-blue-text); }
+.chip--teal        { background: var(--typology-teal-25);        color: var(--typology-teal-text); }
+.chip--dark-green  { background: var(--typology-dark-green-25);  color: var(--typology-dark-green-text); }
+.chip--light-green { background: var(--typology-light-green-25); color: var(--typology-light-green-text); }
+.chip--lime        { background: var(--typology-lime-25);        color: var(--typology-lime-text); }
+.chip--yellow      { background: var(--typology-yellow-25);      color: var(--typology-yellow-text); }
+.chip--apricot     { background: var(--typology-apricot-25);     color: var(--typology-apricot-text); }
+.chip--orange      { background: var(--typology-orange-25);      color: var(--typology-orange-text); }
+.chip--cool-red    { background: var(--typology-cool-red-25);    color: var(--typology-cool-red-text); }
+.chip--magenta     { background: var(--typology-magenta-25);     color: var(--typology-magenta-text); }
+
+/* Removable chips: <button class="chip__remove" aria-label="Remove …"> holding an inline
+   stroke × (currentColor). Inherits the chip's text colour; the hover wash derives from
+   currentColor so it stays correct on every variant in every theme. */
+.chip__remove { display: inline-flex; align-items: center; justify-content: center; inline-size: 18px; block-size: 18px;
+  margin-inline: 2px -6px; padding: 0; border: 0; border-radius: var(--radius-pill); background: none; color: inherit;
+  font: inherit; line-height: 1; cursor: pointer; position: relative; }
+.chip__remove::after { content: ''; position: absolute; inset: -3px; } /* 24px effective hit target (WCAG 2.5.8) with no layout change */
+.chip__remove:where(:not(:disabled)):hover { background: color-mix(in srgb, currentColor 15%, transparent); }
+
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; width: var(--control-h, 44px); height: var(--control-h, 44px);
+  border-radius: var(--radius-m); background: var(--bg-surface-1); border: 1px solid var(--border-subtle);
+  color: var(--text-muted); cursor: pointer; } /* quiet by default - utility icons are not brand decoration */
+.icon-btn:where(:not(:disabled)):hover { color: var(--text-strong); background: var(--bg-surface-2); }
+.icon-btn--ghost { background: transparent; border-color: transparent; } /* toolbar/chat form - same box + hit target, no chrome */
+
+.skeleton { background: var(--bg-surface-2); border-radius: var(--radius-m); position: relative; overflow: hidden; }
+.skeleton::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--bg-surface-3), transparent); animation: zha-shimmer 1.4s infinite; }
+@keyframes zha-shimmer { 100% { transform: translateX(100%); } }
+
+/* focus = outline, not shadow: not clipped by the element's own overflow:hidden (a clipping ancestor still clips it: .accordion summary insets its ring), follows the element's own radius, survives forced-colours (Spec 3 §5.4).
+   --accent-fill is gate-checked at 3.0 against every surface, so the ring clears WCAG 2.2 non-text contrast by construction. */
+:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
+.input:focus-visible, .select:focus-visible { outline-offset: 0; border-color: var(--accent-fill); }
+* { scrollbar-width: thin; scrollbar-color: var(--border-default) transparent; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Brand gradient utilities - identity/hero use only (never work-surface headings).
+   .accent-grad = area fill; .accent-grad-text = gradient headline with a solid --accent-fill fallback. */
+.accent-grad { background-image: var(--brand-grad); }
+.accent-grad-text { background-image: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .accent-grad-text { background: none; color: var(--accent-fill); }
+}
+@media (forced-colors: active) { .accent-grad-text { background: none; color: CanvasText; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* ponytail: baseline print legibility - force any surface (light/dark/brand) to
+   black-on-white so pages don't print ghosted. Richer print styling can come later. */
+@media print {
+  :root, [data-theme="dark"], [data-surface="brand"] {
+    --bg-page: #fff; --bg-surface-1: #fff; --bg-surface-2: #fff; --bg-surface-3: #fff;
+    --text-strong: #000; --text-default: #000; --text-muted: #333;
+    --border-subtle: #ccc; --border-default: #999; --border-strong: #666;
+  }
+  body { background: #fff; }
+  .card, .surface, .input, .select, .icon-btn { box-shadow: none; }
+  /* tinted chips carry their own hue tokens, which the var overrides above don't touch -
+     a dark/brand page would otherwise print its light-on-dark chip text (down to 1.5:1)
+     on white paper. Same umbrella pattern as the grad-pair print arm in gradient.css. */
+  [class*="chip--"] { background: #fff none; color: #000; border-color: #ccc; }
+  .app-bar { background: #fff !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; position: static !important; }
+  .toast { display: none; } /* transient: a fixed toast would otherwise print on every page */
+}

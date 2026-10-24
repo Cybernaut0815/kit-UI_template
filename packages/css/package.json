@@ -1,0 +1,44 @@
+{
+  "name": "@gitzhacode/zha-ui-css",
+  "version": "0.2.0",
+  "author": "Aleksander Mastalski <Aleksander.Mastalski@zha.com>",
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./primitives.css": "./dist/primitives.css",
+    "./es-lockup.css": "./dist/es-lockup.css",
+    "./index.css": "./dist/index.css",
+    "./classes.txt": "./dist/classes.txt",
+    "./assets/zha-logo.svg": "./dist/assets/zha-logo.svg",
+    "./assets/zha-sans.ttf": "./dist/assets/zha-sans.ttf",
+    "./assets/inter-latin.woff2": "./dist/assets/inter-latin.woff2",
+    "./assets/inter-latin-ext.woff2": "./dist/assets/inter-latin-ext.woff2"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "lint": "echo ok"
+  },
+  "dependencies": {
+    "@gitzhacode/zha-ui-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "vitest": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitZHACODE/zha-ui.git",
+    "directory": "packages/css"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

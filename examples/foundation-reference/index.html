@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="en" data-brand="es" data-theme="light" data-surface="work" data-density="comfortable">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZHA UI - foundation reference</title>
+  <!-- Built ZHA bundle: every colour, size and primitive resolves from here. Run `pnpm build` first. -->
+  <link rel="stylesheet" href="../../packages/css/dist/index.css">
+  <style>
+    /* Page-scoped layout only. No colour, font or size literals - everything draws
+       on var(--…) from the ZHA bundle. */
+
+    body { margin: 0; background: var(--bg-page); color: var(--text-default);
+      font-family: var(--font-primary); line-height: var(--leading-body); }
+
+    .fr-eyebrow { margin: 0; font-family: var(--font-mono); font-size: var(--fs-label);
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
+    .fr-mono { font-family: var(--font-mono); font-size: var(--fs-small); color: var(--text-muted-strong); }
+    /* ZHA Sans display - font shorthand resets weight to normal: never bold, per brand. */
+    .fr-display { margin: 0; font: var(--fs-display)/var(--leading-display) var(--font-secondary);
+      letter-spacing: var(--tracking-display); color: var(--text-strong); }
+
+    /* Sticky, translucent, hairline-separated chrome - dogfoods the border-first/
+       translucent-chrome direction (research cues #1, #4). */
+    .fr-top { position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      background: color-mix(in srgb, var(--bg-page) 82%, transparent);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle); }
+    .fr-top__title { font-family: var(--font-mono); font-size: var(--fs-small); color: var(--text-muted);
+      letter-spacing: 0.04em; }
+
+    .fr-wrap { max-width: 68rem; margin: 0 auto; padding: 0 var(--space-6); }
+
+    .fr-hero { margin-top: var(--space-6); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-l); padding: var(--space-8) var(--space-6);
+      background: radial-gradient(95% 140% at 10% -25%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 60%), var(--bg-surface-1); }
+    .fr-hero__lead { max-width: 44rem; margin: var(--space-4) 0 0;
+      color: var(--text-muted-strong); font-size: var(--fs-body); }
+    .fr-locked { display: grid; gap: var(--space-3); margin-top: var(--space-6);
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); }
+    .fr-locked .surface { padding: var(--space-4); }
+
+    /* Section scaffold */
+    .fr-sec { padding-top: var(--space-8); margin-top: var(--space-8);
+      border-top: 1px solid var(--border-subtle); }
+    .fr-sec__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--space-3); }
+    .fr-num { font-family: var(--font-mono); font-size: var(--fs-small); color: var(--accent);
+      letter-spacing: 0.1em; }
+    .fr-sec__head h2 { margin: 0; font: 500 var(--fs-h2)/var(--leading-heading) var(--font-primary);
+      letter-spacing: var(--tracking-display); color: var(--text-strong); }
+    .fr-delta { margin-left: auto; }
+    .fr-lead { max-width: 46rem; margin: var(--space-3) 0 var(--space-5);
+      color: var(--text-muted-strong); font-size: var(--fs-small); }
+
+    /* Specimen grid */
+    .fr-cmp { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
+    .fr-col { position: relative; padding: var(--space-5); border-radius: var(--radius-l);
+      border: 1px solid var(--border-subtle); background: var(--bg-surface-1); }
+    .fr-tag { display: inline-block; margin-bottom: var(--space-4); font-family: var(--font-mono);
+      font-size: var(--fs-label); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+
+    .fr-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+    .fr-stack { display: flex; flex-direction: column; gap: var(--space-3); }
+
+    /* Token delta table */
+    .fr-tok { width: 100%; margin-top: var(--space-5); border-collapse: collapse;
+      font-family: var(--font-mono); font-size: var(--fs-small); }
+    .fr-tok th { text-align: left; font-weight: normal; color: var(--text-muted-strong);
+      font-size: var(--fs-label); letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0 var(--space-4) var(--space-2) 0; border-bottom: 1px solid var(--border-subtle); }
+    .fr-tok td { padding: var(--space-2) var(--space-4) var(--space-2) 0;
+      border-bottom: 1px solid var(--border-subtle); color: var(--text-default); }
+    .fr-tok td:first-child { color: var(--text-muted-strong); }
+    .fr-to { color: var(--accent); }
+    .fr-new { display: inline-block; margin-left: var(--space-2); padding: 1px 6px; border-radius: var(--radius-s);
+      font-size: var(--fs-label); background: var(--accent-subtle); color: var(--accent); }
+
+    /* Radius demo */
+    .fr-swatch { display: flex; align-items: center; justify-content: center; width: 4.5rem; height: 4.5rem;
+      background: var(--accent-subtle); border: 1px solid var(--border-default); color: var(--text-muted);
+      font-family: var(--font-mono); font-size: var(--fs-label); }
+    .fr-r-s { border-radius: var(--radius-s); }
+    .fr-r-m { border-radius: var(--radius-m); }
+    .fr-r-l { border-radius: var(--radius-l); }
+
+    /* Elevation ladder */
+    .fr-ladder { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); }
+    .fr-tier { padding: var(--space-4); border-radius: var(--radius-l); background: var(--bg-surface-1);
+      font-family: var(--font-mono); font-size: var(--fs-label); color: var(--text-muted); min-height: 4rem; }
+    .fr-tier--border { border: 1px solid var(--border-subtle); }
+    .fr-tier--low { box-shadow: var(--shadow-low); }
+    .fr-tier--mid { box-shadow: var(--shadow-mid); }
+    .fr-tier--high { box-shadow: var(--shadow-high); }
+
+    /* Motion demo - duration bars scale with the token value; replay re-runs the slide. */
+    .fr-bars { display: flex; flex-direction: column; gap: var(--space-3); }
+    .fr-bar { height: 0.5rem; border-radius: var(--radius-pill); background: var(--accent);
+      transition: width var(--motion-slow) var(--ease-out); }
+    .fr-bar--fast { width: 25%; }
+    .fr-bar--base { width: 55%; }
+    .fr-bar--slow { width: 100%; }
+    .fr-track { position: relative; height: 2.5rem; border-radius: var(--radius-m);
+      background: var(--bg-surface-2); overflow: hidden; }
+    .fr-thumb { position: absolute; top: 0.5rem; left: 0.5rem; width: 1.5rem; height: 1.5rem;
+      border-radius: var(--radius-s); background: var(--accent);
+      /* spring for positional moves; ease-out fallback is defensive (token always present) */
+      transition: transform var(--motion-slow) var(--ease-spring, var(--ease-out)); }
+    .is-playing .fr-thumb { transform: translateX(calc(100% * 8)); }
+
+    /* Type ladder */
+    .fr-type li { list-style: none; margin: 0 0 var(--space-3); }
+    .fr-type ul { margin: 0; padding: 0; }
+    .fr-specimen { font-family: var(--font-secondary); color: var(--text-strong);
+      letter-spacing: var(--tracking-display); line-height: 1; }
+    .fr-hero-size { font-size: var(--fs-hero, var(--fs-display)); }
+    .fr-disp-size { font-size: var(--fs-display); }
+    .fr-h2-size   { font-size: var(--fs-h2); }
+    .fr-body-line { font-family: var(--font-primary); font-size: var(--fs-body);
+      letter-spacing: var(--tracking-body); color: var(--text-default); }
+    .fr-label-line { font-family: var(--font-primary); font-size: var(--fs-label);
+      letter-spacing: var(--tracking-label, 0); text-transform: uppercase; color: var(--text-muted); }
+
+    /* Spacing ramp */
+    .fr-ramp { display: flex; align-items: flex-end; gap: var(--space-3); flex-wrap: wrap; }
+    .fr-ramp > span { display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+      font-family: var(--font-mono); font-size: var(--fs-label); color: var(--text-muted); }
+    .fr-ramp i { display: block; width: 1.5rem; background: var(--accent); border-radius: var(--radius-s); }
+
+    /* Density rows */
+    .fr-rows { border: 1px solid var(--border-subtle); border-radius: var(--radius-m); overflow: hidden; }
+    .fr-rows div { display: flex; align-items: center; padding: 0 var(--space-4);
+      min-height: var(--row-h, var(--control-h)); border-bottom: 1px solid var(--border-subtle);
+      font-size: var(--fs-small); color: var(--text-default); }
+    .fr-rows div:last-child { border-bottom: 0; }
+
+    /* Locked colour */
+    .fr-palette { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--space-2); }
+    .fr-palette span { height: var(--space-8); border-radius: var(--radius-s); }
+    /* Hero palette doubles as a non-binding accent-preview picker (click a hue). */
+    .fr-palette button { height: var(--space-8); border: 0; border-radius: var(--radius-s); padding: 0;
+      cursor: pointer; transition: transform var(--motion-fast) var(--ease-out); }
+    .fr-palette button:hover { transform: translateY(-2px); }
+    .fr-palette button[aria-pressed="true"] { outline: 2px solid var(--text-strong); outline-offset: 2px; }
+    .fr-reset { font: inherit; color: var(--accent); background: none; border: 0; padding: 0;
+      cursor: pointer; text-decoration: underline; }
+    /* The locked-accent swatch always shows the canonical ES teal - pinned to the
+       primitive so the accent-preview picker and brand surface never recolour it. */
+    .fr-tealchip { display: inline-block; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-s);
+      background: var(--color-accent-teal); vertical-align: middle; margin-right: var(--space-3); }
+
+    footer { margin-top: var(--space-8); padding: var(--space-6) 0; border-top: 1px solid var(--border-subtle); }
+  </style>
+</head>
+<body>
+
+  <header class="fr-top">
+    <span style="display: inline-flex; align-items: center; gap: var(--space-5)">
+      <a href="../index.html" style="font-family: var(--font-mono); font-size: var(--fs-small); color: var(--text-muted); text-decoration: none">← All examples</a>
+      <span class="zha-lockup"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></span>
+    </span>
+    <span class="fr-top__title">foundation refinement · visual reference</span>
+    <button class="icon-btn" aria-label="Toggle light or dark theme"
+      onclick="document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'">◐</button>
+  </header>
+
+  <main class="fr-wrap">
+
+    <p style="margin: 0 0 var(--space-4); font-size: var(--fs-small); color: var(--text-muted)">Looking for gradients? See the <a href="../gradient-showcase/index.html" style="color: var(--accent)">ZHA UI gradient library</a>.</p>
+
+    <!-- Hero: the thesis + the locked invariants, made as prominent as the change. -->
+    <section class="fr-hero" data-surface="brand">
+      <p class="fr-eyebrow">Foundation · Spec 1 of 2</p>
+      <h1 class="fr-display" style="font-size: var(--fs-display); margin-top: var(--space-3)">An engineered register.</h1>
+      <p class="fr-hero__lead">The ZHA token foundation, tuned for an engineered register:
+        sharper corners, depth from borders, faster motion with a spring, a real tracking
+        scale, and a denser rhythm. Everything below renders on the live ZHA tokens; each
+        section's <strong>was → now</strong> table records what this refinement changed.
+        Colour, type and the typology palette are unchanged.</p>
+      <div class="fr-locked">
+        <div class="surface">
+          <p class="fr-eyebrow">Locked · accent</p>
+          <p style="margin: var(--space-3) 0 0"><span class="fr-tealchip"></span><span class="fr-mono">ES = teal</span></p>
+        </div>
+        <div class="surface">
+          <p class="fr-eyebrow">Locked · type</p>
+          <p class="fr-specimen fr-h2-size" style="margin: var(--space-3) 0 0">ZHA Sans</p>
+          <p class="fr-mono" style="margin: var(--space-2) 0 0">regular · upright, never bold</p>
+        </div>
+        <div class="surface">
+          <p class="fr-eyebrow">Locked · palette</p>
+          <div class="fr-palette" id="fr-accent-picker" style="margin-top: var(--space-3)">
+            <button type="button" aria-pressed="false" data-hue="purple" aria-label="Preview purple accent" style="background: var(--typology-purple-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="ultramarine" aria-label="Preview ultramarine accent" style="background: var(--typology-ultramarine-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="blue" aria-label="Preview blue accent" style="background: var(--typology-blue-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="teal" aria-label="Preview teal accent" style="background: var(--typology-teal-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="dark-green" aria-label="Preview dark-green accent" style="background: var(--typology-dark-green-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="light-green" aria-label="Preview light-green accent" style="background: var(--typology-light-green-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="lime" aria-label="Preview lime accent" style="background: var(--typology-lime-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="yellow" aria-label="Preview yellow accent" style="background: var(--typology-yellow-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="apricot" aria-label="Preview apricot accent" style="background: var(--typology-apricot-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="orange" aria-label="Preview orange accent" style="background: var(--typology-orange-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="cool-red" aria-label="Preview cool-red accent" style="background: var(--typology-cool-red-100)"></button>
+            <button type="button" aria-pressed="false" data-hue="magenta" aria-label="Preview magenta accent" style="background: var(--typology-magenta-100)"></button>
+          </div>
+          <p class="fr-mono" style="margin: var(--space-3) 0 0">Data-viz palette - <span id="fr-accent-label">click a hue to preview it as the accent</span>
+            <button type="button" class="fr-reset" onclick="zhaResetAccent()">reset</button></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 RADIUS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">01</span><h2>Radius</h2>
+        <span class="fr-delta fr-mono">s 8&rarr;4 · m 10&rarr;8 · l 14&rarr;12 · pill - </span>
+      </div>
+      <p class="fr-lead">Sharper corners suit an engineered register (cue&nbsp;#2). Value retune only -
+        keys are unchanged, so every consumer picks it up automatically.</p>
+      <div class="fr-col">
+        <div class="fr-row">
+          <span class="fr-swatch fr-r-s">s</span>
+          <span class="fr-swatch fr-r-m">m</span>
+          <span class="fr-swatch fr-r-l">l</span>
+        </div>
+        <div class="fr-row" style="margin-top: var(--space-4)">
+          <span class="chip">chip</span><button class="btn btn--primary">Button</button>
+        </div>
+      </div>
+      <table class="fr-tok">
+        <thead><tr><th>token</th><th>was</th><th>now</th><th>use</th></tr></thead>
+        <tbody>
+          <tr><td>--radius-s</td><td>8px</td><td class="fr-to">4px</td><td>badges, chips, tags</td></tr>
+          <tr><td>--radius-m</td><td>10px</td><td class="fr-to">8px</td><td>buttons, inputs, controls</td></tr>
+          <tr><td>--radius-l</td><td>14px</td><td class="fr-to">12px</td><td>cards, panels, surfaces</td></tr>
+          <tr><td>--radius-pill</td><td colspan="2">999px (unchanged)</td><td>pills</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 02 ELEVATION -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">02</span><h2>Elevation</h2>
+        <span class="fr-delta fr-mono">border-first · + --shadow-high</span>
+      </div>
+      <p class="fr-lead">Passive surfaces get depth from a 1px hairline; shadows are reserved for floating
+        layers - popovers, menus, modals (cue&nbsp;#1). A third shadow level is added for overlays.</p>
+      <div class="fr-col">
+        <div class="surface" style="padding: var(--space-5)">
+          <p class="fr-specimen fr-h2-size" style="margin: 0">Passive surface</p>
+          <p class="fr-mono" style="margin: var(--space-2) 0 0">1px hairline · no resting shadow</p>
+        </div>
+        <div class="fr-ladder" style="margin-top: var(--space-4)">
+          <div class="fr-tier fr-tier--border">border<br>passive</div>
+          <div class="fr-tier fr-tier--low">low<br>raised</div>
+          <div class="fr-tier fr-tier--mid">mid<br>popover</div>
+          <div class="fr-tier fr-tier--high">high<br>modal</div>
+        </div>
+      </div>
+      <table class="fr-tok">
+        <thead><tr><th>token</th><th>was</th><th>now</th><th>reserved for</th></tr></thead>
+        <tbody>
+          <tr><td>--shadow-low</td><td>keep</td><td>keep</td><td>subtle raise</td></tr>
+          <tr><td>--shadow-mid</td><td>keep</td><td>keep</td><td>popovers, menus</td></tr>
+          <tr><td>--shadow-high</td><td> - </td><td class="fr-to">0 8px 24px / 16%<span class="fr-new">add</span></td><td>modals, overlays</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 03 MOTION -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">03</span><h2>Motion</h2>
+        <span class="fr-delta fr-mono">base 220&rarr;200 · slow 360&rarr;300 · + --ease-spring</span>
+      </div>
+      <p class="fr-lead">Faster, more purposeful timing (cue&nbsp;#5). A spring easing for <em>positional</em>
+        moves only - sliding thumbs and panels - never colour fades.
+        <button class="btn btn--secondary" style="margin-left: var(--space-3)"
+          onclick="document.querySelectorAll('.fr-track').forEach(function(t){t.classList.remove('is-playing');void t.offsetWidth;t.classList.add('is-playing')})">Replay slide ▸</button></p>
+      <div class="fr-col">
+        <div class="fr-bars">
+          <div class="fr-bar fr-bar--fast"></div><div class="fr-bar fr-bar--base"></div><div class="fr-bar fr-bar--slow"></div>
+        </div>
+        <div class="fr-track" style="margin-top: var(--space-4)"><span class="fr-thumb"></span></div>
+      </div>
+      <table class="fr-tok">
+        <thead><tr><th>token</th><th>was</th><th>now</th><th>use</th></tr></thead>
+        <tbody>
+          <tr><td>--motion-fast</td><td>150ms</td><td>150ms</td><td>hover, state</td></tr>
+          <tr><td>--motion-base</td><td>220ms</td><td class="fr-to">200ms</td><td>popovers, cards</td></tr>
+          <tr><td>--motion-slow</td><td>360ms</td><td class="fr-to">300ms</td><td>modal entry</td></tr>
+          <tr><td>--ease-spring</td><td> - </td><td class="fr-to">cubic-bezier(.175,.885,.32,1.1)<span class="fr-new">add</span></td><td>positional only</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 04 TYPE & TRACKING -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">04</span><h2>Type &amp; tracking</h2>
+        <span class="fr-delta fr-mono">display -.03&rarr;-.04 · + label/small +.01 · + --fs-hero</span>
+      </div>
+      <p class="fr-lead">Negative tracking tightens display sizes; small geometric text gains a touch of air
+        (cue&nbsp;#6). ZHA Sans stays regular and upright. <strong>--fs-hero</strong> (32px) adds a headline
+        step above display for marketing and landing surfaces.</p>
+      <div class="fr-col fr-type">
+        <ul>
+          <li><span class="fr-specimen fr-hero-size">Hero 32</span> <span class="fr-new">add</span></li>
+          <li><span class="fr-specimen fr-disp-size">Display 24</span><br><span class="fr-mono">tracking -0.04em</span></li>
+          <li><span class="fr-body-line">Body copy renders in Neue&nbsp;Haas Unica at 13px.</span></li>
+          <li><span class="fr-label-line">Label / caption 11</span> <span class="fr-mono">tracking +0.01em</span></li>
+        </ul>
+      </div>
+      <table class="fr-tok">
+        <thead><tr><th>token</th><th>was</th><th>now</th><th>note</th></tr></thead>
+        <tbody>
+          <tr><td>tracking.display</td><td>-0.03em</td><td class="fr-to">-0.04em</td><td>tighter at size</td></tr>
+          <tr><td>tracking.body</td><td>-0.01em</td><td>-0.01em</td><td>unchanged</td></tr>
+          <tr><td>tracking.label</td><td> - </td><td class="fr-to">+0.01em<span class="fr-new">add</span></td><td>air for small text</td></tr>
+          <tr><td>tracking.small</td><td> - </td><td class="fr-to">+0.01em<span class="fr-new">add</span></td><td>air for small text</td></tr>
+          <tr><td>--fs-hero</td><td> - </td><td class="fr-to">32px<span class="fr-new">add</span></td><td>step above display</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 05 SPACING & DENSITY -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">05</span><h2>Spacing &amp; density</h2>
+        <span class="fr-delta fr-mono">+ space-10/12/16 · + --row-h</span>
+      </div>
+      <p class="fr-lead">Larger steps for section rhythm; a density token so the upcoming table primitive gets
+        compact rows through the density axis, not hardcoded heights. All additive.</p>
+      <div class="fr-cmp">
+        <div class="fr-col">
+          <span class="fr-tag">Spacing ramp - existing 4-32 + new 40 / 48 / 64</span>
+          <div class="fr-ramp">
+            <span><i style="height: var(--space-1)"></i>1</span>
+            <span><i style="height: var(--space-2)"></i>2</span>
+            <span><i style="height: var(--space-3)"></i>3</span>
+            <span><i style="height: var(--space-4)"></i>4</span>
+            <span><i style="height: var(--space-5)"></i>5</span>
+            <span><i style="height: var(--space-6)"></i>6</span>
+            <span><i style="height: var(--space-8)"></i>8</span>
+            <span><i style="height: var(--space-10)"></i>10<span class="fr-new">+</span></span>
+            <span><i style="height: var(--space-12)"></i>12<span class="fr-new">+</span></span>
+            <span><i style="height: var(--space-16)"></i>16<span class="fr-new">+</span></span>
+          </div>
+        </div>
+        <div class="fr-col">
+          <span class="fr-tag">Density - comfortable vs compact rows</span>
+          <div class="fr-row" style="align-items: flex-start">
+            <div style="flex: 1">
+              <p class="fr-mono" style="margin: 0 0 var(--space-2)">comfortable · 44</p>
+              <div class="fr-rows" data-density="comfortable">
+                <div>NEOM Bay Terminal A</div><div>Bee'ah Headquarters</div><div>Dubai 2026 climate</div>
+              </div>
+            </div>
+            <div style="flex: 1">
+              <p class="fr-mono" style="margin: 0 0 var(--space-2)">compact · --row-h 36</p>
+              <div class="fr-rows" data-density="compact">
+                <div>NEOM Bay Terminal A</div><div>Bee'ah Headquarters</div><div>Dubai 2026 climate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="fr-tok">
+        <thead><tr><th>token</th><th>was</th><th>now</th><th>use</th></tr></thead>
+        <tbody>
+          <tr><td>--space-10</td><td> - </td><td class="fr-to">40px<span class="fr-new">add</span></td><td>section rhythm</td></tr>
+          <tr><td>--space-12</td><td> - </td><td class="fr-to">48px<span class="fr-new">add</span></td><td>section rhythm</td></tr>
+          <tr><td>--space-16</td><td> - </td><td class="fr-to">64px<span class="fr-new">add</span></td><td>section rhythm</td></tr>
+          <tr><td>--row-h</td><td> - </td><td class="fr-to">44 / 36<span class="fr-new">add</span></td><td>table row, by density</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- LOCKED -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num"> - </span><h2>Locked - do not touch</h2>
+        <span class="fr-delta fr-mono">brand book</span>
+      </div>
+      <p class="fr-lead">What the refinement must not move. The contrast gate (text 4.5 / non-text 3.0,
+        across light, dark and brand) must stay green through every change above.</p>
+      <div class="fr-cmp">
+        <div class="fr-col">
+          <span class="fr-tag">ES accent - teal</span>
+          <p style="margin: 0"><span class="fr-tealchip"></span><span class="fr-mono">ES teal · the one UI accent</span></p>
+        </div>
+        <div class="fr-col">
+          <span class="fr-tag">ZHA Sans - regular, upright</span>
+          <p class="fr-specimen fr-disp-size" style="margin: 0">Refracted light</p>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-4)">
+        <p class="fr-eyebrow" style="margin-bottom: var(--space-3)">12-hue typology palette - for data &amp; taxonomy, never UI chrome</p>
+        <div class="fr-palette">
+          <span style="background: var(--typology-purple-100)"></span>
+          <span style="background: var(--typology-ultramarine-100)"></span>
+          <span style="background: var(--typology-blue-100)"></span>
+          <span style="background: var(--typology-teal-100)"></span>
+          <span style="background: var(--typology-dark-green-100)"></span>
+          <span style="background: var(--typology-light-green-100)"></span>
+          <span style="background: var(--typology-lime-100)"></span>
+          <span style="background: var(--typology-yellow-100)"></span>
+          <span style="background: var(--typology-apricot-100)"></span>
+          <span style="background: var(--typology-orange-100)"></span>
+          <span style="background: var(--typology-cool-red-100)"></span>
+          <span style="background: var(--typology-magenta-100)"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIMITIVES - Spec 2 -->
+<hr class="divider" style="margin-block: var(--space-8)">
+
+    <!-- 06 APP SHELL -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">06</span><h2>App shell</h2>
+      </div>
+      <p class="fr-lead">.app-shell sets a two-column, two-row grid: sidebar takes the full block height; app-bar spans the header row; .app-main fills the rest. Add data-rail to collapse the sidebar to 56 px icon rail.</p>
+      <div style="display: grid; gap: var(--space-6); grid-template-columns: 1fr 1fr">
+
+        <!-- Default shell -->
+        <div class="fr-col" style="padding: 0; overflow: hidden">
+          <span class="fr-tag" style="display: block; padding: var(--space-3) var(--space-4) 0">default · 240 px sidebar</span>
+          <div class="app-shell" style="block-size: 22rem; overflow: hidden">
+            <header class="app-bar">
+              <span class="app-bar__brand">
+                <a class="zha-lockup" href="index.html" aria-label="ZHA ES, home"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">ES</span></a>
+                <span class="app-bar__app">App name</span>
+              </span>
+              <span class="app-bar__spacer"></span>
+              <button class="icon-btn" aria-label="User menu" style="min-width: var(--control-h)">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M3 15c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </header>
+            <nav class="sidebar" aria-label="Main">
+              <a href="#" aria-current="page">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>Dashboard</span>
+              </a>
+              <a href="#">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 14V7l6-4 6 4v7H3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="7" y="9" width="4" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>Projects</span>
+              </a>
+              <a href="#">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v3l2 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>History</span>
+              </a>
+            </nav>
+            <main class="app-main">
+              <p style="margin: 0; font-size: var(--fs-body); color: var(--text-muted)">app-main content area - padding: var(--space-6)</p>
+            </main>
+          </div>
+        </div>
+
+        <!-- Rail shell -->
+        <div class="fr-col" style="padding: 0; overflow: hidden">
+          <span class="fr-tag" style="display: block; padding: var(--space-3) var(--space-4) 0">data-rail · 56 px icon rail</span>
+          <div class="app-shell" data-rail style="block-size: 22rem; overflow: hidden">
+            <header class="app-bar">
+              <span class="app-bar__brand">
+                <a class="zha-lockup" href="index.html" aria-label="ZHA ES, home"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">ES</span></a>
+                <span class="app-bar__app">App name</span>
+              </span>
+              <span class="app-bar__spacer"></span>
+            </header>
+            <nav class="sidebar" aria-label="Main rail">
+              <a href="#" aria-current="page">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>Dashboard</span>
+              </a>
+              <a href="#">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 14V7l6-4 6 4v7H3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="7" y="9" width="4" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+                <span>Projects</span>
+              </a>
+              <a href="#">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v3l2 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>History</span>
+              </a>
+            </nav>
+            <main class="app-main">
+              <p style="margin: 0; font-size: var(--fs-body); color: var(--text-muted)">Icon labels hidden; tooltip each icon for accessibility.</p>
+            </main>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 07 DIVIDER -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">07</span><h2>Divider</h2>
+      </div>
+      <p class="fr-lead">.divider renders as a 1 px hairline using --border-subtle. Use &lt;hr class="divider"&gt; or any element with role="separator". Margin is --space-4 above and below.</p>
+      <div class="fr-col">
+        <p style="margin: 0; font-size: var(--fs-body); color: var(--text-muted)">Content above the divider - a section header or a card body.</p>
+        <hr class="divider">
+        <p style="margin: 0; font-size: var(--fs-body); color: var(--text-muted)">Content below the divider - a footer note or a secondary action row.</p>
+      </div>
+    </section>
+
+    <!-- 08 SIDEBAR -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">08</span><h2>Sidebar</h2>
+      </div>
+      <p class="fr-lead">.sidebar is a flex column of &lt;a&gt; links. The active item (a[aria-current="page"]) gets an --accent left bar via ::before. Each link wraps its text label in &lt;span&gt; so rail mode can hide it.</p>
+      <div class="fr-col" style="max-inline-size: 16rem">
+        <span class="fr-tag">Navigation</span>
+        <nav aria-label="Projects" class="sidebar">
+          <a href="#" aria-current="page">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="#">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 14V7l6-4 6 4v7H3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="7" y="9" width="4" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Projects</span>
+          </a>
+          <a href="#">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 4h10M4 8h7M4 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span>Reports</span>
+          </a>
+          <a href="#">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v3l2 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>History</span>
+          </a>
+        </nav>
+        <p style="margin: var(--space-4) 0 0; font-size: var(--fs-small); color: var(--text-muted)">Active state: --accent-subtle tint + 3 px left bar. We rejected a solid --accent-fill pill: it reads as a CTA and outshines the work surface.</p>
+      </div>
+    </section>
+
+    <!-- 09 BREADCRUMB -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">09</span><h2>Breadcrumb</h2>
+      </div>
+      <p class="fr-lead">.breadcrumb wraps a &lt;nav aria-label="Breadcrumb"&gt; with an &lt;ol&gt;. Separators are injected via li:not(:first-child)::before. The current page item carries aria-current="page" and is plain text (no anchor).</p>
+      <div class="fr-col">
+        <nav aria-label="Breadcrumb" class="breadcrumb">
+          <ol>
+            <li><a href="#">ZHA ES</a></li>
+            <li><a href="#">NEOM Bay</a></li>
+            <li><span aria-current="page">Terminal A</span></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 10 PAGINATION -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">10</span><h2>Pagination</h2>
+      </div>
+      <p class="fr-lead">.pagination is an &lt;ol&gt; (not ul). Anchors AND buttons are both styled - SPA views paginate with &lt;button&gt;s (UA chrome stripped). Active page: aria-current="page" - accent-fill bg, accent-on text. Disabled: aria-disabled="true" on anchors, :disabled on buttons → opacity .45.</p>
+      <div class="fr-col">
+        <span class="fr-tag">anchors (documents, MPA)</span>
+        <nav aria-label="Pagination">
+          <ol class="pagination">
+            <li><a href="#" aria-disabled="true" aria-label="Previous page">‹</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><span aria-current="page">3</span></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#" aria-label="Next page">›</a></li>
+          </ol>
+        </nav>
+        <span class="fr-tag" style="display: block; margin-top: var(--space-4)">buttons (SPA views, no hrefs)</span>
+        <nav aria-label="Pagination (buttons)">
+          <ol class="pagination">
+            <li><button disabled aria-label="Previous page">‹</button></li>
+            <li><button aria-current="page">1</button></li>
+            <li><button>2</button></li>
+            <li><button>3</button></li>
+            <li><button aria-label="Next page">›</button></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 11 PAGE HEADER -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">11</span><h2>Page header</h2>
+      </div>
+      <p class="fr-lead">.page-header is a flex row: __title (fs-display + tracking-display) on the start side, __actions flex row on the end. A 1 px border-block-end separates it from content below.</p>
+      <div class="fr-col">
+        <div class="page-header">
+          <h1 class="page-header__title">Parametric Models</h1>
+          <div class="page-header__actions">
+            <button class="btn btn--secondary">Export</button>
+            <button class="btn btn--primary">New model</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 STAT TILES -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">12</span><h2>Stat tiles</h2>
+      </div>
+      <p class="fr-lead">.stat is a hairline-bordered flex column. __value uses fs-display with tabular-nums. __delta modifiers: stat__delta--up (intent-success-text) and stat__delta--down (intent-error-text). Plain __delta inherits text-muted.</p>
+      <div style="display: grid; gap: var(--space-4); grid-template-columns: repeat(4, 1fr)">
+        <div class="stat">
+          <span class="stat__label">Active projects</span>
+          <span class="stat__value">124</span>
+          <span class="stat__delta stat__delta--up">↑ 12 this month</span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">Models processed</span>
+          <span class="stat__value">3,842</span>
+          <span class="stat__delta">last 30 days</span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">Render time</span>
+          <span class="stat__value">2.4s</span>
+          <span class="stat__delta stat__delta--down">↓ 0.3s</span>
+        </div>
+        <div class="stat">
+          <span class="stat__label">Collaborators</span>
+          <span class="stat__value">47</span>
+          <span class="stat__delta">across 8 teams</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 CARDS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">13</span><h2>Cards</h2>
+      </div>
+      <p class="fr-lead">.card is border-first: 1 px hairline, no resting shadow. .card--interactive adds shadow-mid + translateY(-2px) on hover. .card--accent adds a 3 px inline-start --accent stripe. Padding is not built in - add via inline style or wrapper.</p>
+      <div style="display: grid; gap: var(--space-4); grid-template-columns: repeat(3, 1fr)">
+
+        <div class="card" style="padding: var(--space-5)">
+          <span class="fr-tag">card</span>
+          <p style="margin: 0; font-size: var(--fs-body); color: var(--text-default)">Border-first surface. Hairline only - no resting shadow.</p>
+        </div>
+
+        <div class="card card--interactive" style="padding: var(--space-5)">
+          <span class="fr-tag">card--interactive</span>
+          <p style="margin: 0; font-size: var(--fs-body); color: var(--text-default)">Hover to see the shadow-mid lift. Use for clickable cards only.</p>
+        </div>
+
+        <div class="card card--accent" style="padding: var(--space-5)">
+          <span class="fr-tag">card--accent</span>
+          <p style="margin: 0; font-size: var(--fs-body); color: var(--text-default)">3 px accent stripe on the inline-start edge. Hue locked to --accent.</p>
+        </div>
+
+      </div>
+
+      <p class="fr-lead" style="margin-top: var(--space-6)">The login-card pattern - a .card wrapping stacked .field groups. The fields keep their own internal gap; the card supplies padding and the hairline. No new classes needed.</p>
+      <div class="card" style="padding: var(--space-6); max-inline-size: 24rem">
+        <h3 style="margin: 0 0 var(--space-4)">Sign in</h3>
+        <form onsubmit="return false" style="display: flex; flex-direction: column; gap: var(--space-4)">
+          <div class="field">
+            <label class="field__label" for="lc-user">Email</label>
+            <input class="input" id="lc-user" type="email" placeholder="name@zha.com" autocomplete="username">
+          </div>
+          <div class="field">
+            <label class="field__label" for="lc-pass">Password</label>
+            <input class="input" id="lc-pass" type="password" autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn--primary" style="inline-size: 100%">Sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 14 BADGES -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">14</span><h2>Badges</h2>
+      </div>
+      <p class="fr-lead">.badge is an outline pill: 1 px border + text both currentColor, set by the intent modifier. background is always transparent (locked). .dot is a 6 px filled circle in currentColor - status is never colour-alone (WCAG 1.4.1). --neutral is the intent-less state (queued, unknown).</p>
+      <div class="fr-col">
+        <div class="fr-row">
+          <span class="badge badge--success"><span class="dot"></span>Online</span>
+          <span class="badge badge--warning">In review</span>
+          <span class="badge badge--error">Failed</span>
+          <span class="badge badge--info">Draft</span>
+          <span class="badge badge--neutral"><span class="dot"></span>Queued</span>
+          <span class="badge">v1.0.4</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 ACCORDION -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">15</span><h2>Accordion</h2>
+      </div>
+      <p class="fr-lead">.accordion is a styled native &lt;details&gt; element. The chevron (::after) rotates on [open] via --motion-base. Adjacent .accordion + .accordion gets a margin-block-start space. No JS required.</p>
+      <div class="fr-col">
+        <details class="accordion" open>
+          <summary>NEOM Bay Terminal A</summary>
+          <div class="accordion__body">
+            <p style="margin: 0">Mixed-use terminal complex spanning 84,000 m² on the Red Sea coast. Structural optimisation phase completed Q1 2026; MEP coordination ongoing through parametric clash detection.</p>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>Bee'ah Headquarters</summary>
+          <div class="accordion__body">
+            <p style="margin: 0">Award-winning sustainability centre in Sharjah. Post-occupancy energy monitoring integration is under review for the ZHA ES dashboard data pipeline.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 16 DATA TABLE -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">16</span><h2>Data table</h2>
+      </div>
+      <p class="fr-lead">.data-table collapses borders, stretches inline to 100%. thead th is sticky + opaque bg-surface-1. .num right-aligns with tabular-nums. No zebra stripes; row hover uses bg-surface-2. Sort headers: a &lt;button&gt; inside th adopts the header typography automatically (sorting logic stays JS-deferred). Unit strings escape the uppercase transform with .th-unit.</p>
+      <div class="fr-col" style="padding: 0; overflow-x: auto">
+        <table class="data-table">
+          <caption>Recent projects</caption>
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="descending"><button>Project ↓</button></th>
+              <th scope="col">Phase</th>
+              <th scope="col" class="num">Area <span class="th-unit">m²</span></th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>NEOM Bay Terminal A</td>
+              <td>MEP coordination</td>
+              <td class="num">84,000</td>
+              <td><span class="badge badge--info">Draft</span></td>
+            </tr>
+            <tr>
+              <td>Bee'ah Headquarters</td>
+              <td>Post-occupancy</td>
+              <td class="num">19,400</td>
+              <td><span class="badge badge--success"><span class="dot"></span>Online</span></td>
+            </tr>
+            <tr>
+              <td>Dubai Climate Pavilion</td>
+              <td>Concept design</td>
+              <td class="num">6,200</td>
+              <td><span class="badge badge--warning">In review</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 17 FORM FIELDS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">17</span><h2>Form fields</h2>
+      </div>
+      <p class="fr-lead">.field is a flex column. __label, __help, and __error are sibling paragraphs. Error state is driven by aria-invalid="true" on the input - the CSS selector .field [aria-invalid="true"] applies intent-error-text border without a modifier class. Choice groups are fieldset.field (UA border box removed, legend styled). .slider-row is the label / range / value grid - the value slot is tabular-nums.</p>
+      <div style="display: grid; gap: var(--space-6); grid-template-columns: 1fr 1fr">
+
+        <div class="field">
+          <label class="field__label" for="ff1">Project name</label>
+          <input class="input" id="ff1" type="text" placeholder="e.g. NEOM Bay Terminal">
+          <p class="field__help">Used as the display name across all views.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="ff2">Phase start date</label>
+          <input class="input" id="ff2" type="text" aria-invalid="true" aria-describedby="ff2-err" value="not-a-date">
+          <p class="field__error" id="ff2-err">Enter a valid date (YYYY-MM-DD).</p>
+        </div>
+
+        <fieldset class="field">
+          <legend>Aggregation</legend>
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-body)"><input type="radio" name="ff-agg" checked> Hourly</label>
+          <label style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-body)"><input type="radio" name="ff-agg"> Daily</label>
+        </fieldset>
+
+        <div class="field">
+          <span class="field__label">Render quality</span>
+          <div class="slider-row">
+            <label for="ff3">Samples</label>
+            <input id="ff3" type="range" min="0" max="512" value="128">
+            <span class="slider-row__value">128</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 18 SEGMENTED CONTROL -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">18</span><h2>Segmented control</h2>
+      </div>
+      <p class="fr-lead">.segmented is a pill-shaped track over native radio inputs. The checked label lifts off the track with bg-surface-1 + shadow-low, driven by :has(:checked). Keyboard = native radio arrow-key behaviour. No JS required.</p>
+      <div class="fr-col">
+        <div style="display: flex; justify-content: center">
+          <div class="segmented">
+            <label>
+              <input type="radio" name="prim-view" value="list" checked>
+              List
+            </label>
+            <label>
+              <input type="radio" name="prim-view" value="grid">
+              Grid
+            </label>
+            <label>
+              <input type="radio" name="prim-view" value="map">
+              Map
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 ALERTS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">19</span><h2>Alerts</h2>
+      </div>
+      <p class="fr-lead">.alert carries intent via its 3 px inline-start border and icon colour; a tinted background fails AA on dark and brand surfaces. __icon is 16×16 (the inline icon step) and inherits the intent colour. __title is font-weight 600 + text-strong. Set role="status" (polite) or role="alert" (assertive) as needed.</p>
+      <div style="display: flex; flex-direction: column; gap: var(--space-3)">
+
+        <div class="alert alert--success" role="status">
+          <div class="alert__icon">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" role="img" aria-label="Success">
+              <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5.5 9l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="alert__title">Models exported</p>
+            <p style="margin: 0">All 47 parametric models have been exported successfully.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--warning" role="status">
+          <div class="alert__icon">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" role="img" aria-label="Warning">
+              <path d="M9 2L16 15H2L9 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M9 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="9" cy="12.5" r=".75" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <p class="alert__title">Storage at 85%</p>
+            <p style="margin: 0">Free up space to avoid interrupted uploads.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--error" role="alert">
+          <div class="alert__icon">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" role="img" aria-label="Error">
+              <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M6 6l6 6M12 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="alert__title">Export failed</p>
+            <p style="margin: 0">Check your network connection and retry.</p>
+          </div>
+        </div>
+
+        <div class="alert alert--info" role="status">
+          <div class="alert__icon">
+            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" role="img" aria-label="Info">
+              <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M9 8v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="9" cy="5.5" r=".75" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <p class="alert__title">Scheduled maintenance</p>
+            <p style="margin: 0">The system will be unavailable on 28 Jun 02:00-04:00 UTC.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 20 PROGRESS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">20</span><h2>Progress</h2>
+      </div>
+      <p class="fr-lead">.progress is a styled native &lt;progress&gt; element. Fill: accent-fill via accent-color (Chrome/Firefox) and ::-webkit-progress-value + ::-moz-progress-bar (Safari). Track: bg-surface-3. Always set max="100" explicitly.</p>
+      <div style="display: flex; flex-direction: column; gap: var(--space-6)">
+
+        <div class="fr-col">
+          <span class="fr-tag">25% - early stage</span>
+          <progress class="progress" value="25" max="100" aria-label="Early stage, 25 percent"></progress>
+        </div>
+
+        <div class="fr-col">
+          <span class="fr-tag">60% - mid stage</span>
+          <progress class="progress" value="60" max="100" aria-label="Mid stage, 60 percent"></progress>
+        </div>
+
+        <div class="fr-col">
+          <span class="fr-tag">95% - near complete</span>
+          <progress class="progress" value="95" max="100" aria-label="Near complete, 95 percent"></progress>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 21 EMPTY STATE -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">21</span><h2>Empty state</h2>
+      </div>
+      <p class="fr-lead">.empty-state is a centered flex column with space-12 vertical padding. __icon is a 48×48 rounded bg-surface-2 container - put an inline stroke SVG in currentColor inside it, never an emoji or image. h3 heading (text-strong, fs-h2) + p body (text-muted) + optional CTA. No container border.</p>
+      <div class="fr-col">
+        <div class="empty-state">
+          <div class="empty-state__icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <rect x="12" y="14" width="24" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M18 20h12M18 25h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>No models yet</h3>
+          <p>Upload a parametric model or start from a template to get going.</p>
+          <button class="btn btn--secondary">Browse templates</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22 VIEW FADE -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">22</span><h2>View fade</h2>
+      </div>
+      <p class="fr-lead">.view-fade runs zha-view-fade: opacity 0→1 + translateY 8px→0 over motion-slow + ease-out. Apply when a new view enters the DOM (route changes, tab switches). The animation plays once and leaves the element fully visible.</p>
+      <div class="fr-col">
+        <div id="vf-demo" class="card view-fade" style="padding: var(--space-5)">
+          <p style="margin: 0; font-size: var(--fs-body); color: var(--text-default)">This card faded in. Replay to run the entrance animation again.</p>
+        </div>
+        <div style="margin-top: var(--space-4)">
+          <button class="btn btn--secondary" onclick="(function(){var el=document.getElementById('vf-demo');el.classList.remove('view-fade');void el.offsetWidth;el.classList.add('view-fade');})()">Replay ▸</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 23 TABS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">23</span><h2>Tabs</h2>
+      </div>
+      <p class="fr-lead">.tabs is the content-switching tab row - the input-like exclusive choice stays .segmented. One blessed selected treatment: text-strong + 2 px --accent underline, driven by aria-current="page" (valid on both &lt;button&gt; and &lt;a&gt; without the full role=tab/tablist + JS keyboard pattern). Hover lifts text to text-default.</p>
+      <div class="fr-col">
+        <nav class="tabs" aria-label="Model views">
+          <button class="tabs__tab" aria-current="page">Overview</button>
+          <button class="tabs__tab">Geometry</button>
+          <button class="tabs__tab">Results</button>
+          <button class="tabs__tab">History</button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 24 TOGGLE & ICON BUTTONS -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">24</span><h2>Toggle &amp; icon buttons</h2>
+      </div>
+      <p class="fr-lead">.btn.is-active (or aria-pressed="true") is the quiet persistent toggle: accent-subtle wash + 1 px --accent border; text stays text-strong (accent-family text fails AA at body size). .icon-btn is muted by default - utility icons are not brand decoration. .icon-btn--ghost drops the chrome but keeps the full hit target; it is the toolbar/chat form.</p>
+      <div class="fr-col">
+        <div class="fr-row">
+          <button class="btn is-active">Layers</button>
+          <button class="btn btn--secondary" aria-pressed="true">Grid snap</button>
+          <button class="btn btn--secondary">Compare</button>
+          <button class="icon-btn" aria-label="User menu">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 15c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+          <button class="icon-btn icon-btn--ghost" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M12 12l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25 TOOLTIP & MENU CARET -->
+    <section class="fr-sec">
+      <div class="fr-sec__head">
+        <span class="fr-num">25</span><h2>Tooltip &amp; menu caret</h2>
+      </div>
+      <p class="fr-lead">.tooltip is paint-only - an inverse-surface box (near-ink on light, near-paper on dark), fs-small, 36ch max; positioning belongs to the consumer or the Anchor API. .menu__caret is the expandable-section chevron inside .menu rows: points right collapsed, rotates down when the row is aria-expanded="true". (The .menu below is inlined for display; real menus are [popover] elements.)</p>
+      <div class="fr-col">
+        <div class="fr-row" style="align-items: flex-start">
+          <span class="tooltip">Vertices snap to the active grid only.</span>
+          <div class="menu" style="position: static; opacity: 1; inline-size: 15rem">
+            <div class="menu__list">
+              <button class="menu__item" aria-expanded="false">Typology<span class="menu__caret"></span></button>
+              <button class="menu__item" aria-expanded="true">Climate<span class="menu__caret"></span></button>
+              <label class="menu__item"><input class="menu__check" type="checkbox" checked><span>Radiation</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 26 COMPOSITION -->
+    <section class="fr-sec" id="composition">
+      <div class="fr-sec__head">
+        <span class="fr-num">26</span><h2>Composition</h2>
+      </div>
+      <p class="fr-lead">The composition layer: element defaults, layout primitives with their one knob each, the control state matrix, the toast and the spinner. Layout below uses the primitives themselves. Two demo h1s appear here (the ladder and the hero); the page's real h1 is the title above.</p>
+
+      <p class="fr-lead">1. Element ladder: bare h1 to h4, p, a, strong, code and hr, no classes, inside .prose.</p>
+      <div class="fr-col">
+        <div class="prose">
+          <h1>Heading level one</h1>
+          <h2>Heading level two</h2>
+          <h3>Heading level three</h3>
+          <h4>Heading level four</h4>
+          <p>Body copy sets the measure and leading. It holds an <a href="#composition">inline link</a>, some <strong>strong text</strong> and a run of <code>inline code</code>.</p>
+          <hr>
+          <p class="text-muted">A .text-muted line steps back from the body copy.</p>
+        </div>
+      </div>
+
+      <p class="fr-lead">2. .stack (three default cards), .stack--tight, .cluster with three buttons and a vertical divider, and .cluster--between.</p>
+      <div class="fr-col">
+        <div class="stack">
+          <div class="card"><p>First card in a default stack.</p></div>
+          <div class="card"><p>Second card in a default stack.</p></div>
+          <div class="card"><p>Third card in a default stack.</p></div>
+          <div class="stack stack--tight">
+            <div class="card"><p>Tight stack, first.</p></div>
+            <div class="card"><p>Tight stack, second.</p></div>
+          </div>
+          <div class="cluster">
+            <button type="button" class="btn">One</button>
+            <button type="button" class="btn">Two</button>
+            <span class="divider divider--vertical" role="separator"></span>
+            <button type="button" class="btn">Three</button>
+          </div>
+          <div class="cluster cluster--between">
+            <span>Pushed to the start</span>
+            <span>Pushed to the end</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="fr-lead">3. .grid with --grid-min: 12rem fills the row with as many columns as fit.</p>
+      <div class="fr-col">
+        <div class="grid" style="--grid-min: 12rem">
+          <div class="stat"><span class="stat__label">Active projects</span><span class="stat__value">124</span></div>
+          <div class="stat"><span class="stat__label">Models processed</span><span class="stat__value">3,842</span></div>
+          <div class="stat"><span class="stat__label">Render time</span><span class="stat__value">2.4s</span></div>
+          <div class="stat"><span class="stat__label">Collaborators</span><span class="stat__value">47</span></div>
+        </div>
+      </div>
+
+      <p class="fr-lead">4. .section + .section draws a hairline and the section rhythm between neighbours.</p>
+      <div class="fr-col">
+        <section class="section">
+          <h3>First section</h3>
+          <p>The first section carries no rule above it.</p>
+        </section>
+        <section class="section">
+          <h3>Second section</h3>
+          <p>The adjacent section gets the hairline and the larger gap.</p>
+        </section>
+      </div>
+
+      <p class="fr-lead">5. .split puts a canvas beside a fixed aside; .split--aside-start swaps the column widths, so put the aside first in the markup.</p>
+      <div class="fr-col">
+        <div class="split">
+          <div class="card"><p class="text-muted">Canvas placeholder</p></div>
+          <aside class="card">
+            <div class="slider-row">
+              <label for="c26-s1">Samples</label>
+              <input id="c26-s1" type="range" min="0" max="512" value="128">
+              <span class="slider-row__value">128</span>
+            </div>
+            <div class="slider-row">
+              <label for="c26-s2">Bounces</label>
+              <input id="c26-s2" type="range" min="0" max="16" value="4">
+              <span class="slider-row__value">4</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <p class="fr-lead">6. .toolbar holds a segmented control, two chip buttons, a vertical divider and a ghost button; controls are compact by scope.</p>
+      <div class="fr-col">
+        <div class="toolbar">
+          <div class="segmented">
+            <label><input type="radio" name="c26-view" value="list" checked>List</label>
+            <label><input type="radio" name="c26-view" value="grid">Grid</label>
+          </div>
+          <button type="button" class="chip">Level 1</button>
+          <button type="button" class="chip">Level 2</button>
+          <span class="divider divider--vertical" role="separator"></span>
+          <button type="button" class="btn btn--ghost">Reset view</button>
+        </div>
+      </div>
+
+      <p class="fr-lead">7. .form-grid lays fields in columns, .field--span runs one across; .cluster--end closes the form with one primary action.</p>
+      <div class="fr-col">
+        <form class="stack" onsubmit="return false">
+          <div class="form-grid">
+            <div class="field">
+              <label class="field__label" for="c26-f1">Project</label>
+              <input class="input" id="c26-f1" type="text" placeholder="e.g. NEOM Bay Terminal">
+            </div>
+            <div class="field">
+              <label class="field__label" for="c26-f2">Phase</label>
+              <input class="input" id="c26-f2" type="text" placeholder="e.g. Concept">
+            </div>
+            <div class="field">
+              <label class="field__label" for="c26-f3">Lead</label>
+              <input class="input" id="c26-f3" type="text" placeholder="e.g. A. Example">
+            </div>
+            <div class="field field--span">
+              <label class="field__label" for="c26-f4">Notes</label>
+              <textarea class="input" id="c26-f4" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="cluster cluster--end">
+            <button type="button" class="btn btn--ghost">Cancel</button>
+            <button type="submit" class="btn btn--primary">Save</button>
+          </div>
+        </form>
+      </div>
+
+      <p class="fr-lead">8. .table-wrap scrolls a .data-table--wrap on narrow screens; one row is selected and one header sorts.</p>
+      <div class="fr-col">
+        <div class="table-wrap">
+          <table class="data-table data-table--wrap">
+            <caption>Recent projects</caption>
+            <thead>
+              <tr>
+                <th scope="col" aria-sort="ascending"><button type="button">Project</button></th>
+                <th scope="col">Phase</th>
+                <th scope="col" class="num">Area <span class="th-unit">m²</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr aria-selected="true"><td>Bee'ah Headquarters</td><td>Post-occupancy</td><td class="num">19,400</td></tr>
+              <tr><td>NEOM Bay Terminal A</td><td>MEP coordination</td><td class="num">84,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="fr-lead">9. .eyebrow on its own, then a .hero on the brand surface with .grad-hero-ocean (the h1 here is the ZHA Sans specimen).</p>
+      <div class="fr-col">
+        <p class="eyebrow">Eyebrow on its own</p>
+        <section class="hero grad-hero-ocean" data-surface="brand">
+          <p class="eyebrow">Design systems</p>
+          <h1>One system, every tool</h1>
+          <p>Tokens and primitives that keep each ZHA tool recognisably one family.</p>
+          <div class="cluster">
+            <button type="button" class="btn btn--primary">Get started</button>
+            <button type="button" class="btn btn--secondary">Read the guide</button>
+          </div>
+        </section>
+      </div>
+
+      <p class="fr-lead">10. State matrix: each control at rest and disabled; hover, pressed and focus are live, so tab through them.</p>
+      <div class="fr-col">
+        <div class="stack">
+          <div class="cluster">
+            <button type="button" class="btn btn--primary">Primary</button>
+            <button type="button" class="btn btn--primary" disabled>Primary</button>
+            <button type="button" class="btn btn--secondary">Secondary</button>
+            <button type="button" class="btn btn--secondary" disabled>Secondary</button>
+            <button type="button" class="btn btn--ghost">Ghost</button>
+            <button type="button" class="btn btn--ghost" disabled>Ghost</button>
+            <button type="button" class="btn btn--danger">Danger</button>
+            <button type="button" class="btn btn--danger" disabled>Danger</button>
+          </div>
+          <div class="cluster">
+            <button type="button" class="icon-btn" aria-label="Search">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </button>
+            <button type="button" class="icon-btn" aria-label="Search, unavailable" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            </button>
+            <button type="button" class="chip">Chip</button>
+            <button type="button" class="chip" disabled>Chip</button>
+            <input class="input" type="text" placeholder="Input at rest" aria-label="Input at rest">
+            <input class="input" type="text" placeholder="Input disabled" aria-label="Input disabled" disabled>
+          </div>
+        </div>
+      </div>
+
+      <p class="fr-lead">11. .toast shown statically (the knob rule is waived on this page), and a .spinner beside a busy label.</p>
+      <div class="fr-col">
+        <div class="stack">
+          <div class="toast" style="position: static; inline-size: 24rem">
+            <div class="alert alert--success" role="status">Model saved to the project.</div>
+          </div>
+          <p><span class="spinner" aria-hidden="true"></span> Running model</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span class="fr-mono">ZHA · ES - foundation + primitives · Spec 1-2 of 2 · rendered on @gitzhacode/zha-ui tokens.
+        Neue Haas Unica renders where licensed, otherwise falls back to bundled Inter; ZHA Sans is bundled.</span>
+    </footer>
+
+  </main>
+
+  <script>
+    /* Ring-1 inline JS: the hero palette doubles as a non-binding accent preview.
+       Clicking a hue sets --accent (+ a darkened fill and a subtle tint) on :root,
+       so the foundation sections below re-resolve live; the brand-surface hero keeps
+       the locked ES teal. Reset reverts to the stylesheet (ES) values. All values are
+       token-derived - no hardcoded colour. */
+    (function () {
+      var rootStyle = document.documentElement.style;
+      var picker = document.getElementById('fr-accent-picker');
+      var label = document.getElementById('fr-accent-label');
+      if (!picker) return;
+      var btns = picker.querySelectorAll('button[data-hue]');
+      function mark(active) {
+        btns.forEach(function (b) { b.setAttribute('aria-pressed', b === active ? 'true' : 'false'); });
+      }
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var hue = 'var(--typology-' + b.dataset.hue + '-100)';
+          rootStyle.setProperty('--accent', hue);
+          rootStyle.setProperty('--accent-fill', 'color-mix(in srgb, ' + hue + ', var(--color-neutral-black) 16%)');
+          rootStyle.setProperty('--accent-subtle', 'color-mix(in srgb, ' + hue + ' 14%, transparent)');
+          mark(b);
+          if (label) label.textContent = 'previewing ' + b.dataset.hue.replace('-', ' ') + ' - non-binding';
+        });
+      });
+      window.zhaResetAccent = function () {
+        ['--accent', '--accent-fill', '--accent-subtle'].forEach(function (p) { rootStyle.removeProperty(p); });
+        mark(null);
+        if (label) label.textContent = 'click a hue to preview it as the accent';
+      };
+    })();
+  </script>
+</body>
+</html>

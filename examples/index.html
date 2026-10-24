@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-brand="zha-app" data-theme="light" data-surface="work">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZHA UI - examples</title>
+  <!-- ZHA UI examples hub: the landing-page recipe from skills/zha-ui/SKILL.md (full-bleed hero, container of
+       sections, cards). It declares the firm default (data-brand="zha-app") explicitly rather than leaning on :root. -->
+  <link rel="stylesheet" href="../packages/css/dist/index.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-bar">
+    <span class="app-bar__brand">
+      <a class="zha-lockup" href="index.html" aria-label="ZHA UI, home"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></a>
+    </span>
+    <span class="app-bar__spacer"></span>
+    <span class="text-muted">Design system examples</span>
+  </header>
+
+  <section class="hero hero--bleed grad-hero-dusk" data-surface="brand">
+    <p class="eyebrow">The ZHA design system</p>
+    <span class="zha-lockup" role="img" aria-label="ZHA UI" style="--zha-lockup-size: clamp(3.25rem, 9vw, 5.5rem)"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></span>
+    <h1>One system. Every screen on brand.</h1>
+    <p>ZHA UI is the studio's visual language as working code: colour, type, spacing and motion
+       as shared tokens, so anything you build matches ZHA's other tools. Start with the
+       deck, browse the gradients, then make something.</p>
+    <div class="cluster">
+      <a class="btn btn--primary" href="./brand-deck/index.html">Watch the brand deck</a>
+      <a class="btn btn--secondary" href="./gradient-showcase/index.html">Open the gradient library</a>
+      <a href="https://github.com/GitZHACODE/zha-ui">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M19 13.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5.5"/>
+          <path d="M14.5 4H20v5.5"/>
+          <path d="M20 4 11 13"/>
+        </svg>
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <main class="container stack" id="main">
+
+    <section class="section stack">
+      <h2>The brand deck</h2>
+      <p>Start here: the whole identity in one sitting.</p>
+      <div class="grid" style="--grid-min: 16rem">
+        <a class="card card--interactive" href="./brand-deck/index.html">
+          <div class="stack stack--tight">
+            <h3>Brand deck</h3>
+            <p>The wordmark, ZHA Sans, the accent pairs, the gradients and the rules that hold them
+               together, told as slides and built from the very tokens it presents. Arrow keys or
+               Space to advance.</p>
+          </div>
+        </a>
+        <a class="card card--interactive" href="./brand-deck-editorial/index.html">
+          <div class="stack stack--tight">
+            <h3>Editorial</h3>
+            <p>Text-led variant for long-form narratives.</p>
+          </div>
+        </a>
+        <a class="card card--interactive" href="./brand-deck-product/index.html">
+          <div class="stack stack--tight">
+            <h3>Product</h3>
+            <p>UI, metrics and feature storytelling.</p>
+          </div>
+        </a>
+        <a class="card card--interactive" href="./brand-deck-specimen/index.html">
+          <div class="stack stack--tight">
+            <h3>Specimen</h3>
+            <p>The compact spec sheet, on slides.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Reference</h2>
+      <p>The system itself, rendered live. Check here before styling anything by hand.</p>
+      <div class="grid">
+        <a class="card card--interactive" href="./foundation-reference/index.html">
+          <div class="stack stack--tight">
+            <h3>Foundation reference</h3>
+            <p>Every colour, type size, spacing step and UI primitive (buttons, forms, cards,
+               navigation, tables) live in light, dark and branded themes.</p>
+          </div>
+        </a>
+        <a class="card card--interactive" href="./gradient-showcase/index.html">
+          <div class="stack stack--tight">
+            <h3>Gradient library</h3>
+            <p>Hero meshes, the spectrum and the work-safe washes, with the rules for where each
+               may be used: heroes and identity moments only, never UI chrome.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Starters</h2>
+      <p>Three ways to begin an on-brand app: hand it to your coding agent, copy the pattern, or run it.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="stack stack--tight">
+            <h3>Your coding agent</h3>
+            <p>Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Antigravity, Windsurf and the other
+               tools the <code>skills</code> CLI supports read the zha-ui skill. Install it in your project, then
+               describe the app: the agent installs the package and composes on-brand pages.</p>
+            <pre><code>npx skills add GitZHACODE/zha-ui</code></pre>
+            <p>Or paste this to the agent: "Use the ZHA UI design system for everything visual in this
+               project. Run npx skills add GitZHACODE/zha-ui -y, then read the installed zha-ui/SKILL.md
+               and follow it."</p>
+            <p>The <a href="https://github.com/GitZHACODE/zha-ui#quick-start-with-your-coding-agent">repository README</a>
+               lists where the skill lands for each tool, a manual route without npx and a note for Windows.</p>
+          </div>
+        </div>
+        <a class="card card--interactive" href="./zha-app-vanilla/index.html">
+          <div class="stack stack--tight">
+            <h3>Vanilla starter</h3>
+            <p>Plain HTML on the bundle, no build step. Open it, view source, copy the pattern:
+               composition classes for layout, bundle classes for every component.</p>
+          </div>
+        </a>
+        <div class="card">
+          <div class="stack stack--tight">
+            <h3>React starter</h3>
+            <p>React and Vite on the same tokens. It runs from source; there is no static page to
+               open here.</p>
+            <pre><code>git clone https://github.com/GitZHACODE/zha-ui
+cd zha-ui/examples/zha-app-react
+pnpm install &amp;&amp; pnpm dev</code></pre>
+            <p><a href="https://github.com/GitZHACODE/zha-ui/tree/main/examples/zha-app-react">Browse the source on GitHub</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Under the hood</h2>
+      <p>For builders: where the system lives and how to consume it.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="stack stack--tight">
+            <h3>Repository</h3>
+            <p>Source, specs, issues and releases live in GitZHACODE/zha-ui. It needs a GitHub
+               account on the org; everything else on this page works without one.</p>
+            <p><a href="https://github.com/GitZHACODE/zha-ui">Open the repository on GitHub</a></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stack stack--tight">
+            <h3>Consume the system</h3>
+            <p>@gitzhacode/zha-ui-css and @gitzhacode/zha-ui-tokens install straight from git:
+               no token, no .npmrc, just your normal GitHub access. Add to package.json
+               dependencies:</p>
+            <pre><code>"@gitzhacode/zha-ui-css": "github:GitZHACODE/zha-ui#release/css"</code></pre>
+            <p>They are also on GitHub Packages for registry installs; that route and the CI
+               pipeline setup are in the repo README.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <hr class="divider">
+    <div class="cluster cluster--between">
+      <p>No GitHub access? This folder on the ES project share is a full mirror, refreshed on
+         every commit - you are likely reading it right now.</p>
+      <span class="zha-lockup" role="img" aria-label="ZHA UI"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></span>
+    </div>
+  </footer>
+
+</body>
+</html>

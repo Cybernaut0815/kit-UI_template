@@ -1,0 +1,69 @@
+{
+  "bg":   { "page": { "$type": "color", "$value": "{color.neutral.black}" },
+            "surface-1": { "$type": "color", "$value": "#0D0D0C" },
+            "surface-2": { "$type": "color", "$value": "#161614" },
+            "surface-3": { "$type": "color", "$value": "#21211E" } },
+  "text": { "strong": { "$type": "color", "$value": "{color.neutral.white}" },
+            "default": { "$type": "color", "$value": "#E8E6E3" },
+            "muted": { "$type": "color", "$value": "#9A9794" },
+            "muted-strong": { "$type": "color", "$value": "#C9C7C4" },
+            "disabled": { "$type": "color", "$value": "#5A5754" } },
+  "border": { "subtle": { "$type": "color", "$value": "rgba(255,255,255,0.10)" },
+              "default": { "$type": "color", "$value": "rgba(255,255,255,0.18)" },
+              "strong": { "$type": "color", "$value": "rgba(255,255,255,0.30)" } },
+  "accent": { "DEFAULT": { "$type": "color", "$value": "{color.neutral.white}" },
+              "fill": { "$type": "color", "$value": "{color.neutral.white}" },
+              "on": { "$type": "color", "$value": "{color.neutral.black}" },
+              "hover": { "$type": "color", "$value": "{color.neutral.concrete}" },
+              "subtle": { "$type": "color", "$value": "rgba(255,255,255,0.16)" } },
+  "scrim": { "$type": "color", "$value": "rgba(0,0,0,0.7)" },
+  "intent": {
+    "error-text":   { "$type": "color", "$value": "#F44375" },
+    "success-text": { "$type": "color", "$value": "{color.typology.dark-green}" },
+    "warning-text": { "$type": "color", "$value": "{color.typology.yellow}" },
+    "info-text":    { "$type": "color", "$value": "#2988F0" }
+  },
+  "chart": {
+    "cat": {
+      "1": { "$type": "color", "$value": "{color.typology.teal}" },
+      "2": { "$type": "color", "$value": "#3652FF" },
+      "3": { "$type": "color", "$value": "#80A400" },
+      "4": { "$type": "color", "$value": "{color.typology.blue}" },
+      "5": { "$type": "color", "$value": "#A09900" },
+      "6": { "$type": "color", "$value": "#7D3EEB" },
+      "7": { "$type": "color", "$value": "#D57B00" },
+      "8": { "$type": "color", "$value": "{color.typology.magenta}" }
+    },
+    "seq": {
+      "1": { "$type": "color", "$value": "#005862" },
+      "2": { "$type": "color", "$value": "#006D7A" },
+      "3": { "$type": "color", "$value": "#008493" },
+      "4": { "$type": "color", "$value": "#2499AA" },
+      "5": { "$type": "color", "$value": "#42AFC0" },
+      "6": { "$type": "color", "$value": "#5BC6D7" }
+    },
+    "div": {
+      "neg-3": { "$type": "color", "$value": "#63A6FF" },
+      "neg-2": { "$type": "color", "$value": "#2B84F2" },
+      "neg-1": { "$type": "color", "$value": "#0065CC" },
+      "mid":   { "$type": "color", "$value": "#5A5754" },
+      "pos-1": { "$type": "color", "$value": "#C4003D" },
+      "pos-2": { "$type": "color", "$value": "#EF2A55" },
+      "pos-3": { "$type": "color", "$value": "#FF6F7E" }
+    }
+  },
+  "typology": {
+    "purple":      { "text": { "$type": "color", "$value": "#9F7BFF" } },
+    "ultramarine": { "text": { "$type": "color", "$value": "#6287FF" } },
+    "blue":        { "text": { "$type": "color", "$value": "#4B99FF" } },
+    "teal":        { "text": { "$type": "color", "$value": "#3AAABA" } },
+    "dark-green":  { "text": { "$type": "color", "$value": "#3BB37C" } },
+    "light-green": { "text": { "$type": "color", "$value": "{color.typology.light-green}" } },
+    "lime":        { "text": { "$type": "color", "$value": "{color.typology.lime}" } },
+    "yellow":      { "text": { "$type": "color", "$value": "{color.typology.yellow}" } },
+    "apricot":     { "text": { "$type": "color", "$value": "#F5921E" } },
+    "orange":      { "text": { "$type": "color", "$value": "#FF6D4D" } },
+    "cool-red":    { "text": { "$type": "color", "$value": "#FF5C72" } },
+    "magenta":     { "text": { "$type": "color", "$value": "#F847B9" } }
+  }
+}

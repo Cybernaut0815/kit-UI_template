@@ -1,0 +1,50 @@
+{
+  "space": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "5": { "$type": "dimension", "$value": "20px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "8": { "$type": "dimension", "$value": "32px" },
+    "10": { "$type": "dimension", "$value": "40px" },
+    "12": { "$type": "dimension", "$value": "48px" },
+    "16": { "$type": "dimension", "$value": "64px" }
+  },
+  "radius": {
+    "s": { "$type": "dimension", "$value": "4px" },
+    "m": { "$type": "dimension", "$value": "8px" },
+    "l": { "$type": "dimension", "$value": "12px" },
+    "pill": { "$type": "dimension", "$value": "999px" }
+  },
+  "motion": {
+    "fast": { "$type": "duration", "$value": "150ms" },
+    "base": { "$type": "duration", "$value": "200ms" },
+    "slow": { "$type": "duration", "$value": "300ms" }
+  },
+  "ease": {
+    "out": { "$type": "other", "$value": "cubic-bezier(0.2, 0, 0, 1)" },
+    "in": { "$type": "other", "$value": "cubic-bezier(0.4, 0, 1, 1)" },
+    "spring": { "$type": "other", "$value": "cubic-bezier(0.175, 0.885, 0.32, 1.1)" }
+  },
+  "font": {
+    "primary": { "$type": "fontFamily", "$value": "\"Neue Haas Unica\", \"Inter\", system-ui, sans-serif" },
+    "secondary": { "$type": "fontFamily", "$value": "\"ZHA Sans\", \"Neue Haas Unica\", \"Inter\", system-ui, sans-serif" },
+    "mono": { "$type": "fontFamily", "$value": "\"SF Mono\", Consolas, ui-monospace, monospace" },
+    "zh": { "$type": "fontFamily", "$value": "\"Noto Sans SC\", \"Neue Haas Unica\", \"Inter\", sans-serif" },
+    "ar-display": { "$type": "fontFamily", "$value": "\"Noto Kufi Arabic\", sans-serif" },
+    "ar-body": { "$type": "fontFamily", "$value": "\"Noto Sans Arabic\", sans-serif" }
+  },
+  "fs": {
+    "hero": { "$type": "dimension", "$value": "32px" },
+    "hero-xl": { "$type": "other", "$value": "clamp(2.5rem, 1.5rem + 4vw, 4.5rem)", "$description": "Fluid 40-72px display for .hero > h1 on landing and brand pages." },
+    "display": { "$type": "dimension", "$value": "24px" },
+    "h1": { "$type": "dimension", "$value": "20px", "$description": "Element h2 size; fills the 16→24 gap. (fs-* names are sizes, not elements - see DESIGN.md ladder.)" },
+    "h2": { "$type": "dimension", "$value": "16px" },
+    "h3": { "$type": "dimension", "$value": "14px" },
+    "body": { "$type": "dimension", "$value": "13px" },
+    "reading": { "$type": "dimension", "$value": "16px", "$description": "Paragraph size inside .prose - an alias by role so nobody writes --fs-h2 for body copy." },
+    "small": { "$type": "dimension", "$value": "12px" },
+    "label": { "$type": "dimension", "$value": "11px" }
+  }
+}

@@ -1,0 +1,60 @@
+/* ZHA marks - two treatments:
+
+   1) .zha-logo - the SVG wordmark, theme-aware via mask. Use BIG and on its own.
+   2) .zha-lockup - "ZHA" alone (the firm form, data-brand="zha-app", the default), or "ZHA" + team name
+                     (the team form, team letters in the brand gradient), BOTH typeset in the ZHA font, for
+                     PAIRED use (nav / side / bottom panels). Same font => display parity; baseline-aligned,
+                     so a smaller team name still sits on the wordmark baseline (not centered).
+
+   ZHA Sans (--font-secondary) is always regular weight and upright - never bold, never italic.
+   ZHA Sans is bundled below as a webfont, so typeset "ZHA" renders in the true brand font;
+   the SVG (.zha-logo) remains the pixel-accurate mark for large, standalone use. */
+
+/* ZHA Sans webfont - regular only (the brand font is never bold or italic). */
+@font-face {
+  font-family: "ZHA Sans";
+  src: url("./assets/zha-sans.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* --- Standalone logo (big, on its own) --- */
+.zha-logo {
+  display: inline-block;
+  height: var(--zha-logo-h, 2.5rem);
+  aspect-ratio: 283.5 / 110.3;            /* logo viewBox → width from height */
+  background-color: var(--text-strong);
+  -webkit-mask: url("./assets/zha-logo.svg") center / contain no-repeat;
+          mask: url("./assets/zha-logo.svg") center / contain no-repeat;
+}
+@media (forced-colors: active) { .zha-logo { background-color: CanvasText; } }
+
+/* --- Paired lockup (ZHA + team, both in the ZHA font) --- */
+.zha-lockup {
+  --zha-lockup-size: 1.5rem;   /* in app bars this is the FLOOR, not a suggestion: a team's gradient
+                                  stop can sit near 3:1 on light (teal) - AA large-text only; the
+                                  firm form's second stop, Dark Gray, is 4.48:1 */
+  display: inline-flex; align-items: baseline; gap: 0.35em;
+  font-family: var(--font-secondary); font-weight: 400; font-style: normal; /* ZHA Sans: never bold, never italic */
+  font-size: var(--zha-lockup-size); line-height: 1; letter-spacing: -.02em;
+}
+.zha-lockup__zha { color: var(--text-strong); }      /* the wordmark - theme-aware neutral */
+.zha-lockup__team {                                   /* team name - brand gradient (primary→secondary) */
+  background: var(--brand-grad, linear-gradient(105deg, var(--accent) 0%, var(--accent-2) 100%));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 200% 100%; background-position: 0 0;
+  transition: background-position var(--motion-base) var(--ease-out);
+}
+a.zha-lockup { text-decoration: none; } /* canonical app-bar form: the lockup IS the home link */
+button.zha-lockup { background: none; border: 0; padding: 0; cursor: pointer; } /* SPA home-action form - strip UA button chrome */
+:is(a, button).zha-lockup:hover .zha-lockup__team,
+:is(a, button).zha-lockup:focus-visible .zha-lockup__team { background-position: 100% 0; } /* shift implies interactivity - gated on the interactive forms */
+
+/* Fallbacks: gradient-text unsupported, forced-colors, or the solid variant */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .zha-lockup__team { background: none; color: var(--accent-fill); }
+}
+@media (forced-colors: active) { .zha-lockup__team { background: none; color: CanvasText; } }
+.zha-lockup--solid .zha-lockup__team { background: none; color: var(--accent-fill); }
+@media (prefers-reduced-motion: reduce) { .zha-lockup__team { transition: none; } }
+/* gradient-clipped text must never print transparent (print skips background images) */
+@media print { .zha-lockup__team { background: none; color: var(--accent-fill); } }

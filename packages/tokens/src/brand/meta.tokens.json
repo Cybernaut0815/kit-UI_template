@@ -1,0 +1,12 @@
+{
+  "accent": {
+    "DEFAULT": { "$type": "color", "$value": "{color.typology.ultramarine}", "$description": "Provisional placeholder accent - not yet chosen by this team; randomized for now and adjustable per team preference." },
+    "fill":    { "$type": "color", "$value": "#3f61ff", "$description": "Provisional; lifted from raw ultramarine so it clears AA non-text contrast on the dark/brand surface (3.5) while keeping white-on-fill ≥4.5." },
+    "on":      { "$type": "color", "$value": "{color.neutral.white}" },
+    "hover":   { "$type": "color", "$value": "color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong))" },
+    "subtle":  { "$type": "color", "$value": "rgba(40,56,230,0.12)" }
+  },
+  "brand": {
+    "name": { "$type": "other", "$value": "META" }
+  }
+}
