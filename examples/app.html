@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-density="compact">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>kit-forge app</title>
+  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css"> -->
+  <link rel="stylesheet" href="../css/kit-forge-ui.css">
+</head>
+<!-- A tool page built only from primitives; the only inline styles are knobs (--grid-min). -->
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app-shell" id="shell">
+    <header class="app-bar">
+      <a class="app-bar__brand" href="./index.html">kit-forge<span class="app-bar__app">Parcel generator</span></a>
+      <span class="app-bar__spacer"></span>
+      <button class="icon-btn icon-btn--ghost app-bar__nav-toggle" type="button" aria-label="Toggle navigation" aria-controls="nav" aria-expanded="false" id="nav-toggle">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
+      </button>
+      <button class="icon-btn icon-btn--ghost" type="button" aria-label="Switch light and dark theme" id="theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="4" y="4" width="16" height="16"/><path d="M12 4v16h8V4Z" fill="currentColor"/></svg>
+      </button>
+      <button class="btn btn--primary" type="button" id="new-run">New run</button>
+    </header>
+
+    <nav class="sidebar" id="nav" aria-label="Main">
+      <a href="#main" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg><span>Runs</span></a>
+      <a href="#main"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M3 21 12 3l9 18Z"/><path d="M7.5 12h9"/></svg><span>Meshes</span></a>
+      <a href="#main"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M3 3h18v18H3zM3 12h18M12 3v18"/></svg><span>Parcels</span></a>
+      <a href="#main"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16l4-5 3 3 5-7"/></svg><span>Reports</span></a>
+      <a href="#main"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M6 14v6"/></svg><span>Settings</span></a>
+    </nav>
+
+    <main class="app-main stack" id="main">
+      <header class="page-header">
+        <h1 class="page-header__title">Runs</h1>
+        <div class="page-header__actions">
+          <button class="btn btn--secondary" type="button">Export</button>
+          <button class="icon-btn" type="button" aria-label="Columns" aria-haspopup="true" popovertarget="cols" id="cols-trigger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="10.5" width="3" height="3"/><rect x="10.5" y="10.5" width="3" height="3"/><rect x="17" y="10.5" width="3" height="3"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="tabs">
+        <button class="tabs__tab" type="button" aria-current="page" data-view="overview">Overview</button>
+        <button class="tabs__tab" type="button" data-view="history">History</button>
+      </div>
+
+      <section class="stack view-fade" id="overview">
+        <h2 class="sr-only">Overview</h2>
+        <div class="toolbar">
+          <div class="segmented" role="radiogroup" aria-label="Range">
+            <label><input type="radio" name="range" value="24h"> 24h</label>
+            <label><input type="radio" name="range" value="7d" checked> 7d</label>
+            <label><input type="radio" name="range" value="30d"> 30d</label>
+          </div>
+          <hr class="divider divider--vertical">
+          <button class="chip" type="button" aria-pressed="true">All</button>
+          <button class="chip" type="button" aria-pressed="false">Running</button>
+          <button class="chip" type="button" aria-pressed="false">Failed</button>
+          <hr class="divider divider--vertical">
+          <div class="field">
+            <label class="sr-only" for="q">Search runs</label>
+            <input class="input" id="q" type="search" placeholder="Search runs">
+          </div>
+        </div>
+
+        <div class="grid" style="--grid-min: 11rem">
+          <div class="stat"><span class="stat__label">Runs</span><span class="stat__value">38</span><span class="stat__delta stat__delta--up">+6 this week</span></div>
+          <div class="stat"><span class="stat__label">Parcels</span><span class="stat__value">412</span><span class="stat__delta">across 9 blocks</span></div>
+          <div class="stat"><span class="stat__label">Median run</span><span class="stat__value">2.4 s</span><span class="stat__delta stat__delta--down">+0.3 s vs last week</span></div>
+          <div class="stat"><span class="stat__label">Cache hits</span><span class="stat__value">71%</span><span class="stat__delta stat__delta--up">+4 pts</span></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <caption>Runs this week, largest area first</caption>
+            <thead>
+              <tr>
+                <th scope="col">Run</th>
+                <th scope="col">Module</th>
+                <th scope="col" class="num" aria-sort="descending"><button type="button">Area <span class="th-unit">m²</span></button></th>
+                <th scope="col" class="num">Faces</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Block 4, north</td><td>parcelation-gen</td><td class="num">18,420</td><td class="num">1,284</td><td><span class="badge badge--success"><span class="dot"></span>Complete</span></td></tr>
+              <tr><td>Block 7, riverside</td><td>parcelation-gen</td><td class="num">15,070</td><td class="num">1,102</td><td><span class="badge badge--error"><span class="dot"></span>Failed</span></td></tr>
+              <tr aria-selected="true"><td>Courtyard remesh</td><td>half-face-mesh</td><td class="num">6,310</td><td class="num">9,816</td><td><span class="badge badge--warning"><span class="dot"></span>Degenerate faces</span></td></tr>
+              <tr><td>Tower podium</td><td>blender-distort</td><td class="num">4,880</td><td class="num">22,140</td><td><span class="badge badge--info"><span class="dot"></span>Cached</span></td></tr>
+              <tr><td>Floor 3 plan</td><td>plan-gen</td><td class="num">1,240</td><td class="num">318</td><td><span class="badge badge--neutral"><span class="dot"></span>Queued</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <nav aria-label="Pagination"><ol class="pagination"><li><a href="#main" aria-current="page">1</a></li><li><a href="#main">2</a></li><li><a href="#main">3</a></li></ol></nav>
+
+        <div class="alert alert--error" role="alert">
+          <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+          <div><span class="alert__title">Block 7 failed</span>The outline self-intersects at two vertices. Fix the outline, then run it again.</div>
+        </div>
+      </section>
+
+      <section class="stack view-fade" id="history" hidden>
+        <h2 class="sr-only">History</h2>
+        <div class="empty-state">
+          <div class="empty-state__icon"></div>
+          <h3>No archived runs</h3>
+          <p>Runs older than 30 days move here.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- native popover: popovertarget opens it, light dismiss closes it; JS only places it -->
+  <div class="menu" id="cols" popover="auto">
+    <div class="menu__section">Columns</div>
+    <div class="menu__list" role="group" aria-label="Columns">
+      <label class="menu__item"><input class="menu__check" type="checkbox" checked><span>Module</span></label>
+      <label class="menu__item"><input class="menu__check" type="checkbox" checked><span>Faces</span></label>
+      <label class="menu__item"><input class="menu__check" type="checkbox"><span>Updated</span></label>
+    </div>
+    <div class="menu__separator"></div>
+    <div class="menu__footer"><button class="btn btn--ghost" type="button">Reset columns</button></div>
+  </div>
+
+  <!-- native modal: method="dialog" closes it with the pressed button's value -->
+  <dialog class="dialog dialog--sm" id="run-dialog" aria-labelledby="run-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="run-title">New run</h2>
+      <button class="icon-btn icon-btn--ghost dialog__close" type="submit" form="run-form" value="cancel" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+      </button>
+    </div>
+    <form class="dialog__body stack" method="dialog" id="run-form">
+      <div class="field">
+        <label class="field__label" for="r-name">Name</label>
+        <input class="input" id="r-name" type="text" value="Block 9, east">
+      </div>
+      <div class="field">
+        <label class="field__label" for="r-module">Module</label>
+        <select class="select" id="r-module"><option>parcelation-gen</option><option>half-face-mesh</option><option>plan-gen</option></select>
+      </div>
+      <div class="slider-row">
+        <label for="r-min">Min parcel</label>
+        <input id="r-min" type="range" min="100" max="2000" step="50" value="400" oninput="this.nextElementSibling.textContent = this.value + ' m²'">
+        <output class="slider-row__value">400 m²</output>
+      </div>
+    </form>
+    <div class="dialog__footer">
+      <button class="btn btn--ghost" type="submit" form="run-form" value="cancel">Cancel</button>
+      <button class="btn btn--primary" type="submit" form="run-form" value="run">Start run</button>
+    </div>
+  </dialog>
+
+  <script>
+    var $ = function (id) { return document.getElementById(id); };
+    var html = document.documentElement;
+    $('theme').onclick = function () { html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark'; };
+    $('nav-toggle').onclick = function () {
+      var open = $('shell').toggleAttribute('data-nav-open');
+      this.setAttribute('aria-expanded', open);
+    };
+    // tabs: show one view, mark the tab
+    document.querySelectorAll('.tabs__tab').forEach(function (tab) {
+      tab.onclick = function () {
+        document.querySelectorAll('.tabs__tab').forEach(function (t) {
+          if (t === tab) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+          $(t.dataset.view).hidden = t !== tab;
+        });
+      };
+    });
+    // menu placement under its trigger
+    $('cols').addEventListener('toggle', function (e) {
+      if (e.newState !== 'open') return;
+      var r = $('cols-trigger').getBoundingClientRect();
+      this.style.top = r.bottom + 4 + 'px';
+      this.style.left = Math.max(8, r.right - this.offsetWidth) + 'px';
+    });
+    // dialog + toast: only "Start run" toasts
+    $('new-run').onclick = function () { $('run-dialog').returnValue = ''; $('run-dialog').showModal(); };
+    $('run-dialog').addEventListener('close', function () {
+      if (this.returnValue !== 'run') return;
+      var toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = '<div class="alert alert--success" role="status"><div><span class="alert__title">Run started</span>' + $('r-name').value.replace(/</g, '&lt;') + ' is in the queue.</div></div>';
+      document.body.append(toast);
+      setTimeout(function () { toast.remove(); }, 3000);
+    });
+  </script>
+</body>
+</html>

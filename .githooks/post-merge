@@ -1,5 +1,0 @@
-#!/bin/sh
-# Mirror the working tree to the ES project share after every pull/merge
-# (this is how PR merges from GitHub land locally).
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(git rev-parse --show-toplevel)/tools/sync-to-share.ps1"
-exit 0

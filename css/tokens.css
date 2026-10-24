@@ -1,0 +1,231 @@
+/* kit-forge-ui tokens - every colour, size, space and state as a CSS custom property.
+   Hex only: getComputedStyle hands canvas renderers a colour they can parse.
+   Cascade: light (:root) → dark family (dark + brand surface) → brand surface → compact → accent-derived.
+   An island escapes by carrying its own data-theme. */
+
+:root, [data-theme="light"] {
+  /* palette - the warm ramp runs orange → red → purple; 400 bright, 500 vivid, 600 deep */
+  --color-black: #000000;
+  --color-ink: #1d1d1b;
+  --color-white: #ffffff;
+  --color-orange-400: #FF8A4C; --color-orange-500: #F26A1F; --color-orange-600: #C2410C;
+  --color-red-400: #FF5C6C;    --color-red-500: #E5243B;    --color-red-600: #C8102E;
+  --color-purple-400: #B48CFF; --color-purple-500: #8B3DFF; --color-purple-600: #7A35E0;
+  --color-green: #1A9D67;
+  --color-amber: #F5BB00;
+  --color-blue: #1372DE;
+
+  /* surfaces and text */
+  --bg-page: #F4F2F0;
+  --bg-surface-1: #FFFFFF;
+  --bg-surface-2: #ECEAE8;
+  --bg-surface-3: #DDDCDB;
+  --text-strong: var(--color-ink);
+  --text-default: #312E2B;
+  --text-muted: #6A6764;
+  --text-muted-strong: #333333;
+  --text-disabled: #A19E9E;
+  --border-subtle: rgba(29,29,27,0.08);
+  --border-default: rgba(29,29,27,0.14);
+  --border-strong: rgba(29,29,27,0.22);
+  --scrim: rgba(0,0,0,0.5);
+
+  /* accent - light fills are the deep tone under white text */
+  --accent-fill: var(--accent-base);
+  --accent-on: var(--color-white);
+
+  /* intent */
+  --intent-error: var(--color-red-600);
+  --intent-success: var(--color-green);
+  --intent-warning: var(--color-amber);
+  --intent-info: var(--color-blue);
+  --intent-on-error: var(--color-white);
+  --intent-on-success: var(--color-white);
+  --intent-on-warning: #333333;
+  --intent-on-info: var(--color-white);
+  --intent-error-text: #C2143C;
+  --intent-success-text: #147A4F;
+  --intent-warning-text: #7A5B00;
+  --intent-info-text: #1466C8;
+
+  /* chip hues - text is the per-theme AA form; the class tints the background with the hue */
+  --chip-orange-text: #A33608;
+  --chip-red-text: #AD0035;
+  --chip-purple-text: #6B21D4;
+  --chip-green-text: #006A42;
+  --chip-amber-text: #816100;
+  --chip-blue-text: #0057B2;
+
+  /* charts - cat slots in fixed order, never cycled; seq: more = more contrast vs the surface */
+  --chart-cat-1: #E5243B;
+  --chart-cat-2: #1372DE;
+  --chart-cat-3: #7C9F00;
+  --chart-cat-4: #7633E2;
+  --chart-cat-5: #048C9C;
+  --chart-cat-6: #D97D00;
+  --chart-cat-7: #CB0092;
+  --chart-cat-8: #2838E6;
+  --chart-cat-other: var(--text-disabled);
+  --chart-seq-1: #FDBA8C;
+  --chart-seq-2: #F7894A;
+  --chart-seq-3: #EE4B3A;
+  --chart-seq-4: #C8102E;
+  --chart-seq-5: #8E1660;
+  --chart-seq-6: #4C1D95;
+  --chart-div-neg-3: #4C1D95;
+  --chart-div-neg-2: #7A35E0;
+  --chart-div-neg-1: #B48CFF;
+  --chart-div-mid: #B9B7B5;
+  --chart-div-pos-1: #FFA36E;
+  --chart-div-pos-2: #F26A1F;
+  --chart-div-pos-3: #A33608;
+  --chart-text: var(--text-muted);
+  --chart-text-strong: var(--text-default);
+  --chart-grid: var(--border-subtle);
+  --chart-axis: var(--border-default);
+
+  /* scale */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px;
+  --space-section: 48px;
+  --space-block: 24px;
+  --space-inline: 12px;
+  --gutter: 24px;
+  --radius: 0; /* sharp by default; set 2px on a page or element to soften */
+  --control-h: 44px;
+  --control-pad-y: 8px;
+  --row-h: 44px;
+  --z-sticky: 10;
+  --z-toast: 100;
+  --shadow-low: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.10);
+  --shadow-mid: 0 4px 12px rgba(0,0,0,0.12);
+  --shadow-high: 0 8px 24px rgba(0,0,0,0.16);
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 300ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+
+  /* type - fs-* names are sizes, not elements: h2 takes --fs-h1 */
+  --font-primary: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --fs-hero: 32px;
+  --fs-hero-xl: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+  --fs-display: 24px;
+  --fs-h1: 20px;
+  --fs-h2: 16px;
+  --fs-h3: 14px;
+  --fs-body: 13px;
+  --fs-reading: 16px;
+  --fs-small: 12px;
+  --fs-label: 11px;
+  --tracking-display: -0.04em;
+  --tracking-body: -0.01em;
+  --tracking-label: 0.01em;
+  --tracking-small: 0.01em;
+  --leading-display: 1;
+  --leading-heading: 1.15;
+  --leading-body: 1.2;
+  --leading-prose: 1.5;
+  --measure: 65ch;
+
+  /* gradients - decorative only; the accent-driven ones (.grad-accent, .grad-wash, .grad-glow) live in their classes */
+  --grad-spectrum: linear-gradient(105deg in oklch, var(--color-orange-500), var(--color-red-500), var(--color-purple-500));
+  --grad-ember: linear-gradient(105deg in oklch, var(--color-orange-500), var(--color-red-600));
+  --grad-dusk: linear-gradient(105deg in oklch, var(--color-red-500), var(--color-purple-600));
+  --grad-aurora: radial-gradient(ellipse 70% 60% at 18% 25%, color-mix(in srgb, var(--color-orange-500) 70%, transparent) 0%, transparent 62%),
+    radial-gradient(ellipse 65% 60% at 55% 75%, color-mix(in srgb, var(--color-red-500) 75%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 55% at 88% 20%, color-mix(in srgb, var(--color-purple-500) 70%, transparent) 0%, transparent 60%);
+}
+
+/* accent axis - red is the default; put data-accent on <html> or beside a data-theme */
+:root { --accent-base: var(--color-red-600); --accent-bright: var(--color-red-400); --accent-2: var(--color-purple-500); }
+[data-accent="orange"] { --accent-base: var(--color-orange-600); --accent-bright: var(--color-orange-400); --accent-2: var(--color-red-500); }
+[data-accent="purple"] { --accent-base: var(--color-purple-600); --accent-bright: var(--color-purple-400); --accent-2: var(--color-red-500); }
+
+/* dark family - shared by data-theme="dark" and data-surface="brand" */
+[data-theme="dark"], [data-surface="brand"] {
+  --bg-page: var(--color-black);
+  --bg-surface-1: var(--color-ink);
+  --bg-surface-2: #2A2826;
+  --bg-surface-3: #3A3734;
+  --text-strong: var(--color-white);
+  --text-default: #d4d4d4;
+  --text-muted: #999999;
+  --text-muted-strong: #d4d4d4;
+  --text-disabled: #777777;
+  --border-subtle: rgba(255,255,255,0.08);
+  --border-default: rgba(255,255,255,0.14);
+  --border-strong: rgba(255,255,255,0.24);
+  --scrim: rgba(0,0,0,0.6);
+
+  /* dark fills are the bright tone under ink text - links and focus rings stay AA on black */
+  --accent-fill: var(--accent-bright);
+  --accent-on: var(--color-ink);
+
+  --intent-error-text: #F44375;
+  --intent-success-text: #3BB37C;
+  --intent-warning-text: #F5BB00;
+  --intent-info-text: #2988F0;
+
+  --chip-orange-text: #FF8A4C;
+  --chip-red-text: #FF5C72;
+  --chip-purple-text: #B48CFF;
+  --chip-green-text: #3BB37C;
+  --chip-amber-text: #F5BB00;
+  --chip-blue-text: #4B99FF;
+
+  --chart-cat-1: #FF5C6C;
+  --chart-cat-2: #2988F0;
+  --chart-cat-3: #80A400;
+  --chart-cat-4: #9F7BFF;
+  --chart-cat-5: #1BA3B3;
+  --chart-cat-6: #D57B00;
+  --chart-cat-7: #E636AD;
+  --chart-cat-8: #6287FF;
+  --chart-seq-1: #6E2A12;
+  --chart-seq-2: #A8390F;
+  --chart-seq-3: #E0303F;
+  --chart-seq-4: #FF6680;
+  --chart-seq-5: #DA8CF2;
+  --chart-seq-6: #EBD4FF;
+  --chart-div-neg-3: #C9A8FF;
+  --chart-div-neg-2: #9466F5;
+  --chart-div-neg-1: #5E2EB8;
+  --chart-div-mid: #5A5754;
+  --chart-div-pos-1: #A8390F;
+  --chart-div-pos-2: #F26A1F;
+  --chart-div-pos-3: #FFB27A;
+}
+
+/* brand surface - black-first presentation surface in both themes; wins over data-theme on the same element */
+[data-surface="brand"] {
+  --bg-surface-1: #0D0D0C;
+  --bg-surface-2: #161614;
+  --bg-surface-3: #21211E;
+  --text-default: #E8E6E3;
+  --text-muted: #9A9794;
+  --text-muted-strong: #C9C7C4;
+  --text-disabled: #5A5754;
+  --border-subtle: rgba(255,255,255,0.10);
+  --border-default: rgba(255,255,255,0.18);
+  --border-strong: rgba(255,255,255,0.30);
+  --scrim: rgba(0,0,0,0.7);
+}
+
+[data-density="compact"] {
+  --control-h: 36px;
+  --control-pad-y: 6px;
+  --row-h: 36px;
+  --space-section: 32px;
+  --space-block: 16px;
+  --space-inline: 8px;
+}
+
+/* accent-derived - re-declared on every themed element so they resolve against that element's fill and text */
+:root, [data-theme], [data-surface] {
+  --accent: var(--accent-fill);
+  --accent-hover: color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong));
+  --accent-subtle: color-mix(in srgb, var(--accent-fill) 14%, transparent);
+}

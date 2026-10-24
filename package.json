@@ -1,24 +1,19 @@
 {
-  "name": "zha-ui",
-  "private": true,
+  "name": "kit-forge-ui",
+  "version": "0.1.0",
+  "description": "Sharp-cornered design tokens and CSS primitives for kit-forge modules. No build: the css/ folder is the package.",
   "type": "module",
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=20"
+  "exports": {
+    ".": "./css/kit-forge-ui.css",
+    "./tokens.css": "./css/tokens.css",
+    "./css/*": "./css/*"
   },
+  "style": "./css/kit-forge-ui.css",
+  "files": ["css"],
+  "sideEffects": ["*.css"],
+  "engines": { "node": ">=20" },
   "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "release": "changeset publish"
+    "test": "node --test"
   },
-  "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.3",
-    "@changesets/cli": "^2.27.0",
-    "culori": "^4.0.0",
-    "publint": "^0.2.0",
-    "turbo": "^2.1.0",
-    "typescript": "^5.5.0",
-    "vitest": "^2.0.0"
-  }
+  "license": "UNLICENSED"
 }

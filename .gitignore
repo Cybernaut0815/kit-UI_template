@@ -1,11 +1,4 @@
 node_modules/
-dist/
-.turbo/
 *.log
-verify-shots/
-.playwright-mcp/
-.superpowers/
-.local-pack/
-
-# Implementation plans, briefs and handoffs stay local (RULES.md, Standard files)
+*.tgz
 /.plans/

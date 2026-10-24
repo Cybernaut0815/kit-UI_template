@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-surface="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kit-forge-ui deck</title>
+<link rel="stylesheet" href="../css/kit-forge-ui.css">
+<style>
+/* deck chrome - tokens only */
+body { font-size: clamp(1rem, 0.65rem + 0.7vw, 1.15rem); line-height: 1.55; }
+.deck { height: 100svh; overflow-y: auto; overflow-x: hidden; scroll-snap-type: y proximity; scroll-behavior: smooth; }
+.slide { position: relative; min-height: 100svh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: safe center;
+  padding: clamp(var(--space-10), 6vh, 80px) clamp(var(--space-5), 7vw, 120px) clamp(96px, 12vh, 140px); }
+.wrap { width: 100%; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.rail { position: fixed; inset: 0 0 auto 0; height: 2px; background: var(--border-subtle); z-index: 50; }
+.rail > i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 120ms linear; }
+.chrome { position: fixed; inset: auto 0 0 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) clamp(var(--space-5), 7vw, 120px); pointer-events: none; }
+.chrome .idx { font: var(--fs-label) var(--font-mono); letter-spacing: 0.04em; color: var(--text-muted); }
+.chrome .cluster { pointer-events: auto; }
+.back { position: fixed; top: var(--space-2); left: clamp(var(--space-5), 7vw, 120px); z-index: 60; font: var(--fs-label) var(--font-mono); color: var(--text-muted); text-decoration: none; }
+.kicker { display: inline-flex; align-items: center; gap: 0.6em; font: 500 var(--fs-label) var(--font-mono); text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: var(--space-6); }
+.kicker::before { content: ""; width: 24px; height: 1px; background: var(--accent); }
+.slide h1, .slide h2 { font-weight: 600; letter-spacing: -0.035em; max-width: 18ch; }
+.slide h1 { font-size: clamp(2.4rem, 1rem + 5.4vw, 4.9rem); line-height: 1; }
+.slide h2 { font-size: clamp(1.9rem, 1rem + 3.4vw, 3.25rem); line-height: 1.05; margin-bottom: var(--space-6); }
+.wrap > p:not(.kicker) { margin-top: var(--space-5); }
+.lead { font-size: clamp(1.1rem, 0.85rem + 1vw, 1.5rem); line-height: 1.4; max-width: 50ch; color: var(--text-default); }
+.body { max-width: 58ch; color: var(--text-muted-strong); }
+.accent { color: var(--accent); }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#s-hero { overflow: hidden; }
+.band { height: 72px; border: 1px solid var(--border-subtle); }
+.fade { opacity: 0; transform: translateY(16px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); }
+.slide.is-active .fade { opacity: 1; transform: none; }
+.d1 { transition-delay: 80ms; } .d2 { transition-delay: 160ms; } .d3 { transition-delay: 240ms; }
+@media (prefers-reduced-motion: reduce) { .deck { scroll-behavior: auto; } .fade { opacity: 1; transform: none; transition: none; } }
+@media print { .rail, .chrome, .back, .hero-canvas { display: none; } .deck { height: auto; overflow: visible; } .fade { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<a class="back" href="./index.html">← Reference</a>
+<div class="rail" aria-hidden="true"><i id="rail"></i></div>
+
+<main class="deck" id="deck">
+
+  <section class="slide" id="s-hero" aria-label="kit-forge-ui">
+    <canvas class="hero-canvas" id="curves" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="kicker fade">kit-forge-ui</p>
+      <h1 class="fade d1">Sharp tools,<br><span class="grad-text">one look.</span></h1>
+      <p class="lead fade d2">One stylesheet gives every kit-forge module the same corners, type, colour and states - so a new tool looks finished on its first commit.</p>
+      <p class="text-muted fade d3">Scroll, or use the arrow keys.</p>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Why">
+    <div class="wrap">
+      <p class="kicker fade">Why</p>
+      <h2 class="fade d1">Every module was styling itself by hand.</h2>
+      <p class="body fade d2">Each generator, mesh editor and viewer grew its own colours, radii and button rules. They drifted, and each one carried its own accessibility debt. <strong>Now they share one vocabulary of tokens and classes.</strong></p>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Four switches">
+    <div class="wrap">
+      <p class="kicker fade">Four switches</p>
+      <h2 class="fade d1">Declare it once on <span class="accent">&lt;html&gt;</span>.</h2>
+      <div class="grid fade d2" style="--grid-min: 14rem">
+        <div class="card card--accent"><p class="eyebrow">data-theme</p><h3>light · dark</h3><p class="text-muted">Surfaces, text and fills flip together.</p></div>
+        <div class="card card--accent"><p class="eyebrow">data-surface</p><h3>brand</h3><p class="text-muted">Black-first for decks and heroes, in both themes.</p></div>
+        <div class="card card--accent"><p class="eyebrow">data-density</p><h3>compact</h3><p class="text-muted">Controls and rows from 44 to 36 px for dense tools.</p></div>
+        <div class="card card--accent"><p class="eyebrow">data-accent</p><h3>orange · red · purple</h3><p class="text-muted">Red by default; one attribute switches a module.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="The ramp">
+    <div class="wrap">
+      <p class="kicker fade">The ramp</p>
+      <h2 class="fade d1">Orange, over red, to purple.</h2>
+      <div class="stack fade d2">
+        <div class="band grad-spectrum"></div>
+        <div class="grid" style="--grid-min: 10rem">
+          <div class="band grad-ember"></div>
+          <div class="band grad-dusk"></div>
+          <div class="band grad-accent"></div>
+          <div class="band grad-aurora"></div>
+        </div>
+        <p class="body">Gradients are decoration only: heroes, decks, identity. Work surfaces get the quiet <code>.grad-wash</code> and <code>.grad-glow</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Two surfaces">
+    <div class="wrap">
+      <p class="kicker fade">Two surfaces</p>
+      <h2 class="fade d1">Present in black. Work in light.</h2>
+      <div class="grid fade d2" style="--grid-min: 18rem">
+        <div class="card stack">
+          <p class="eyebrow">data-surface="brand"</p>
+          <h3>Presentation</h3>
+          <p class="text-muted">Black-first, bright accent under ink text.</p>
+          <div class="cluster"><button class="btn btn--primary" type="button">Run</button><button class="btn btn--secondary" type="button">Export</button></div>
+        </div>
+        <div class="card stack" data-theme="light">
+          <p class="eyebrow">data-theme="light" island</p>
+          <h3>Work</h3>
+          <p class="text-muted">Any element carrying its own data-theme escapes the page.</p>
+          <div class="cluster"><button class="btn btn--primary" type="button">Run</button><button class="btn btn--danger" type="button">Delete</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Rules">
+    <div class="wrap">
+      <p class="kicker fade">Rules</p>
+      <h2 class="fade d1">Four rules keep it one system.</h2>
+      <ol class="stack fade d2 body">
+        <li><strong>Tokens only.</strong> No hex, no invented variables - every colour and size already exists.</li>
+        <li><strong>Square by default.</strong> <code>--radius</code> is 0; soften a page with one variable, never per component.</li>
+        <li><strong>No build.</strong> The <code>css/</code> folder is the package; link it and go.</li>
+        <li><strong>Accessible by construction.</strong> A contrast gate checks every theme and accent on every change.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="slide" aria-label="Start">
+    <div class="wrap">
+      <p class="kicker fade">Start</p>
+      <h2 class="fade d1">One line of HTML.</h2>
+      <pre class="card fade d2"><code>&lt;link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css"&gt;</code></pre>
+      <p class="body fade d3"><a href="./index.html">See every token and primitive</a> or <a href="./app.html">open the app example</a>.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="chrome">
+  <span class="app-bar__brand">kit-forge</span>
+  <span class="idx" id="idx">01 / 07</span>
+  <span class="cluster">
+    <button class="icon-btn icon-btn--ghost" id="prev" type="button" aria-label="Previous slide">↑</button>
+    <button class="icon-btn icon-btn--ghost" id="next" type="button" aria-label="Next slide">↓</button>
+  </span>
+</footer>
+
+<script>
+(function () {
+  var deck = document.getElementById('deck');
+  var slides = [].slice.call(deck.querySelectorAll('.slide'));
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var current = 0;
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-active');
+      current = slides.indexOf(e.target);
+      document.getElementById('idx').textContent = pad(current + 1) + ' / ' + pad(slides.length);
+    });
+  }, { root: deck, threshold: 0.5 });
+  slides.forEach(function (s) { io.observe(s); });
+
+  deck.addEventListener('scroll', function () {
+    var max = deck.scrollHeight - deck.clientHeight;
+    document.getElementById('rail').style.width = (max > 0 ? deck.scrollTop / max * 100 : 0) + '%';
+  }, { passive: true });
+
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides[current].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+  document.getElementById('next').onclick = function () { go(current + 1); };
+  document.getElementById('prev').onclick = function () { go(current - 1); };
+  document.addEventListener('keydown', function (e) {
+    var step = { ArrowDown: 1, ArrowRight: 1, PageDown: 1, ' ': 1, ArrowUp: -1, ArrowLeft: -1, PageUp: -1 }[e.key];
+    if (e.key === 'Home') step = -current;
+    if (e.key === 'End') step = slides.length;
+    if (step) { e.preventDefault(); go(current + step); }
+  });
+
+  // Hero: a fan of parametric curves stroked in the live accent pair (read from the tokens, so it follows data-accent).
+  var canvas = document.getElementById('curves'), ctx = canvas.getContext('2d');
+  var cs = getComputedStyle(document.documentElement);
+  var from = cs.getPropertyValue('--accent-fill').trim(), to = cs.getPropertyValue('--accent-2').trim();
+  var W = 0, H = 0, t = 0, raf = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+  function size() {
+    var r = canvas.getBoundingClientRect(); W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    var g = ctx.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, from); g.addColorStop(0.55, from); g.addColorStop(1, to);
+    ctx.strokeStyle = g; ctx.lineWidth = 1.4;
+    for (var i = 0; i < 7; i++) {
+      ctx.globalAlpha = 0.3 + 0.03 * i;
+      ctx.beginPath();
+      for (var x = 0; x <= W; x += 6) {
+        var tx = x / W, y = H * 0.46 + (i / 6 - 0.5) * H * (0.14 + 0.82 * tx) + H * 0.17 * tx * tx * Math.sin(2.2 * tx + t * 0.08 + i * 0.65);
+        if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop() { t += 0.6; draw(); raf = requestAnimationFrame(loop); }
+  size(); draw();
+  if (!reduce) {
+    new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { if (!raf) raf = requestAnimationFrame(loop); } else { cancelAnimationFrame(raf); raf = 0; }
+    }, { root: deck, threshold: 0.05 }).observe(document.getElementById('s-hero'));
+  }
+  addEventListener('resize', function () { size(); draw(); });
+})();
+</script>
+</body>
+</html>

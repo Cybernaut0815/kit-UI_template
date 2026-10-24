@@ -1,4 +1,0 @@
-#!/bin/sh
-# Mirror the working tree to the ES project share after every commit.
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(git rev-parse --show-toplevel)/tools/sync-to-share.ps1"
-exit 0

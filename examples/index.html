@@ -1,176 +1,317 @@
 <!doctype html>
-<html lang="en" data-brand="zha-app" data-theme="light" data-surface="work">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ZHA UI - examples</title>
-  <!-- ZHA UI examples hub: the landing-page recipe from skills/zha-ui/SKILL.md (full-bleed hero, container of
-       sections, cards). It declares the firm default (data-brand="zha-app") explicitly rather than leaning on :root. -->
-  <link rel="stylesheet" href="../packages/css/dist/index.css">
+  <title>kit-forge-ui reference</title>
+  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css"> -->
+  <link rel="stylesheet" href="../css/kit-forge-ui.css">
+  <style>
+    /* page-local helpers - tokens only */
+    .sw { display: flex; flex-direction: column; gap: var(--space-2); font: var(--fs-label) / 1.3 var(--font-mono); color: var(--text-muted); }
+    .sw > i { display: block; block-size: 56px; border: 1px solid var(--border-subtle); }
+    .tile { min-block-size: 120px; display: flex; align-items: flex-end; padding: var(--space-3); border: 1px solid var(--border-subtle); font: var(--fs-label) / 1 var(--font-mono); color: var(--color-white); }
+    .bar { block-size: 12px; background: var(--accent-fill); }
+    .mono { font-family: var(--font-mono); font-size: var(--fs-small); color: var(--text-muted); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="app-bar">
-    <span class="app-bar__brand">
-      <a class="zha-lockup" href="index.html" aria-label="ZHA UI, home"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></a>
-    </span>
+    <a class="app-bar__brand" href="./index.html">kit-forge<span class="app-bar__app">ui reference</span></a>
     <span class="app-bar__spacer"></span>
-    <span class="text-muted">Design system examples</span>
+    <a class="btn btn--ghost" href="./app.html">App</a>
+    <a class="btn btn--ghost" href="./deck.html">Deck</a>
   </header>
-
-  <section class="hero hero--bleed grad-hero-dusk" data-surface="brand">
-    <p class="eyebrow">The ZHA design system</p>
-    <span class="zha-lockup" role="img" aria-label="ZHA UI" style="--zha-lockup-size: clamp(3.25rem, 9vw, 5.5rem)"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></span>
-    <h1>One system. Every screen on brand.</h1>
-    <p>ZHA UI is the studio's visual language as working code: colour, type, spacing and motion
-       as shared tokens, so anything you build matches ZHA's other tools. Start with the
-       deck, browse the gradients, then make something.</p>
-    <div class="cluster">
-      <a class="btn btn--primary" href="./brand-deck/index.html">Watch the brand deck</a>
-      <a class="btn btn--secondary" href="./gradient-showcase/index.html">Open the gradient library</a>
-      <a href="https://github.com/GitZHACODE/zha-ui">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-          <path d="M19 13.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5.5"/>
-          <path d="M14.5 4H20v5.5"/>
-          <path d="M20 4 11 13"/>
-        </svg>
-        View on GitHub
-      </a>
-    </div>
-  </section>
 
   <main class="container stack" id="main">
 
+    <section class="hero grad-aurora" data-surface="brand">
+      <p class="eyebrow">kit-forge-ui · tokens + primitives · no build</p>
+      <h1>Sharp by default.</h1>
+      <p>One stylesheet for every kit-forge module: square corners, Geist type and a warm ramp from orange over red to purple. Flip the switches below - every section re-resolves live.</p>
+      <div class="cluster">
+        <a class="btn btn--primary" href="./app.html">Open the app example</a>
+        <a class="btn btn--secondary" href="./deck.html">Open the deck</a>
+      </div>
+    </section>
+
+    <div class="toolbar" aria-label="Page identity">
+      <div class="segmented" role="radiogroup" aria-label="Theme">
+        <label><input type="radio" name="theme" value="light" checked> Light</label>
+        <label><input type="radio" name="theme" value="dark"> Dark</label>
+        <label><input type="radio" name="theme" value="brand"> Brand</label>
+      </div>
+      <hr class="divider divider--vertical">
+      <div class="segmented" role="radiogroup" aria-label="Accent">
+        <label><input type="radio" name="accent" value="orange"> Orange</label>
+        <label><input type="radio" name="accent" value="red" checked> Red</label>
+        <label><input type="radio" name="accent" value="purple"> Purple</label>
+      </div>
+      <hr class="divider divider--vertical">
+      <div class="segmented" role="radiogroup" aria-label="Density">
+        <label><input type="radio" name="density" value="comfortable" checked> Comfortable</label>
+        <label><input type="radio" name="density" value="compact"> Compact</label>
+      </div>
+    </div>
+
     <section class="section stack">
-      <h2>The brand deck</h2>
-      <p>Start here: the whole identity in one sitting.</p>
-      <div class="grid" style="--grid-min: 16rem">
-        <a class="card card--interactive" href="./brand-deck/index.html">
-          <div class="stack stack--tight">
-            <h3>Brand deck</h3>
-            <p>The wordmark, ZHA Sans, the accent pairs, the gradients and the rules that hold them
-               together, told as slides and built from the very tokens it presents. Arrow keys or
-               Space to advance.</p>
-          </div>
-        </a>
-        <a class="card card--interactive" href="./brand-deck-editorial/index.html">
-          <div class="stack stack--tight">
-            <h3>Editorial</h3>
-            <p>Text-led variant for long-form narratives.</p>
-          </div>
-        </a>
-        <a class="card card--interactive" href="./brand-deck-product/index.html">
-          <div class="stack stack--tight">
-            <h3>Product</h3>
-            <p>UI, metrics and feature storytelling.</p>
-          </div>
-        </a>
-        <a class="card card--interactive" href="./brand-deck-specimen/index.html">
-          <div class="stack stack--tight">
-            <h3>Specimen</h3>
-            <p>The compact spec sheet, on slides.</p>
-          </div>
-        </a>
+      <h2>Colour</h2>
+      <p class="text-muted">The warm ramp - 400 bright (dark-theme fills), 500 vivid (gradients), 600 deep (light-theme fills). The accent is red unless <code>data-accent</code> says otherwise.</p>
+      <div class="grid" style="--grid-min: 6rem">
+        <div class="sw"><i style="background: var(--color-orange-400)"></i>--color-orange-400</div>
+        <div class="sw"><i style="background: var(--color-orange-500)"></i>--color-orange-500</div>
+        <div class="sw"><i style="background: var(--color-orange-600)"></i>--color-orange-600</div>
+        <div class="sw"><i style="background: var(--color-red-400)"></i>--color-red-400</div>
+        <div class="sw"><i style="background: var(--color-red-500)"></i>--color-red-500</div>
+        <div class="sw"><i style="background: var(--color-red-600)"></i>--color-red-600</div>
+        <div class="sw"><i style="background: var(--color-purple-400)"></i>--color-purple-400</div>
+        <div class="sw"><i style="background: var(--color-purple-500)"></i>--color-purple-500</div>
+        <div class="sw"><i style="background: var(--color-purple-600)"></i>--color-purple-600</div>
+      </div>
+      <h3>Theme roles</h3>
+      <div class="grid" style="--grid-min: 6rem">
+        <div class="sw"><i style="background: var(--bg-page)"></i>--bg-page</div>
+        <div class="sw"><i style="background: var(--bg-surface-1)"></i>--bg-surface-1</div>
+        <div class="sw"><i style="background: var(--bg-surface-2)"></i>--bg-surface-2</div>
+        <div class="sw"><i style="background: var(--bg-surface-3)"></i>--bg-surface-3</div>
+        <div class="sw"><i style="background: var(--text-strong)"></i>--text-strong</div>
+        <div class="sw"><i style="background: var(--text-muted)"></i>--text-muted</div>
+        <div class="sw"><i style="background: var(--accent-fill)"></i>--accent-fill</div>
+        <div class="sw"><i style="background: var(--accent-subtle)"></i>--accent-subtle</div>
+        <div class="sw"><i style="background: var(--intent-success)"></i>--intent-success</div>
+        <div class="sw"><i style="background: var(--intent-warning)"></i>--intent-warning</div>
+        <div class="sw"><i style="background: var(--intent-info)"></i>--intent-info</div>
+        <div class="sw"><i style="background: var(--intent-error)"></i>--intent-error</div>
       </div>
     </section>
 
     <section class="section stack">
-      <h2>Reference</h2>
-      <p>The system itself, rendered live. Check here before styling anything by hand.</p>
-      <div class="grid">
-        <a class="card card--interactive" href="./foundation-reference/index.html">
-          <div class="stack stack--tight">
-            <h3>Foundation reference</h3>
-            <p>Every colour, type size, spacing step and UI primitive (buttons, forms, cards,
-               navigation, tables) live in light, dark and branded themes.</p>
-          </div>
-        </a>
-        <a class="card card--interactive" href="./gradient-showcase/index.html">
-          <div class="stack stack--tight">
-            <h3>Gradient library</h3>
-            <p>Hero meshes, the spectrum and the work-safe washes, with the rules for where each
-               may be used: heroes and identity moments only, never UI chrome.</p>
-          </div>
-        </a>
+      <h2>Gradients</h2>
+      <p class="text-muted">Decorative only. <code>.grad-wash</code> and <code>.grad-glow</code> are the only ones for work surfaces; the rest belong to heroes, decks and identity moments.</p>
+      <div class="grid" style="--grid-min: 14rem">
+        <div class="tile grad-spectrum">.grad-spectrum</div>
+        <div class="tile grad-ember">.grad-ember</div>
+        <div class="tile grad-dusk">.grad-dusk</div>
+        <div class="tile grad-accent">.grad-accent (live accent)</div>
+        <div class="tile grad-aurora">.grad-aurora</div>
+        <div class="tile grad-wash"><span class="mono">.grad-wash</span></div>
+        <div class="tile grad-glow"><span class="mono">.grad-glow</span></div>
+      </div>
+      <p class="grad-text" style="font-size: var(--fs-hero); font-weight: 600">.grad-text headline</p>
+    </section>
+
+    <section class="section stack">
+      <h2>Type</h2>
+      <p class="text-muted">Geist and Geist Mono, self-hosted. <code>--fs-*</code> names are sizes, not elements: an <code>h2</code> takes <code>--fs-h1</code>.</p>
+      <div class="stack stack--tight">
+        <h1>h1 · display 24 - Parcel layout, block 4</h1>
+        <h2>h2 · 20 - Half-face mesh</h2>
+        <h3>h3 · 16 - Residential plan generator</h3>
+        <h4>h4 · 14 - Daylight grid</h4>
+        <p>Body 13 - The run subdivides 1,284 faces and keeps every edge on the 0.5 m grid.</p>
+        <p><small>Small 12 - Updated 3 minutes ago</small></p>
+        <p class="eyebrow">Eyebrow · mono label</p>
+        <p><code>code · Geist Mono · 0.92em</code></p>
+      </div>
+      <div class="prose">
+        <p>The <code>.prose</code> block sets running text at 16 px on a 65-character measure with 1.5 leading. Links stay <a href="#main">underlined everywhere</a>, because colour alone is no link cue.</p>
       </div>
     </section>
 
     <section class="section stack">
-      <h2>Starters</h2>
-      <p>Three ways to begin an on-brand app: hand it to your coding agent, copy the pattern, or run it.</p>
-      <div class="grid">
-        <div class="card">
-          <div class="stack stack--tight">
-            <h3>Your coding agent</h3>
-            <p>Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Antigravity, Windsurf and the other
-               tools the <code>skills</code> CLI supports read the zha-ui skill. Install it in your project, then
-               describe the app: the agent installs the package and composes on-brand pages.</p>
-            <pre><code>npx skills add GitZHACODE/zha-ui</code></pre>
-            <p>Or paste this to the agent: "Use the ZHA UI design system for everything visual in this
-               project. Run npx skills add GitZHACODE/zha-ui -y, then read the installed zha-ui/SKILL.md
-               and follow it."</p>
-            <p>The <a href="https://github.com/GitZHACODE/zha-ui#quick-start-with-your-coding-agent">repository README</a>
-               lists where the skill lands for each tool, a manual route without npx and a note for Windows.</p>
-          </div>
-        </div>
-        <a class="card card--interactive" href="./zha-app-vanilla/index.html">
-          <div class="stack stack--tight">
-            <h3>Vanilla starter</h3>
-            <p>Plain HTML on the bundle, no build step. Open it, view source, copy the pattern:
-               composition classes for layout, bundle classes for every component.</p>
-          </div>
-        </a>
-        <div class="card">
-          <div class="stack stack--tight">
-            <h3>React starter</h3>
-            <p>React and Vite on the same tokens. It runs from source; there is no static page to
-               open here.</p>
-            <pre><code>git clone https://github.com/GitZHACODE/zha-ui
-cd zha-ui/examples/zha-app-react
-pnpm install &amp;&amp; pnpm dev</code></pre>
-            <p><a href="https://github.com/GitZHACODE/zha-ui/tree/main/examples/zha-app-react">Browse the source on GitHub</a></p>
-          </div>
-        </div>
+      <h2>Space, radius, density</h2>
+      <div class="stack stack--tight">
+        <div class="cluster"><span class="mono">--space-1</span><span class="bar" style="inline-size: var(--space-1)"></span></div>
+        <div class="cluster"><span class="mono">--space-2</span><span class="bar" style="inline-size: var(--space-2)"></span></div>
+        <div class="cluster"><span class="mono">--space-4</span><span class="bar" style="inline-size: var(--space-4)"></span></div>
+        <div class="cluster"><span class="mono">--space-6</span><span class="bar" style="inline-size: var(--space-6)"></span></div>
+        <div class="cluster"><span class="mono">--space-8</span><span class="bar" style="inline-size: var(--space-8)"></span></div>
+        <div class="cluster"><span class="mono">--space-12</span><span class="bar" style="inline-size: var(--space-12)"></span></div>
+        <div class="cluster"><span class="mono">--space-16</span><span class="bar" style="inline-size: var(--space-16)"></span></div>
+      </div>
+      <p class="text-muted"><code>--radius</code> is <code>0</code>: every primitive is square. Set <code>--radius: 2px</code> on a page or element to soften it. Compact density takes controls and rows from 44 to 36 px.</p>
+    </section>
+
+    <section class="section stack">
+      <h2>Buttons, chips, badges</h2>
+      <div class="cluster">
+        <button class="btn btn--primary" type="button">Run</button>
+        <button class="btn btn--secondary" type="button">Export</button>
+        <button class="btn btn--ghost" type="button">Cancel</button>
+        <button class="btn btn--danger" type="button">Delete run</button>
+        <button class="btn btn--primary" type="button" disabled>Disabled</button>
+        <button class="btn btn--secondary" type="button" aria-pressed="true">Wireframe</button>
+        <button class="icon-btn" type="button" aria-label="Settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><path d="M14 4v6M6 14v6"/></svg></button>
+        <button class="icon-btn icon-btn--ghost" type="button" aria-label="More"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="10.5" width="3" height="3"/><rect x="10.5" y="10.5" width="3" height="3"/><rect x="17" y="10.5" width="3" height="3"/></svg></button>
+      </div>
+      <div class="cluster">
+        <button class="chip" type="button" aria-pressed="true">All</button>
+        <button class="chip" type="button" aria-pressed="false">Running</button>
+        <button class="chip" type="button" aria-pressed="false">Done</button>
+        <span class="chip chip--orange">orange</span>
+        <span class="chip chip--red">red</span>
+        <span class="chip chip--purple">purple</span>
+        <span class="chip chip--green">green</span>
+        <span class="chip chip--amber">amber</span>
+        <span class="chip chip--blue">blue</span>
+        <span class="chip">mesh <button class="chip__remove" type="button" aria-label="Remove mesh"><svg width="10" height="10" viewBox="0 0 10 10" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg></button></span>
+      </div>
+      <div class="cluster">
+        <span class="badge badge--success"><span class="dot"></span>Complete</span>
+        <span class="badge badge--warning"><span class="dot"></span>Degenerate faces</span>
+        <span class="badge badge--error"><span class="dot"></span>Failed</span>
+        <span class="badge badge--info"><span class="dot"></span>Cached</span>
+        <span class="badge badge--neutral"><span class="dot"></span>Queued</span>
       </div>
     </section>
 
     <section class="section stack">
-      <h2>Under the hood</h2>
-      <p>For builders: where the system lives and how to consume it.</p>
-      <div class="grid">
-        <div class="card">
-          <div class="stack stack--tight">
-            <h3>Repository</h3>
-            <p>Source, specs, issues and releases live in GitZHACODE/zha-ui. It needs a GitHub
-               account on the org; everything else on this page works without one.</p>
-            <p><a href="https://github.com/GitZHACODE/zha-ui">Open the repository on GitHub</a></p>
-          </div>
+      <h2>Forms</h2>
+      <form class="form-grid" action="#" onsubmit="return false">
+        <div class="field">
+          <label class="field__label" for="f-name">Run name</label>
+          <input class="input" id="f-name" type="text" value="Block 4, north parcels">
+          <p class="field__help">Shown in the run list.</p>
         </div>
-        <div class="card">
-          <div class="stack stack--tight">
-            <h3>Consume the system</h3>
-            <p>@gitzhacode/zha-ui-css and @gitzhacode/zha-ui-tokens install straight from git:
-               no token, no .npmrc, just your normal GitHub access. Add to package.json
-               dependencies:</p>
-            <pre><code>"@gitzhacode/zha-ui-css": "github:GitZHACODE/zha-ui#release/css"</code></pre>
-            <p>They are also on GitHub Packages for registry installs; that route and the CI
-               pipeline setup are in the repo README.</p>
-          </div>
+        <div class="field">
+          <label class="field__label" for="f-grid">Grid size</label>
+          <input class="input" id="f-grid" type="text" value="0" aria-invalid="true" aria-describedby="f-grid-err">
+          <p class="field__error" id="f-grid-err">Enter a size above 0 m.</p>
         </div>
+        <div class="field">
+          <label class="field__label" for="f-mode">Subdivision</label>
+          <select class="select" id="f-mode"><option>Catmull-Clark</option><option>Loop</option><option>None</option></select>
+        </div>
+        <fieldset class="field">
+          <legend>Output</legend>
+          <label><input type="radio" name="out" checked> USD</label>
+          <label><input type="radio" name="out"> glTF</label>
+          <label><input type="checkbox" checked> Keep history</label>
+        </fieldset>
+        <div class="slider-row field--span">
+          <label for="f-iter">Iterations</label>
+          <input id="f-iter" type="range" min="0" max="16" value="4" oninput="this.nextElementSibling.textContent = this.value">
+          <output class="slider-row__value">4</output>
+        </div>
+      </form>
+    </section>
+
+    <section class="section stack">
+      <h2>Feedback</h2>
+      <div class="alert alert--success" role="status"><div><span class="alert__title">Run complete</span>Block 4 split into 36 parcels in 2.1 s.</div></div>
+      <div class="alert alert--warning"><div><span class="alert__title">Degenerate faces</span>12 faces fell below the area tolerance and were merged.</div></div>
+      <div class="alert alert--error"><div><span class="alert__title">Export failed</span>The output folder is read-only. Pick another folder and export again.</div></div>
+      <div class="alert alert--info"><div><span class="alert__title">Cached</span>The mesh has not changed since the last run, so its result was reused.</div></div>
+      <div class="cluster">
+        <progress class="progress" value="62" max="100" style="inline-size: 16rem">62%</progress>
+        <span class="spinner" role="status" aria-label="Loading"></span>
+        <span class="tooltip">Tooltip: inverse surface, paint only</span>
+      </div>
+      <div class="grid" style="--grid-min: 12rem">
+        <div class="skeleton" aria-hidden="true">&nbsp;<br>&nbsp;</div>
+        <div class="skeleton" aria-hidden="true">&nbsp;<br>&nbsp;</div>
+        <div class="skeleton" aria-hidden="true">&nbsp;<br>&nbsp;</div>
+      </div>
+      <div class="card empty-state">
+        <div class="empty-state__icon"></div>
+        <h3>No runs yet</h3>
+        <p>Runs appear here once a generator has finished.</p>
+        <button class="btn btn--secondary" type="button">New run</button>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Navigation</h2>
+      <header class="page-header">
+        <h3 class="page-header__title">Page header</h3>
+        <div class="page-header__actions"><button class="btn btn--secondary" type="button">Share</button><button class="btn btn--primary" type="button">Run</button></div>
+      </header>
+      <nav class="breadcrumb" aria-label="Breadcrumb"><ol><li><a href="#main">Projects</a></li><li><a href="#main">Block 4</a></li><li><span aria-current="page">Parcels</span></li></ol></nav>
+      <div class="tabs"><a class="tabs__tab" href="#main" aria-current="page">Overview</a><a class="tabs__tab" href="#main">Meshes</a><a class="tabs__tab" href="#main">History</a></div>
+      <nav aria-label="Pagination"><ol class="pagination"><li><a href="#main" aria-current="page">1</a></li><li><a href="#main">2</a></li><li><a href="#main">3</a></li></ol></nav>
+    </section>
+
+    <section class="section stack">
+      <h2>Data</h2>
+      <div class="grid" style="--grid-min: 11rem">
+        <div class="stat"><span class="stat__label">Faces</span><span class="stat__value">1,284</span><span class="stat__delta stat__delta--up">+96 vs last run</span></div>
+        <div class="stat"><span class="stat__label">Parcels</span><span class="stat__value">36</span><span class="stat__delta">Block 4</span></div>
+        <div class="stat"><span class="stat__label">Run time</span><span class="stat__value">2.1 s</span><span class="stat__delta stat__delta--down">+0.4 s</span></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>Recent runs</caption>
+          <thead><tr><th scope="col">Run</th><th scope="col">Module</th><th scope="col" class="num" aria-sort="descending"><button type="button">Area <span class="th-unit">m²</span></button></th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><td>Block 4, north</td><td>parcelation-gen</td><td class="num">18,420</td><td><span class="badge badge--success"><span class="dot"></span>Complete</span></td></tr>
+            <tr aria-selected="true"><td>Courtyard mesh</td><td>half-face-mesh</td><td class="num">6,310</td><td><span class="badge badge--warning"><span class="dot"></span>Degenerate faces</span></td></tr>
+            <tr><td>Floor 3 plan</td><td>plan-gen</td><td class="num">1,240</td><td><span class="badge badge--neutral"><span class="dot"></span>Queued</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid" style="--grid-min: 14rem">
+        <div class="card"><h3>.card</h3><p class="text-muted">Hairline border, no resting shadow.</p></div>
+        <div class="card card--accent"><h3>.card--accent</h3><p class="text-muted">Accent edge for the one card that matters.</p></div>
+        <a class="card card--interactive" href="#main"><h3>.card--interactive</h3><p class="text-muted">Lifts on hover.</p></a>
+      </div>
+      <details class="accordion"><summary>Accordion</summary><div class="accordion__body">Native details and summary, no JS.</div></details>
+      <details class="accordion"><summary>Second panel</summary><div class="accordion__body">Panels stack with a small gap.</div></details>
+    </section>
+
+    <section class="section stack">
+      <h2>Charts</h2>
+      <p class="text-muted">Categorical slots in fixed order (never cycled); the sequential ramp runs orange → red → purple; the diverging ramp has a neutral midpoint.</p>
+      <div class="grid" style="--grid-min: 5rem">
+        <div class="sw"><i style="background: var(--chart-cat-1)"></i>cat-1</div>
+        <div class="sw"><i style="background: var(--chart-cat-2)"></i>cat-2</div>
+        <div class="sw"><i style="background: var(--chart-cat-3)"></i>cat-3</div>
+        <div class="sw"><i style="background: var(--chart-cat-4)"></i>cat-4</div>
+        <div class="sw"><i style="background: var(--chart-cat-5)"></i>cat-5</div>
+        <div class="sw"><i style="background: var(--chart-cat-6)"></i>cat-6</div>
+        <div class="sw"><i style="background: var(--chart-cat-7)"></i>cat-7</div>
+        <div class="sw"><i style="background: var(--chart-cat-8)"></i>cat-8</div>
+      </div>
+      <div class="grid" style="--grid-min: 5rem">
+        <div class="sw"><i style="background: var(--chart-seq-1)"></i>seq-1</div>
+        <div class="sw"><i style="background: var(--chart-seq-2)"></i>seq-2</div>
+        <div class="sw"><i style="background: var(--chart-seq-3)"></i>seq-3</div>
+        <div class="sw"><i style="background: var(--chart-seq-4)"></i>seq-4</div>
+        <div class="sw"><i style="background: var(--chart-seq-5)"></i>seq-5</div>
+        <div class="sw"><i style="background: var(--chart-seq-6)"></i>seq-6</div>
+      </div>
+      <div class="grid" style="--grid-min: 5rem">
+        <div class="sw"><i style="background: var(--chart-div-neg-3)"></i>div-neg-3</div>
+        <div class="sw"><i style="background: var(--chart-div-neg-2)"></i>div-neg-2</div>
+        <div class="sw"><i style="background: var(--chart-div-neg-1)"></i>div-neg-1</div>
+        <div class="sw"><i style="background: var(--chart-div-mid)"></i>div-mid</div>
+        <div class="sw"><i style="background: var(--chart-div-pos-1)"></i>div-pos-1</div>
+        <div class="sw"><i style="background: var(--chart-div-pos-2)"></i>div-pos-2</div>
+        <div class="sw"><i style="background: var(--chart-div-pos-3)"></i>div-pos-3</div>
       </div>
     </section>
 
   </main>
 
-  <footer class="container">
-    <hr class="divider">
+  <footer class="container section">
     <div class="cluster cluster--between">
-      <p>No GitHub access? This folder on the ES project share is a full mirror, refreshed on
-         every commit - you are likely reading it right now.</p>
-      <span class="zha-lockup" role="img" aria-label="ZHA UI"><span class="zha-lockup__zha">ZHA</span><span class="zha-lockup__team">UI</span></span>
+      <span class="app-bar__brand">kit-forge</span>
+      <p class="text-muted">Plain HTML, opened from disk - no server, no build. <code>npm test</code> runs the contrast gate.</p>
     </div>
   </footer>
 
+  <script>
+    // The only JS: the switches set the identity attributes on <html>.
+    document.addEventListener('change', function (e) {
+      var html = document.documentElement, v = e.target.value;
+      if (e.target.name === 'theme') {
+        html.dataset.theme = v === 'light' ? 'light' : 'dark';
+        if (v === 'brand') html.dataset.surface = 'brand'; else delete html.dataset.surface;
+      }
+      if (e.target.name === 'accent') { if (v === 'red') delete html.dataset.accent; else html.dataset.accent = v; }
+      if (e.target.name === 'density') html.dataset.density = v;
+    });
+  </script>
 </body>
 </html>

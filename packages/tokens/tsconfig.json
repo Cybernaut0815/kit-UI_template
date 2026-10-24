@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["node"],
-    "noEmit": true,
-    "typeRoots": ["./types", "../../node_modules/@types", "./node_modules/@types"]
-  },
-  "include": ["test/**/*.ts", "vitest.config.ts", "types/**/*.d.ts", "scripts/**/*.d.mts"]
-}
