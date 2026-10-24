@@ -4,7 +4,7 @@ description: Create a PDF report of results a kit-sim, kit-forge or kit-viz app 
 compatibility: Claude Code, Codex, Cursor, GitHub Copilot and any agent that reads the Agent Skills format; needs Chrome, Edge or Playwright's Chromium to render
 metadata:
   source: "https://github.com/Cybernaut0815/kit-UI_template/tree/main/skills/kit-report"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # kit-report
@@ -24,7 +24,7 @@ A kit report is one HTML page on kit-ui, printed by Chromium. kit-ui is the layo
         <h1 class="page-header__title">Daylight report: Block 4</h1></div>
     </header>
     <div class="cluster"><span class="badge badge--success"><span class="dot"></span>Run complete</span>
-      <span class="text-muted">Run R-0724 · 24 Oct 2026, 14:32 · kit-sim 0.4.2 · kit-ui 0.1.0</span></div>
+      <span class="text-muted">Run R-0724 · 24 Oct 2026, 14:32 · kit-sim 0.4.2 · kit-ui 0.2.0</span></div>
     <div class="grid" style="--grid-min: 8rem"><div class="stat">…</div></div>         <!-- the summary row -->
     <section class="section stack"><h2>Summary</h2><div class="prose"><p>…</p></div></section>
     <section class="section stack"><h2>Inputs</h2>…key/value .data-table--wrap…</section>

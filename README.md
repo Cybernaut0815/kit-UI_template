@@ -21,7 +21,7 @@ The app-bar lockup is `<span class="kit-mark">kit-<span class="kit-mark__name">s
 ## Install
 
 ```jsonc
-"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.1.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.2.0" }
 ```
 
 Pin a tag so an update never silently changes a page. Then load it once, before your own CSS:

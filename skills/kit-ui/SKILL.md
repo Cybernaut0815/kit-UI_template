@@ -4,7 +4,7 @@ description: Build or restyle a kit-sim, kit-forge or kit-viz web app with the k
 compatibility: Claude Code, Codex, Cursor, GitHub Copilot and any agent that reads the Agent Skills format
 metadata:
   source: "https://github.com/Cybernaut0815/kit-UI_template/tree/main/skills/kit-ui"
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # kit-ui
@@ -14,7 +14,7 @@ You are building a kit web app on kit-ui: sharp corners, Geist type, dark by def
 ## 1. Install and load once
 
 ```jsonc
-"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.1.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.2.0" }
 ```
 
 There is no build: the package is its `css/` folder. Load it once, before the app's own CSS:

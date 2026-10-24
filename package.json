@@ -1,6 +1,6 @@
 {
   "name": "kit-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Sharp-cornered design tokens and CSS primitives for the kit-sim, kit-forge and kit-viz modules. No build: the css/ folder is the package.",
   "type": "module",
   "exports": {
