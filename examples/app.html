@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="light" data-density="compact">
+<html lang="en" data-kit="forge" data-density="compact">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>kit-forge app</title>
-  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css"> -->
-  <link rel="stylesheet" href="../css/kit-forge-ui.css">
+  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-ui/css/kit-ui.css"> -->
+  <link rel="stylesheet" href="../css/kit-ui.css">
 </head>
 <!-- A tool page built only from primitives; the only inline styles are knobs (--grid-min). -->
 <body>
@@ -158,7 +158,11 @@
   <script>
     var $ = function (id) { return document.getElementById(id); };
     var html = document.documentElement;
-    $('theme').onclick = function () { html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark'; };
+    // no data-theme = follow the system; the first click pins the opposite of what is showing
+    $('theme').onclick = function () {
+      var dark = (html.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')) === 'dark';
+      html.dataset.theme = dark ? 'light' : 'dark';
+    };
     $('nav-toggle').onclick = function () {
       var open = $('shell').toggleAttribute('data-nav-open');
       this.setAttribute('aria-expanded', open);

@@ -1,14 +1,14 @@
 {
-  "name": "kit-forge-ui",
+  "name": "kit-ui",
   "version": "0.1.0",
-  "description": "Sharp-cornered design tokens and CSS primitives for kit-forge modules. No build: the css/ folder is the package.",
+  "description": "Sharp-cornered design tokens and CSS primitives for the kit-sim, kit-forge and kit-viz modules. No build: the css/ folder is the package.",
   "type": "module",
   "exports": {
-    ".": "./css/kit-forge-ui.css",
+    ".": "./css/kit-ui.css",
     "./tokens.css": "./css/tokens.css",
     "./css/*": "./css/*"
   },
-  "style": "./css/kit-forge-ui.css",
+  "style": "./css/kit-ui.css",
   "files": ["css"],
   "sideEffects": ["*.css"],
   "engines": { "node": ">=20" },

@@ -1,4 +1,4 @@
-// The repo's one gate: contrast per theme × accent, vocabulary sync, brand leak. Zero dependencies: `node --test`.
+// The repo's one gate: contrast per theme × kit, vocabulary sync, brand leak. Zero dependencies: `node --test`.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -7,7 +7,7 @@ import { join, relative } from 'node:path';
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const TOKENS = read('css/tokens.css');
-const CSS = read('css/kit-forge-ui.css');
+const CSS = read('css/kit-ui.css');
 const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
 
 // ── colour maths ─────────────────────────────────────────────────────────────
@@ -29,35 +29,59 @@ function parse(v) {
 }
 const over = (fg, bg) => (fg[3] === 1 ? fg : [...mix(fg.slice(0, 3), bg.slice(0, 3), fg[3]), 1]);
 
-// ── token cascade: apply every tokens.css block whose selector matches <html> with these attributes ──
-const BLOCKS = [...strip(TOKENS).matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, sel, body]) => ({
-  sels: sel.split(',').map((s) => s.trim()),
-  decls: [...body.matchAll(/--([\w-]+):\s*([^;]+);/g)].map(([, k, v]) => [k, v.replace(/\s+/g, ' ').trim()]),
-}));
-function matches(sel, attrs) {
-  if (sel === ':root') return true;
-  const m = sel.match(/^\[data-(\w+)(?:="(\w+)")?\]$/);
-  assert.ok(m, `tokens.css selector the gate cannot read: ${sel}`);
-  return m[2] === undefined ? m[1] in attrs : attrs[m[1]] === m[2];
+// ── token cascade: apply every tokens.css block whose selector (and media) matches <html> in a scene ──
+const BLOCKS = [];
+let media = null;
+for (const m of strip(TOKENS).matchAll(/@media([^{]+)\{|([^{}]+)\{([^{}]*)\}|\}/g)) {
+  if (m[1] !== undefined) media = m[1].trim();
+  else if (m[2] === undefined) media = null; // the @media's closing brace
+  else BLOCKS.push({
+    media,
+    sels: m[2].split(/,(?![^(]*\))/).map((s) => s.trim()),
+    decls: [...m[3].matchAll(/--([\w-]+):\s*([^;]+);/g)].map(([, k, v]) => [k, v.replace(/\s+/g, ' ').trim()]),
+  });
 }
-function cascade(attrs) {
+// compound selectors of :root, [data-x], [data-x="v"], :where(…) and :not(…)
+function matches(sel, attrs) {
+  for (let rest = sel; rest; ) {
+    let m;
+    if ((m = rest.match(/^:root/))) { /* every scene is <html> */ }
+    else if ((m = rest.match(/^\[data-(\w+)(?:="(\w+)")?\]/))) { if (m[2] === undefined ? !(m[1] in attrs) : attrs[m[1]] !== m[2]) return false; }
+    else if ((m = rest.match(/^:(where|not)\(/))) {
+      let depth = 1, i = m[0].length;
+      while (depth) depth += { '(': 1, ')': -1 }[rest[i++]] ?? 0;
+      if (matches(rest.slice(m[0].length, i - 1), attrs) !== (m[1] === 'where')) return false;
+      m = [rest.slice(0, i)];
+    } else assert.fail(`tokens.css selector the gate cannot read: ${sel}`);
+    rest = rest.slice(m[0].length);
+  }
+  return true;
+}
+function cascade(attrs, system = 'dark') {
   const vars = {};
-  for (const b of BLOCKS) if (b.sels.some((s) => matches(s, attrs))) for (const [k, v] of b.decls) vars[k] = v;
+  for (const b of BLOCKS)
+    if ((!b.media || b.media.includes(`prefers-color-scheme: ${system}`)) && b.sels.some((s) => matches(s, attrs)))
+      for (const [k, v] of b.decls) vars[k] = v;
   const sub = (v, d = 0) => (d > 20 ? v : v.includes('var(') ? sub(v.replace(/var\(--([\w-]+)\)/g, (_, n) => vars[n] ?? `MISSING(${n})`), d + 1) : v);
   return (name) => { assert.ok(name in vars, `--${name} not defined`); return parse(sub(vars[name])); };
 }
 
+// themes × kits; each theme names the system setting it is tested under
+const THEMES = [
+  ['default', {}, 'dark'], ['system-light', {}, 'light'],
+  ['light', { theme: 'light' }, 'dark'], ['dark', { theme: 'dark' }, 'light'], ['brand', { theme: 'light', surface: 'brand' }, 'light'],
+];
 const SCENES = [];
-for (const accent of ['red', 'orange', 'purple'])
-  for (const [label, attrs] of [['light', { theme: 'light' }], ['dark', { theme: 'dark' }], ['brand', { theme: 'light', surface: 'brand' }]])
-    SCENES.push([`${label}/${accent}`, { ...attrs, ...(accent === 'red' ? {} : { accent }) }]);
+for (const kit of ['forge', 'sim', 'viz'])
+  for (const [label, attrs, system] of THEMES)
+    SCENES.push([`${label}/${kit}`, { ...attrs, ...(kit === 'forge' ? {} : { kit }) }, system]);
 
 const HUES = { orange: 'color-orange-500', red: 'color-red-500', purple: 'color-purple-500', green: 'color-green', amber: 'color-amber', blue: 'color-blue' };
 const INTENTS = ['error', 'success', 'warning', 'info'];
 
-for (const [scene, attrs] of SCENES) {
+for (const [scene, attrs, system] of SCENES) {
   test(`contrast ${scene}`, () => {
-    const c = cascade(attrs);
+    const c = cascade(attrs, system);
     const misses = [];
     const need = (fgName, bgName, min, fg = c(fgName), bg = c(bgName)) => {
       const r = ratio(over(fg, bg), bg);
@@ -83,8 +107,28 @@ for (const [scene, attrs] of SCENES) {
   });
 }
 
-test('brand surface wins over data-theme="light" on the same element', () => {
-  assert.equal(cascade({ theme: 'light', surface: 'brand' })('bg-page').join(), cascade({ theme: 'dark' })('bg-page').join());
+const page = (attrs, system) => cascade(attrs, system)('bg-page').join();
+
+test('no data-theme follows the system, dark by default', () => {
+  assert.equal(page({}, 'dark'), page({ theme: 'dark' }));
+  assert.equal(page({}, 'light'), page({ theme: 'light' }));
+  assert.notEqual(page({}, 'dark'), page({}, 'light'));
+});
+
+test('an explicit data-theme beats the system', () => {
+  assert.equal(page({ theme: 'dark' }, 'light'), page({ theme: 'dark' }, 'dark'));
+  assert.equal(page({ theme: 'light' }, 'dark'), page({ theme: 'light' }, 'light'));
+});
+
+test('brand surface wins over data-theme="light" and the system', () => {
+  assert.equal(page({ theme: 'light', surface: 'brand' }, 'light'), page({ theme: 'dark' }));
+  assert.equal(page({ surface: 'brand' }, 'light'), page({ theme: 'dark' }));
+});
+
+test('the explicit and system light blocks match', () => {
+  const light = BLOCKS.filter((b) => b.decls.some(([k, v]) => k === 'bg-page' && v === '#F4F2F0'));
+  assert.equal(light.length, 2);
+  assert.deepEqual(light[0].decls, light[1].decls);
 });
 
 // ── vocabulary ───────────────────────────────────────────────────────────────
@@ -93,13 +137,13 @@ const declared = new Set([...strip(TOKENS + CSS).matchAll(/(--[\w-]+)\s*:/g)].ma
 const EXAMPLES = readdirSync(join(ROOT, 'examples')).filter((f) => f.endsWith('.html')).map((f) => [`examples/${f}`, read(`examples/${f}`)]);
 
 test('every class is in the skill reference', () => {
-  const ref = read('skills/kit-forge-ui/reference.md');
+  const ref = read('skills/kit-ui/reference.md');
   assert.deepEqual([...classesIn(CSS)].filter((c) => !ref.includes(`.${c}`)), []);
 });
 
 test('every var() used is declared', () => {
   const missing = [];
-  for (const [file, text] of [['css/kit-forge-ui.css', CSS], ['css/tokens.css', TOKENS], ...EXAMPLES])
+  for (const [file, text] of [['css/kit-ui.css', CSS], ['css/tokens.css', TOKENS], ...EXAMPLES])
     for (const [, name] of strip(text).matchAll(/var\((--[\w-]+)/g)) if (!declared.has(name)) missing.push(`${file}: ${name}`);
   assert.deepEqual([...new Set(missing)], []);
 });

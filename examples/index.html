@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>kit-forge-ui reference</title>
-  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css"> -->
-  <link rel="stylesheet" href="../css/kit-forge-ui.css">
+  <title>kit-ui reference</title>
+  <!-- In a project: <link rel="stylesheet" href="./node_modules/kit-ui/css/kit-ui.css"> -->
+  <link rel="stylesheet" href="../css/kit-ui.css">
   <style>
     /* page-local helpers - tokens only */
     .sw { display: flex; flex-direction: column; gap: var(--space-2); font: var(--fs-label) / 1.3 var(--font-mono); color: var(--text-muted); }
@@ -19,7 +19,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="app-bar">
-    <a class="app-bar__brand" href="./index.html">kit-forge<span class="app-bar__app">ui reference</span></a>
+    <a class="app-bar__brand" href="./index.html">kit-ui<span class="app-bar__app">reference</span></a>
     <span class="app-bar__spacer"></span>
     <a class="btn btn--ghost" href="./app.html">App</a>
     <a class="btn btn--ghost" href="./deck.html">Deck</a>
@@ -28,9 +28,9 @@
   <main class="container stack" id="main">
 
     <section class="hero grad-aurora" data-surface="brand">
-      <p class="eyebrow">kit-forge-ui · tokens + primitives · no build</p>
+      <p class="eyebrow">kit-ui · tokens + primitives · no build</p>
       <h1>Sharp by default.</h1>
-      <p>One stylesheet for every kit-forge module: square corners, Geist type and a warm ramp from orange over red to purple. Flip the switches below - every section re-resolves live.</p>
+      <p>One stylesheet for every kit module - kit-sim, kit-forge, kit-viz: square corners, Geist type and a warm ramp from orange over red and burgundy to purple. Flip the switches below - every section re-resolves live.</p>
       <div class="cluster">
         <a class="btn btn--primary" href="./app.html">Open the app example</a>
         <a class="btn btn--secondary" href="./deck.html">Open the deck</a>
@@ -39,15 +39,16 @@
 
     <div class="toolbar" aria-label="Page identity">
       <div class="segmented" role="radiogroup" aria-label="Theme">
-        <label><input type="radio" name="theme" value="light" checked> Light</label>
+        <label><input type="radio" name="theme" value="system" checked> System</label>
+        <label><input type="radio" name="theme" value="light"> Light</label>
         <label><input type="radio" name="theme" value="dark"> Dark</label>
         <label><input type="radio" name="theme" value="brand"> Brand</label>
       </div>
       <hr class="divider divider--vertical">
-      <div class="segmented" role="radiogroup" aria-label="Accent">
-        <label><input type="radio" name="accent" value="orange"> Orange</label>
-        <label><input type="radio" name="accent" value="red" checked> Red</label>
-        <label><input type="radio" name="accent" value="purple"> Purple</label>
+      <div class="segmented" role="radiogroup" aria-label="Kit">
+        <label><input type="radio" name="kit" value="sim"> kit-sim</label>
+        <label><input type="radio" name="kit" value="forge" checked> kit-forge</label>
+        <label><input type="radio" name="kit" value="viz"> kit-viz</label>
       </div>
       <hr class="divider divider--vertical">
       <div class="segmented" role="radiogroup" aria-label="Density">
@@ -58,7 +59,7 @@
 
     <section class="section stack">
       <h2>Colour</h2>
-      <p class="text-muted">The warm ramp - 400 bright (dark-theme fills), 500 vivid (gradients), 600 deep (light-theme fills). The accent is red unless <code>data-accent</code> says otherwise.</p>
+      <p class="text-muted">The warm ramp - 400 bright (dark-theme fills), 500 vivid (gradients), 600 deep (light-theme fills). Burgundy carries the gradients from red into purple. The kit picks the accent: <code>data-kit="sim"</code> orange, <code>forge</code> red (default), <code>viz</code> purple.</p>
       <div class="grid" style="--grid-min: 6rem">
         <div class="sw"><i style="background: var(--color-orange-400)"></i>--color-orange-400</div>
         <div class="sw"><i style="background: var(--color-orange-500)"></i>--color-orange-500</div>
@@ -66,6 +67,8 @@
         <div class="sw"><i style="background: var(--color-red-400)"></i>--color-red-400</div>
         <div class="sw"><i style="background: var(--color-red-500)"></i>--color-red-500</div>
         <div class="sw"><i style="background: var(--color-red-600)"></i>--color-red-600</div>
+        <div class="sw"><i style="background: var(--color-burgundy-500)"></i>--color-burgundy-500</div>
+        <div class="sw"><i style="background: var(--color-burgundy-600)"></i>--color-burgundy-600</div>
         <div class="sw"><i style="background: var(--color-purple-400)"></i>--color-purple-400</div>
         <div class="sw"><i style="background: var(--color-purple-500)"></i>--color-purple-500</div>
         <div class="sw"><i style="background: var(--color-purple-600)"></i>--color-purple-600</div>
@@ -94,7 +97,7 @@
         <div class="tile grad-spectrum">.grad-spectrum</div>
         <div class="tile grad-ember">.grad-ember</div>
         <div class="tile grad-dusk">.grad-dusk</div>
-        <div class="tile grad-accent">.grad-accent (live accent)</div>
+        <div class="tile grad-kit">.grad-kit (live kit)</div>
         <div class="tile grad-aurora">.grad-aurora</div>
         <div class="tile grad-wash"><span class="mono">.grad-wash</span></div>
         <div class="tile grad-glow"><span class="mono">.grad-glow</span></div>
@@ -262,7 +265,7 @@
 
     <section class="section stack">
       <h2>Charts</h2>
-      <p class="text-muted">Categorical slots in fixed order (never cycled); the sequential ramp runs orange → red → purple; the diverging ramp has a neutral midpoint.</p>
+      <p class="text-muted">Categorical slots in fixed order (never cycled); the sequential ramp runs orange → red → burgundy → purple; the diverging ramp has a neutral midpoint.</p>
       <div class="grid" style="--grid-min: 5rem">
         <div class="sw"><i style="background: var(--chart-cat-1)"></i>cat-1</div>
         <div class="sw"><i style="background: var(--chart-cat-2)"></i>cat-2</div>
@@ -296,7 +299,7 @@
 
   <footer class="container section">
     <div class="cluster cluster--between">
-      <span class="app-bar__brand">kit-forge</span>
+      <span class="app-bar__brand">kit-ui</span>
       <p class="text-muted">Plain HTML, opened from disk - no server, no build. <code>npm test</code> runs the contrast gate.</p>
     </div>
   </footer>
@@ -306,10 +309,10 @@
     document.addEventListener('change', function (e) {
       var html = document.documentElement, v = e.target.value;
       if (e.target.name === 'theme') {
-        html.dataset.theme = v === 'light' ? 'light' : 'dark';
+        if (v === 'system') delete html.dataset.theme; else html.dataset.theme = v === 'light' ? 'light' : 'dark';
         if (v === 'brand') html.dataset.surface = 'brand'; else delete html.dataset.surface;
       }
-      if (e.target.name === 'accent') { if (v === 'red') delete html.dataset.accent; else html.dataset.accent = v; }
+      if (e.target.name === 'kit') { if (v === 'forge') delete html.dataset.kit; else html.dataset.kit = v; }
       if (e.target.name === 'density') html.dataset.density = v;
     });
   </script>

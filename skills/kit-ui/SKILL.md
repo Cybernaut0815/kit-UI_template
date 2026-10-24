@@ -1,49 +1,49 @@
 ---
-name: kit-forge-ui
-description: Build or restyle a kit-forge web app with the kit-forge-ui design system. Installs the kit-forge-ui CSS from git, sets the html switches, composes pages from the layout classes and uses only kit-forge-ui classes and tokens. Use for any kit-forge module that needs UI, styling, layout, colour, type, a page skeleton or a design check.
+name: kit-ui
+description: Build or restyle a kit-sim, kit-forge or kit-viz web app with the kit-ui design system. Installs the kit-ui CSS from git, sets the html switches (kit, theme, density), composes pages from the layout classes and uses only kit-ui classes and tokens. Use for any kit module that needs UI, styling, layout, colour, type, a page skeleton or a design check.
 compatibility: Claude Code, Codex, Cursor, GitHub Copilot and any agent that reads the Agent Skills format
 metadata:
-  source: "https://github.com/Cybernaut0815/kit-forge_UI-template/tree/main/skills/kit-forge-ui"
+  source: "https://github.com/Cybernaut0815/kit-forge_UI-template/tree/main/skills/kit-ui"
   version: "0.1.0"
 ---
 
-# kit-forge-ui
+# kit-ui
 
-You are building a kit-forge web app on kit-forge-ui: sharp corners, Geist type, a warm ramp from orange over red to purple. Attributes on `<html>` resolve colour, type, space and state; you declare them, compose the page from the layout classes and never style by hand. Read [reference.md](reference.md) beside this file before writing markup.
+You are building a kit web app on kit-ui: sharp corners, Geist type, dark by default, a warm ramp from orange over red and burgundy to deep purple. Attributes on `<html>` resolve colour, type, space and state; you declare them, compose the page from the layout classes and never style by hand. Read [reference.md](reference.md) beside this file before writing markup.
 
 ## 1. Install and load once
 
 ```jsonc
-"dependencies": { "kit-forge-ui": "github:Cybernaut0815/kit-forge_UI-template#v0.1.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-forge_UI-template#v0.1.0" }
 ```
 
 There is no build: the package is its `css/` folder. Load it once, before the app's own CSS:
 
-- With a bundler (Vite, Next): `import 'kit-forge-ui';` in the entry file.
-- Plain HTML: `<link rel="stylesheet" href="./node_modules/kit-forge-ui/css/kit-forge-ui.css">`. Fonts resolve relative to that file.
+- With a bundler (Vite, Next): `import 'kit-ui';` in the entry file.
+- Plain HTML: `<link rel="stylesheet" href="./node_modules/kit-ui/css/kit-ui.css">`. Fonts resolve relative to that file.
 
-Pin a tag so an update never silently changes the page. If the project started from a Vite template, delete its element-level `button`, `a` and `input` CSS first: the primitives own control paint. Then add one line to the project's `AGENTS.md` or `CLAUDE.md`: `Use the kit-forge-ui skill for every UI change; never style by hand.`
+Pin a tag so an update never silently changes the page. If the project started from a Vite template, delete its element-level `button`, `a` and `input` CSS first: the primitives own control paint. Then add one line to the project's `AGENTS.md` or `CLAUDE.md`: `Use the kit-ui skill for every UI change; never style by hand.`
 
 **Restyling an existing app:** load the CSS before the app's stylesheet, set the switches, delete the scaffold's control paint, replace hand-written colours, fonts and spacing page by page (app bar first), move charts to `--chart-*`, delete the old stylesheet last, then run §7 on every page.
 
 ## 2. Declare the identity on `<html>`
 
 ```html
-<html lang="en" data-theme="light" data-density="compact">
+<html lang="en" data-kit="forge" data-density="compact">
 ```
 
 | Attribute | Options | Meaning |
 |---|---|---|
-| `data-theme` | `light` (default) · `dark` | Surfaces, text and fills flip together |
+| `data-kit` | `sim` · `forge` (default) · `viz` | The product family. kit-sim (simulation) is orange, kit-forge (generation) red, kit-viz (visualization) purple: accent, gradient partner and `.grad-kit` |
+| `data-theme` | `dark` · `light` | Leave it off: the page follows the system setting, dark by default. Set it only for a user's explicit choice |
 | `data-surface` | `brand` | Black-first presentation surface in both themes; wins over `data-theme` on the same element. Leave it off for work surfaces |
 | `data-density` | `compact` | Controls and rows 44 → 36 px for dense tools |
-| `data-accent` | `orange` · `purple` | Red is the default when absent |
 
-Set them once; everything inside inherits. An island escapes by carrying its own `data-theme` (a light card on a brand deck: `<div class="card" data-theme="light">`). Put `data-accent` on `<html>`, or on an element that also carries `data-theme`.
+Set them once; everything inside inherits. An island escapes by carrying its own `data-theme` (a light card on a brand deck: `<div class="card" data-theme="light">`). Put `data-kit` on `<html>`, or on an element that also carries `data-theme`. A theme toggle sets `data-theme` to the opposite of what shows (`matchMedia('(prefers-color-scheme: light)')` when the attribute is absent); removing the attribute returns to the system.
 
 ## 3. The one hard rule
 
-Use only kit-forge-ui classes and variables. Never invent a custom property, never write a hex, rgb or named colour, never write layout in a `style` attribute. The only inline styles allowed are the seven knobs: `--container-w --grid-min --stack-gap --split-aside --control-h --dialog-w --sidebar-w`. Corners are square by design: never add `border-radius`; to soften a whole app set `--radius` once on `<html>`. Elements carry their defaults: write `h1`-`h4`, `p`, `a`, `strong`, `code`, `pre`, `hr` and `img` without classes.
+Use only kit-ui classes and variables. Never invent a custom property, never write a hex, rgb or named colour, never write layout in a `style` attribute. The only inline styles allowed are the seven knobs: `--container-w --grid-min --stack-gap --split-aside --control-h --dialog-w --sidebar-w`. Corners are square by design: never add `border-radius`; to soften a whole app set `--radius` once on `<html>`. Elements carry their defaults: write `h1`-`h4`, `p`, `a`, `strong`, `code`, `pre`, `hr` and `img` without classes.
 
 ## 4. Compose a page
 
@@ -54,7 +54,7 @@ Every region has one owner for its gaps, so the markup needs no inline layout.
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="app-shell">
   <header class="app-bar">
-    <a class="app-bar__brand" href="/">kit-forge<span class="app-bar__app">Parcel generator</span></a>
+    <a class="app-bar__brand" href="/">kit-forge<span class="app-bar__app">Parcel generator</span></a>  <!-- the family name, then the app -->
     <span class="app-bar__spacer"></span>
     <!-- .icon-btn--ghost actions; .app-bar__nav-toggle for the phone drawer; one .btn--primary -->
   </header>
@@ -79,7 +79,7 @@ Every region has one owner for its gaps, so the markup needs no inline layout.
 </main>
 ```
 
-**Deck or landing page:** `<html data-theme="dark" data-surface="brand">`, a `.hero.hero--bleed` with one gradient, then `.section`s of `.grid` cards. `examples/deck.html` is the reference deck.
+**Deck or landing page:** `<html data-kit="…" data-surface="brand">` (brand is black in either theme), a `.hero.hero--bleed` with one gradient, then `.section`s of `.grid` cards. `examples/deck.html` is the reference deck.
 
 ## 5. Rules
 
@@ -119,7 +119,7 @@ An eyebrow above every heading; identical cards chopping a dashboard; nested car
 2. One `h1`; headings descend in order.
 3. One primary action per view; danger is outlined.
 4. Every gap has an owner.
-5. Rendered in light and dark (and brand if used), with the accent the module uses.
+5. Rendered in dark and light (and brand if used), with the module's data-kit.
 6. At 390 px: no horizontal scroll; tables wrapped; the shell collapses.
 7. Keyboard: skip link first; the focus ring shows on every control; dialogs and menus are the native primitives.
 8. Loading, empty and error states exist for every data region.
@@ -129,4 +129,4 @@ An eyebrow above every heading; identical cards chopping a dashboard; nested car
 
 - `@media print`: any surface prints black on white.
 - `prefers-reduced-motion`, `prefers-reduced-transparency` and forced colours are handled.
-- Native widgets (scrollbars, checkboxes, range inputs) follow the theme and accent.
+- Native widgets (scrollbars, checkboxes, range inputs) follow the theme and kit accent.

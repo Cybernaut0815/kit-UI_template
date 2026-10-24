@@ -1,4 +1,4 @@
-# kit-forge-ui reference
+# kit-ui reference
 
 Every class and the grouped variables. `css/tokens.css` is the source of truth for values; this file says what each name is for. `npm test` fails when a class is missing here.
 
@@ -9,10 +9,11 @@ Every class and the grouped variables. `css/tokens.css` is the source of truth f
 - **Borders:** `--border-subtle --border-default --border-strong`
 - **Accent:** `--accent` (lines, underlines, stripes), `--accent-fill` (button fill, links, focus ring), `--accent-on` (text on the fill), `--accent-hover`, `--accent-subtle` (tint), `--accent-2` (gradient partner). Never put text on bare `--accent`; use `.btn--primary`.
 - **Intent:** `--intent-{error,success,warning,info}` (fills), `--intent-on-*` (text on those fills), `--intent-*-text` (AA text on surface-1 and page)
-- **Palette:** `--color-{orange,red,purple}-{400,500,600}`, `--color-green --color-amber --color-blue --color-black --color-ink --color-white`. Reach for a role token first; the palette is for swatches and charts.
+- **Palette:** `--color-{orange,red,purple}-{400,500,600}`, `--color-burgundy-{500,600}` (gradients and identity, never an accent), `--color-green --color-amber --color-blue --color-black --color-ink --color-white`. Reach for a role token first; the palette is for swatches and charts.
 - **Chips:** `--chip-{orange,red,purple,green,amber,blue}-text`
 - **Charts:** `--chart-cat-1..8 --chart-cat-other`, `--chart-seq-1..6`, `--chart-div-neg-3..-1 --chart-div-mid --chart-div-pos-1..3`, `--chart-text --chart-text-strong --chart-grid --chart-axis`
-- **Gradients:** `--grad-spectrum --grad-ember --grad-dusk --grad-aurora` (apply through the classes)
+- **Gradients:** `--grad-spectrum --grad-ember --grad-dusk --grad-aurora --grad-kit` (multi-stop, `in oklch`; apply through the classes)
+- **Kit:** `--accent-base --accent-bright` (the kit's deep and bright tones; themes pick one as `--accent-fill`), `--accent-2`, `--grad-kit`. Set by `data-kit="sim|forge|viz"`, never by hand
 - **Space:** `--space-1 2 3 4 5 6 8 10 12 16` (4-64 px), tiers `--space-section --space-block --space-inline`, `--gutter`
 - **Shape:** `--radius` (0; the one corner knob)
 - **Controls:** `--control-h --control-pad-y --row-h`
@@ -157,11 +158,11 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 ### Gradients (decorative only)
 | Class | What it is |
 |---|---|
-| `.grad-spectrum` | Orange → red → purple, the signature sweep |
+| `.grad-spectrum` | Orange → red → burgundy → purple, the signature sweep |
 | `.grad-ember` | Orange → red |
-| `.grad-dusk` | Red → purple |
-| `.grad-accent` | Live `--accent-fill` → `--accent-2`; follows `data-accent` and the theme |
-| `.grad-aurora` | Orange, red and purple glows over a black floor; dark hero panels, text via `--text-*` |
+| `.grad-dusk` | Red → burgundy → deep purple |
+| `.grad-kit` | The current kit's signature: forge red → burgundy, sim orange → red, viz purple → burgundy |
+| `.grad-aurora` | Orange, red, burgundy and purple glows over a black floor; dark hero panels, text via `--text-*` |
 | `.grad-wash` | Top-down accent tint; safe on work surfaces |
 | `.grad-glow` | Overhead accent glow; safe on work surfaces |
 | `.grad-text` | Spectrum-clipped headline with a solid fallback; heroes and decks only |

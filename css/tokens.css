@@ -1,40 +1,23 @@
-/* kit-forge-ui tokens - every colour, size, space and state as a CSS custom property.
-   Hex only: getComputedStyle hands canvas renderers a colour they can parse.
-   Cascade: light (:root) → dark family (dark + brand surface) → brand surface → compact → accent-derived.
-   An island escapes by carrying its own data-theme. */
+/* kit-ui tokens - every colour, size, space and state as a CSS custom property.
+   Hex only: getComputedStyle hands canvas renderers a colour they can parse (no light-dark()).
+   Theme: dark by default; a page without data-theme follows the system setting.
+   Cascade: constants → dark (default) → light → system light → brand surface → compact → kits → accent-derived.
+   Every theme selector is (0,1,0) via :where(), so source order decides. An island escapes with its own data-theme. */
 
-:root, [data-theme="light"] {
-  /* palette - the warm ramp runs orange → red → purple; 400 bright, 500 vivid, 600 deep */
+:root {
+  /* palette - the warm ramp runs orange → red → burgundy → purple; 400 bright, 500 vivid, 600 deep */
   --color-black: #000000;
   --color-ink: #1d1d1b;
   --color-white: #ffffff;
   --color-orange-400: #FF8A4C; --color-orange-500: #F26A1F; --color-orange-600: #C2410C;
-  --color-red-400: #FF5C6C;    --color-red-500: #E5243B;    --color-red-600: #C8102E;
-  --color-purple-400: #B48CFF; --color-purple-500: #8B3DFF; --color-purple-600: #7A35E0;
+  --color-red-400: #FF5C6C;    --color-red-500: #E01E37;    --color-red-600: #B8102C;
+  --color-burgundy-500: #8E1B3F; --color-burgundy-600: #6B1030;
+  --color-purple-400: #A78BFA; --color-purple-500: #6D28D9; --color-purple-600: #4C1D95;
   --color-green: #1A9D67;
   --color-amber: #F5BB00;
   --color-blue: #1372DE;
 
-  /* surfaces and text */
-  --bg-page: #F4F2F0;
-  --bg-surface-1: #FFFFFF;
-  --bg-surface-2: #ECEAE8;
-  --bg-surface-3: #DDDCDB;
-  --text-strong: var(--color-ink);
-  --text-default: #312E2B;
-  --text-muted: #6A6764;
-  --text-muted-strong: #333333;
-  --text-disabled: #A19E9E;
-  --border-subtle: rgba(29,29,27,0.08);
-  --border-default: rgba(29,29,27,0.14);
-  --border-strong: rgba(29,29,27,0.22);
-  --scrim: rgba(0,0,0,0.5);
-
-  /* accent - light fills are the deep tone under white text */
-  --accent-fill: var(--accent-base);
-  --accent-on: var(--color-white);
-
-  /* intent */
+  /* intent fills - the same in every theme */
   --intent-error: var(--color-red-600);
   --intent-success: var(--color-green);
   --intent-warning: var(--color-amber);
@@ -43,46 +26,6 @@
   --intent-on-success: var(--color-white);
   --intent-on-warning: #333333;
   --intent-on-info: var(--color-white);
-  --intent-error-text: #C2143C;
-  --intent-success-text: #147A4F;
-  --intent-warning-text: #7A5B00;
-  --intent-info-text: #1466C8;
-
-  /* chip hues - text is the per-theme AA form; the class tints the background with the hue */
-  --chip-orange-text: #A33608;
-  --chip-red-text: #AD0035;
-  --chip-purple-text: #6B21D4;
-  --chip-green-text: #006A42;
-  --chip-amber-text: #816100;
-  --chip-blue-text: #0057B2;
-
-  /* charts - cat slots in fixed order, never cycled; seq: more = more contrast vs the surface */
-  --chart-cat-1: #E5243B;
-  --chart-cat-2: #1372DE;
-  --chart-cat-3: #7C9F00;
-  --chart-cat-4: #7633E2;
-  --chart-cat-5: #048C9C;
-  --chart-cat-6: #D97D00;
-  --chart-cat-7: #CB0092;
-  --chart-cat-8: #2838E6;
-  --chart-cat-other: var(--text-disabled);
-  --chart-seq-1: #FDBA8C;
-  --chart-seq-2: #F7894A;
-  --chart-seq-3: #EE4B3A;
-  --chart-seq-4: #C8102E;
-  --chart-seq-5: #8E1660;
-  --chart-seq-6: #4C1D95;
-  --chart-div-neg-3: #4C1D95;
-  --chart-div-neg-2: #7A35E0;
-  --chart-div-neg-1: #B48CFF;
-  --chart-div-mid: #B9B7B5;
-  --chart-div-pos-1: #FFA36E;
-  --chart-div-pos-2: #F26A1F;
-  --chart-div-pos-3: #A33608;
-  --chart-text: var(--text-muted);
-  --chart-text-strong: var(--text-default);
-  --chart-grid: var(--border-subtle);
-  --chart-axis: var(--border-default);
 
   /* scale */
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
@@ -130,22 +73,20 @@
   --leading-prose: 1.5;
   --measure: 65ch;
 
-  /* gradients - decorative only; the accent-driven ones (.grad-accent, .grad-wash, .grad-glow) live in their classes */
-  --grad-spectrum: linear-gradient(105deg in oklch, var(--color-orange-500), var(--color-red-500), var(--color-purple-500));
-  --grad-ember: linear-gradient(105deg in oklch, var(--color-orange-500), var(--color-red-600));
-  --grad-dusk: linear-gradient(105deg in oklch, var(--color-red-500), var(--color-purple-600));
-  --grad-aurora: radial-gradient(ellipse 70% 60% at 18% 25%, color-mix(in srgb, var(--color-orange-500) 70%, transparent) 0%, transparent 62%),
-    radial-gradient(ellipse 65% 60% at 55% 75%, color-mix(in srgb, var(--color-red-500) 75%, transparent) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 55% at 88% 20%, color-mix(in srgb, var(--color-purple-500) 70%, transparent) 0%, transparent 60%);
+  /* gradients - decorative only. in oklch: the dark burgundy and purple stops keep the red → purple turn saturated (oklab greys it out).
+     The accent-driven ones (.grad-wash, .grad-glow) live in their classes; --grad-kit comes with the kit. */
+  --grad-spectrum: linear-gradient(105deg in oklch, var(--color-orange-400), var(--color-orange-500), var(--color-red-500), var(--color-red-600), var(--color-burgundy-500), var(--color-burgundy-600), var(--color-purple-600));
+  --grad-ember: linear-gradient(105deg in oklch, var(--color-orange-400), var(--color-orange-500), var(--color-red-500), var(--color-red-600));
+  --grad-dusk: linear-gradient(105deg in oklch, var(--color-red-600), var(--color-burgundy-500), var(--color-burgundy-600), var(--color-purple-600));
+  --grad-aurora: radial-gradient(ellipse 60% 55% at 15% 25%, color-mix(in srgb, var(--color-orange-500) 70%, transparent) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 60% at 42% 75%, color-mix(in srgb, var(--color-red-500) 75%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 60% at 68% 35%, color-mix(in srgb, var(--color-burgundy-500) 85%, transparent) 0%, transparent 62%),
+    radial-gradient(ellipse 55% 55% at 90% 70%, color-mix(in srgb, var(--color-purple-500) 75%, transparent) 0%, transparent 60%);
 }
 
-/* accent axis - red is the default; put data-accent on <html> or beside a data-theme */
-:root { --accent-base: var(--color-red-600); --accent-bright: var(--color-red-400); --accent-2: var(--color-purple-500); }
-[data-accent="orange"] { --accent-base: var(--color-orange-600); --accent-bright: var(--color-orange-400); --accent-2: var(--color-red-500); }
-[data-accent="purple"] { --accent-base: var(--color-purple-600); --accent-bright: var(--color-purple-400); --accent-2: var(--color-red-500); }
-
-/* dark family - shared by data-theme="dark" and data-surface="brand" */
-[data-theme="dark"], [data-surface="brand"] {
+/* dark - the default, shared by data-theme="dark" and data-surface="brand" */
+:root, [data-theme="dark"], [data-surface="brand"] {
+  color-scheme: dark;
   --bg-page: var(--color-black);
   --bg-surface-1: var(--color-ink);
   --bg-surface-2: #2A2826;
@@ -169,13 +110,15 @@
   --intent-warning-text: #F5BB00;
   --intent-info-text: #2988F0;
 
+  /* chip hues - text is the per-theme AA form; the class tints the background with the hue */
   --chip-orange-text: #FF8A4C;
   --chip-red-text: #FF5C72;
-  --chip-purple-text: #B48CFF;
+  --chip-purple-text: #B39DFF;
   --chip-green-text: #3BB37C;
   --chip-amber-text: #F5BB00;
   --chip-blue-text: #4B99FF;
 
+  /* charts - cat slots in fixed order, never cycled; seq: more = more contrast vs the surface */
   --chart-cat-1: #FF5C6C;
   --chart-cat-2: #2988F0;
   --chart-cat-3: #80A400;
@@ -184,22 +127,131 @@
   --chart-cat-6: #D57B00;
   --chart-cat-7: #E636AD;
   --chart-cat-8: #6287FF;
+  --chart-cat-other: var(--text-disabled);
   --chart-seq-1: #6E2A12;
   --chart-seq-2: #A8390F;
   --chart-seq-3: #E0303F;
   --chart-seq-4: #FF6680;
-  --chart-seq-5: #DA8CF2;
-  --chart-seq-6: #EBD4FF;
-  --chart-div-neg-3: #C9A8FF;
-  --chart-div-neg-2: #9466F5;
-  --chart-div-neg-1: #5E2EB8;
+  --chart-seq-5: #B9A0FF;
+  --chart-seq-6: #E3D6FF;
+  --chart-div-neg-3: #C9B5FF;
+  --chart-div-neg-2: #A78BFA;
+  --chart-div-neg-1: #5B3AA8;
   --chart-div-mid: #5A5754;
   --chart-div-pos-1: #A8390F;
   --chart-div-pos-2: #F26A1F;
   --chart-div-pos-3: #FFB27A;
+  --chart-text: var(--text-muted);
+  --chart-text-strong: var(--text-default);
+  --chart-grid: var(--border-subtle);
+  --chart-axis: var(--border-default);
 }
 
-/* brand surface - black-first presentation surface in both themes; wins over data-theme on the same element */
+/* light - explicit. Keep in step with the system-light block below; the test checks they match. */
+[data-theme="light"]:where(:not([data-surface="brand"])) {
+  color-scheme: light;
+  --bg-page: #F4F2F0;
+  --bg-surface-1: #FFFFFF;
+  --bg-surface-2: #ECEAE8;
+  --bg-surface-3: #DDDCDB;
+  --text-strong: var(--color-ink);
+  --text-default: #312E2B;
+  --text-muted: #6A6764;
+  --text-muted-strong: #333333;
+  --text-disabled: #A19E9E;
+  --border-subtle: rgba(29,29,27,0.08);
+  --border-default: rgba(29,29,27,0.14);
+  --border-strong: rgba(29,29,27,0.22);
+  --scrim: rgba(0,0,0,0.5);
+  --accent-fill: var(--accent-base);
+  --accent-on: var(--color-white);
+  --intent-error-text: #C2143C;
+  --intent-success-text: #147A4F;
+  --intent-warning-text: #7A5B00;
+  --intent-info-text: #1466C8;
+  --chip-orange-text: #A33608;
+  --chip-red-text: #A0002F;
+  --chip-purple-text: #5B21B6;
+  --chip-green-text: #006A42;
+  --chip-amber-text: #816100;
+  --chip-blue-text: #0057B2;
+  --chart-cat-1: #E01E37;
+  --chart-cat-2: #1372DE;
+  --chart-cat-3: #7C9F00;
+  --chart-cat-4: #7633E2;
+  --chart-cat-5: #048C9C;
+  --chart-cat-6: #D97D00;
+  --chart-cat-7: #CB0092;
+  --chart-cat-8: #2838E6;
+  --chart-seq-1: #FDBA8C;
+  --chart-seq-2: #F7894A;
+  --chart-seq-3: #E8432F;
+  --chart-seq-4: #B8102C;
+  --chart-seq-5: #6B1030;
+  --chart-seq-6: #2E0F5C;
+  --chart-div-neg-3: #4C1D95;
+  --chart-div-neg-2: #6D28D9;
+  --chart-div-neg-1: #A78BFA;
+  --chart-div-mid: #B9B7B5;
+  --chart-div-pos-1: #FFA36E;
+  --chart-div-pos-2: #F26A1F;
+  --chart-div-pos-3: #A33608;
+}
+
+/* light - from the system, for a page that sets no data-theme. Same values as the block above. */
+@media (prefers-color-scheme: light) {
+  :root:where(:not([data-theme]):not([data-surface="brand"])) {
+    color-scheme: light;
+    --bg-page: #F4F2F0;
+    --bg-surface-1: #FFFFFF;
+    --bg-surface-2: #ECEAE8;
+    --bg-surface-3: #DDDCDB;
+    --text-strong: var(--color-ink);
+    --text-default: #312E2B;
+    --text-muted: #6A6764;
+    --text-muted-strong: #333333;
+    --text-disabled: #A19E9E;
+    --border-subtle: rgba(29,29,27,0.08);
+    --border-default: rgba(29,29,27,0.14);
+    --border-strong: rgba(29,29,27,0.22);
+    --scrim: rgba(0,0,0,0.5);
+    --accent-fill: var(--accent-base);
+    --accent-on: var(--color-white);
+    --intent-error-text: #C2143C;
+    --intent-success-text: #147A4F;
+    --intent-warning-text: #7A5B00;
+    --intent-info-text: #1466C8;
+    --chip-orange-text: #A33608;
+    --chip-red-text: #A0002F;
+    --chip-purple-text: #5B21B6;
+    --chip-green-text: #006A42;
+    --chip-amber-text: #816100;
+    --chip-blue-text: #0057B2;
+    --chart-cat-1: #E01E37;
+    --chart-cat-2: #1372DE;
+    --chart-cat-3: #7C9F00;
+    --chart-cat-4: #7633E2;
+    --chart-cat-5: #048C9C;
+    --chart-cat-6: #D97D00;
+    --chart-cat-7: #CB0092;
+    --chart-cat-8: #2838E6;
+    --chart-seq-1: #FDBA8C;
+    --chart-seq-2: #F7894A;
+    --chart-seq-3: #E8432F;
+    --chart-seq-4: #B8102C;
+    --chart-seq-5: #6B1030;
+    --chart-seq-6: #2E0F5C;
+    --chart-div-neg-3: #4C1D95;
+    --chart-div-neg-2: #6D28D9;
+    --chart-div-neg-1: #A78BFA;
+    --chart-div-mid: #B9B7B5;
+    --chart-div-pos-1: #FFA36E;
+    --chart-div-pos-2: #F26A1F;
+    --chart-div-pos-3: #A33608;
+  }
+}
+
+/* brand surface - black-first presentation surface in both themes; wins over data-theme="light" on the same element */
 [data-surface="brand"] {
   --bg-surface-1: #0D0D0C;
   --bg-surface-2: #161614;
@@ -221,6 +273,21 @@
   --space-section: 32px;
   --space-block: 16px;
   --space-inline: 8px;
+}
+
+/* kits - one preset per product family: accent pair, gradient partner, signature gradient.
+   Put data-kit on <html>, or beside a data-theme, so the fills re-resolve. */
+:root, [data-kit="forge"] { /* kit-forge - generation */
+  --accent-base: var(--color-red-600); --accent-bright: var(--color-red-400); --accent-2: var(--color-burgundy-500);
+  --grad-kit: linear-gradient(105deg in oklch, var(--color-red-400), var(--color-red-500), var(--color-red-600), var(--color-burgundy-500), var(--color-burgundy-600));
+}
+[data-kit="sim"] { /* kit-sim - simulation */
+  --accent-base: var(--color-orange-600); --accent-bright: var(--color-orange-400); --accent-2: var(--color-red-500);
+  --grad-kit: linear-gradient(105deg in oklch, var(--color-orange-400), var(--color-orange-500), var(--color-red-500), var(--color-red-600));
+}
+[data-kit="viz"] { /* kit-viz - visualization */
+  --accent-base: var(--color-purple-600); --accent-bright: var(--color-purple-400); --accent-2: var(--color-burgundy-500);
+  --grad-kit: linear-gradient(105deg in oklch, var(--color-purple-400), var(--color-purple-500), var(--color-purple-600), var(--color-burgundy-600));
 }
 
 /* accent-derived - re-declared on every themed element so they resolve against that element's fill and text */
