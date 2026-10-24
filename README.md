@@ -4,6 +4,18 @@ Design tokens and CSS primitives for the kit modules - kit-sim, kit-forge and ki
 
 Open [`examples/index.html`](examples/index.html) straight from disk to see every token and primitive, with live theme, kit and density switches. [`examples/app.html`](examples/app.html) is a tool page and [`examples/deck.html`](examples/deck.html) a slide deck.
 
+The three kit test pages show each family in its own preset:
+
+| Page | Preset | Example |
+| --- | --- | --- |
+| [`kit-sim.html`](examples/kit-sim.html) | KIT-SIM | Simulation: a daylight field over a site |
+| [`kit-forge.html`](examples/kit-forge.html) | KIT-FORGE | Generation: a live parcel subdivision with variants |
+| [`kit-viz.html`](examples/kit-viz.html) | KIT-VIZ | Visualization: a dashboard with bar, line, heatmap and diverging charts |
+
+Every chart and colour on those pages comes from the tokens.
+
+The app-bar lockup is `<span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span>`. It renders KIT-SIM, with the kit name in the kit's colour.
+
 ## Install
 
 ```jsonc

@@ -54,7 +54,7 @@ Every region has one owner for its gaps, so the markup needs no inline layout.
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="app-shell">
   <header class="app-bar">
-    <a class="app-bar__brand" href="/">kit-forge<span class="app-bar__app">Parcel generator</span></a>  <!-- the family name, then the app -->
+    <a class="app-bar__brand" href="/"><span class="kit-mark">kit-<span class="kit-mark__name">forge</span></span><span class="app-bar__app">Parcels</span></a>  <!-- KIT-FORGE lockup, then the app -->
     <span class="app-bar__spacer"></span>
     <!-- .icon-btn--ghost actions; .app-bar__nav-toggle for the phone drawer; one .btn--primary -->
   </header>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-kit="sim" data-density="compact">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KIT-SIM test page</title>
+  <link rel="stylesheet" href="../css/kit-ui.css">
+  <style>
+    /* page-local - tokens only */
+    .legend { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
+    .legend > i { block-size: 12px; }
+    .legend-labels { display: flex; justify-content: space-between; font-size: var(--fs-small); color: var(--chart-text); font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<!-- Simulation tool (after the daylight app): inputs left, the scene in the viewport, results right. -->
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell" style="--sidebar-w: 0px">
+    <header class="app-bar">
+      <a class="app-bar__brand" href="./index.html"><span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span><span class="app-bar__app">Daylight</span></a>
+      <span class="app-bar__spacer"></span>
+      <a class="btn btn--ghost" href="./kit-forge.html">Forge</a>
+      <a class="btn btn--ghost" href="./kit-viz.html">Viz</a>
+      <button class="icon-btn icon-btn--ghost" type="button" aria-label="Switch light and dark theme" id="theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="4" y="4" width="16" height="16"/><path d="M12 4v16h8V4Z" fill="currentColor"/></svg>
+      </button>
+    </header>
+
+    <main class="app-main" id="main">
+      <h1 class="sr-only">Daylight simulation</h1>
+      <div class="split split--fill" style="--split-aside: 20rem">
+        <div class="split split--aside-start split--fill" style="--split-aside: 24rem">
+          <aside class="stack" aria-label="Inputs">
+            <h2>Model</h2>
+            <div class="field">
+              <label class="field__label" for="files">Model files</label>
+              <input class="input" id="files" type="file" multiple>
+              <p class="field__help">.glb, .gltf with its .bin and textures, or .obj</p>
+            </div>
+            <details class="accordion" open>
+              <summary>Meshes <span class="text-muted">3 total, 2 receiving, 1 shading</span></summary>
+              <div class="accordion__body stack stack--tight">
+                <div class="toolbar">
+                  <button class="btn btn--secondary" type="button" disabled>Receiver</button>
+                  <button class="btn btn--secondary" type="button" disabled>Shade</button>
+                  <button class="btn btn--secondary" type="button" disabled>Ignore</button>
+                </div>
+                <div class="toolbar">
+                  <div class="field"><label class="sr-only" for="filter">Filter meshes</label><input class="input" id="filter" type="search" placeholder="Filter"></div>
+                  <button class="btn btn--ghost" type="button">All</button>
+                  <button class="btn btn--ghost" type="button">None</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <thead><tr><th scope="col">Mesh</th><th scope="col" class="num">Triangles</th><th scope="col">Role</th></tr></thead>
+                    <tbody>
+                      <tr><td>Plane</td><td class="num">20,808</td><td><span class="badge badge--info"><span class="dot"></span>Receiver</span></td></tr>
+                      <tr aria-selected="true"><td>Courtyard</td><td class="num">15,744</td><td><span class="badge badge--info"><span class="dot"></span>Receiver</span></td></tr>
+                      <tr><td>Tower</td><td class="num">15,744</td><td><span class="badge badge--neutral"><span class="dot"></span>Shade</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="field__help">1 of 3 selected. Shift-click adds to the selection.</p>
+              </div>
+            </details>
+            <details class="accordion" open>
+              <summary>Location <span class="text-muted">51.51° N, 0.13° W</span></summary>
+              <div class="accordion__body stack stack--tight">
+                <div class="form-grid">
+                  <div class="field"><label class="field__label" for="lat">Latitude</label><input class="input" id="lat" type="number" value="51.51" step="0.01"></div>
+                  <div class="field"><label class="field__label" for="lon">Longitude</label><input class="input" id="lon" type="number" value="-0.13" step="0.01"></div>
+                </div>
+                <div class="slider-row"><label for="north">North</label><input id="north" type="range" min="0" max="359" value="12" oninput="this.nextElementSibling.textContent = this.value + '°'"><output class="slider-row__value">12°</output></div>
+              </div>
+            </details>
+            <details class="accordion">
+              <summary>Time <span class="text-muted">21 Jun, 08:00-18:00</span></summary>
+              <div class="accordion__body stack stack--tight">
+                <div class="field"><label class="field__label" for="date">Date</label><input class="input" id="date" type="date" value="2026-06-21"></div>
+                <div class="segmented" role="radiogroup" aria-label="Period"><label><input type="radio" name="period" checked> Day</label><label><input type="radio" name="period"> Month</label><label><input type="radio" name="period"> Year</label></div>
+              </div>
+            </details>
+          </aside>
+
+          <div class="viewport">
+            <svg id="scene" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Daylight autonomy over the site, lower behind the three buildings"></svg>
+            <div class="viewport__info"><span>Daylight autonomy · 300 lx</span><span>1,850 points · 21 Jun</span></div>
+            <div class="viewport__bar cluster cluster--between">
+              <div class="cluster"><button class="btn btn--secondary" type="button">Views</button><button class="btn btn--secondary" type="button">Download USD</button></div>
+              <div class="cluster"><label><input type="checkbox" checked> Run on every change</label><button class="btn btn--primary" type="button" id="run">Run simulation</button></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="stack" aria-label="Results">
+          <h2>Results</h2>
+          <p class="text-muted" id="status">Finished in 1.8 s</p>
+          <div class="grid" style="--grid-min: 6rem">
+            <div class="stat"><span class="stat__label">Mean</span><span class="stat__value" id="mean">-</span></div>
+            <div class="stat"><span class="stat__label">Above 50%</span><span class="stat__value" id="above">-</span></div>
+          </div>
+          <div class="field">
+            <span class="field__label">Daylight autonomy</span>
+            <div class="legend" id="legend"></div>
+            <div class="legend-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+          </div>
+          <svg id="hist" viewBox="0 0 240 110" role="img" aria-label="Distribution of points over the six bands"></svg>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th scope="col">Receiver</th><th scope="col" class="num">Mean</th><th scope="col">Status</th></tr></thead>
+              <tbody>
+                <tr><td>Plane</td><td class="num">64%</td><td><span class="badge badge--success"><span class="dot"></span>Pass</span></td></tr>
+                <tr><td>Courtyard</td><td class="num">38%</td><td><span class="badge badge--warning"><span class="dot"></span>Below target</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    var html = document.documentElement, NS = 'http://www.w3.org/2000/svg';
+    var $ = function (id) { return document.getElementById(id); };
+    function el(parent, tag, attrs, style) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      for (var s in style || {}) e.style[s] = style[s];
+      return parent.appendChild(e);
+    }
+    $('theme').onclick = function () {
+      var dark = (html.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')) === 'dark';
+      html.dataset.theme = dark ? 'light' : 'dark';
+    };
+
+    // A daylight field: high in the open, low in each building's shadow (sun from the south, so shadows fall up the plan).
+    var BUILDINGS = [{ x: 70, y: 150, w: 60, h: 50 }, { x: 190, y: 110, w: 40, h: 90 }, { x: 280, y: 180, w: 70, h: 40 }];
+    function run(jitter) {
+      var scene = $('scene'), counts = [0, 0, 0, 0, 0, 0], sum = 0, n = 0;
+      scene.textContent = '';
+      for (var y = 0; y < 300; y += 8) for (var x = 0; x < 400; x += 8) {
+        var cx = x + 4, cy = y + 4, v = 0.97 - 0.25 * Math.hypot(cx - 200, cy - 150) / 250 - Math.random() * jitter, inside = false;
+        BUILDINGS.forEach(function (b) {
+          if (cx > b.x && cx < b.x + b.w && cy > b.y && cy < b.y + b.h) inside = true;
+          var out = Math.max(b.x - cx, 0, cx - b.x - b.w), above = b.y - cy, len = b.h * 1.6;
+          if (above > 0 && above < len) v -= 0.75 * (1 - above / len) * Math.exp(-out / 10);
+        });
+        if (inside) continue;
+        var band = Math.max(1, Math.min(6, 1 + Math.floor(v * 6)));
+        counts[band - 1]++; sum += Math.max(0, v); n++;
+        el(scene, 'rect', { x: x, y: y, width: 8, height: 8 }, { fill: 'var(--chart-seq-' + band + ')' });
+      }
+      BUILDINGS.forEach(function (b) { el(scene, 'rect', { x: b.x, y: b.y, width: b.w, height: b.h }, { fill: 'var(--bg-surface-3)', stroke: 'var(--border-strong)' }); });
+      $('mean').textContent = Math.round(sum / n * 100) + '%';
+      $('above').textContent = Math.round((counts[3] + counts[4] + counts[5]) / n * 100) + '%';
+      var hist = $('hist'), max = Math.max.apply(null, counts);
+      hist.textContent = '';
+      counts.forEach(function (c, i) {
+        var h = c / max * 90;
+        el(hist, 'rect', { x: i * 40 + 4, y: 95 - h, width: 32, height: h }, { fill: 'var(--chart-seq-' + (i + 1) + ')' });
+        el(hist, 'text', { x: i * 40 + 20, y: 108, 'text-anchor': 'middle', 'font-size': 9 }, { fill: 'var(--chart-text)' }).textContent = c;
+      });
+      el(hist, 'line', { x1: 0, y1: 95.5, x2: 240, y2: 95.5 }, { stroke: 'var(--chart-axis)' });
+    }
+    for (var i = 1; i <= 6; i++) $('legend').appendChild(document.createElement('i')).style.background = 'var(--chart-seq-' + i + ')';
+    $('run').onclick = function () { run(0.08); $('status').textContent = 'Finished in ' + (1 + Math.random()).toFixed(1) + ' s'; };
+    run(0.04);
+  </script>
+</body>
+</html>

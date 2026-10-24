@@ -103,6 +103,8 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.app-main` | The shell's scrolling main region |
 | `.app-bar` | 56 px top bar with translucent chrome |
 | `.app-bar__brand` | Home link: product wordmark in 600 weight, tight tracking |
+| `.kit-mark` | The kit lockup: `<span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span>` renders KIT-SIM. Type it lowercase; the class sets the caps |
+| `.kit-mark__name` | The kit word inside `.kit-mark`, in the kit's accent (follows `data-kit`) |
 | `.app-bar__app` | App name beside the wordmark; muted, ellipsizes, hides ≤ 640 px |
 | `.app-bar__spacer` | Pushes the actions to the end |
 | `.app-bar__nav-toggle` | Phone drawer button (`.icon-btn--ghost`); shown ≤ 768 px only |
@@ -130,6 +132,10 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.section` | Page region with `--space-section` padding; hairline between siblings |
 | `.split` | Main column + aside up to `--split-aside` (22rem); stacks ≤ 1024 px |
 | `.split--aside-start` | Aside first (a panel left of a canvas) |
+| `.split--fill` | Full-height tool layout: the split fills its region and each column scrolls inside; nest two for three columns |
+| `.viewport` | A tool's canvas well (3D view, map, plot); a child canvas or svg fills it |
+| `.viewport__bar` | The run bar pinned to the bottom of the viewport (view menus, export, the primary run action) |
+| `.viewport__info` | Quiet scene facts in the top corner; never takes the pointer |
 | `.toolbar` | Wrapping row of compact 36 px controls |
 | `.form-grid` | Auto-fit grid of `.field`s |
 | `.table-wrap` | Horizontal scroller for a wide `.data-table` |

@@ -196,6 +196,10 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .app-bar .app-bar__app { font: 400 var(--fs-h2) / 1.3 var(--font-primary); color: var(--text-muted);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } /* 1.3 not 1: overflow:hidden clips descenders at line-height 1 */
 @media (max-width: 640px) { .app-bar .app-bar__app { display: none; } }
+/* kit lockup - KIT-SIM, KIT-FORGE, KIT-VIZ. Type it lowercase (screen readers say "kit sim", not letters); the class sets the caps.
+   The family stays neutral and the kit name takes the kit's accent, so data-kit recolours it. Large text: the accent clears 3:1 on every surface. */
+.kit-mark { font: 500 var(--fs-display) / 1 var(--font-primary); letter-spacing: 0.02em; text-transform: uppercase; color: var(--text-strong); white-space: nowrap; }
+.kit-mark__name { color: var(--accent); }
 .app-bar__spacer { flex: 1; }
 .app-bar__nav-toggle { display: none; } /* the phone drawer's button; after .icon-btn in the cascade, so it wins the tie */
 .divider { border: none; block-size: 1px; background: var(--border-subtle); margin-block: var(--space-4); margin-inline: 0; }
@@ -217,10 +221,21 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, var(--split-aside, 22rem)); gap: var(--space-6); }
 .split > * { --split-aside: initial; }
 .split--aside-start { grid-template-columns: minmax(16rem, var(--split-aside, 22rem)) minmax(0, 1fr); } /* aside first: a panel left of a canvas */
+/* full-height tool: the split fills its region and each column scrolls inside (nest a second .split--fill for three columns) */
+.split--fill { block-size: 100%; min-block-size: 0; grid-auto-rows: minmax(0, 1fr); }
+.split--fill > * { min-block-size: 0; min-inline-size: 0; overflow: auto; } /* grid items default to min-content: a wide table or a canvas would push the column past the viewport */
 .toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); --control-h: 36px; } /* compact controls by scope */
 .form-grid { display: grid; gap: var(--space-4) var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr)); }
 .field--span { grid-column: 1 / -1; }
 .table-wrap { overflow-x: auto; max-inline-size: 100%; } /* pairs with .data-table--wrap */
+/* viewport - a tool's canvas well (3D view, map, plot): the canvas or svg fills it, overlays sit on top */
+.viewport { position: relative; block-size: 100%; min-block-size: 24rem; overflow: hidden; border: 1px solid var(--border-subtle); background: var(--bg-surface-2); }
+.viewport > :is(canvas, svg) { display: block; inline-size: 100%; block-size: 100%; }
+.viewport__bar { position: absolute; inset-inline: 0; inset-block-end: 0; padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-1); border-block-start: 1px solid var(--border-subtle); } /* the run bar: always visible under the scene */
+.viewport__info { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); display: grid; justify-items: end;
+  padding: var(--space-1) var(--space-2); background: color-mix(in srgb, var(--bg-surface-1) 85%, transparent);
+  pointer-events: none; font-size: var(--fs-small); color: var(--text-muted); font-variant-numeric: tabular-nums; text-align: end; } /* quiet scene facts on a backing that keeps them legible over any scene; never takes the pointer */
 .eyebrow { font: 500 var(--fs-label) / 1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); }
 
 /* .hero - display type at real size, one gradient, a dark field. The panel colour is a zero-specificity

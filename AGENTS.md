@@ -36,6 +36,7 @@ Each rule carries its reason, so nobody undoes one for lack of context.
 | `examples/index.html` | Live reference of every token and primitive, with switches |
 | `examples/app.html` | Tool page: shell, table, dialog, menu, toast |
 | `examples/deck.html` | Slide deck on the brand surface |
+| `examples/kit-sim.html`, `kit-forge.html`, `kit-viz.html` | One test page per kit preset: simulation viewport, live generator, chart dashboard |
 | `skills/kit-ui/` | Agent skill: `SKILL.md` and `reference.md` |
 | `test/check.test.mjs` | The gate |
 

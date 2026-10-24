@@ -144,7 +144,11 @@ test('every class is in the skill reference', () => {
 test('every var() used is declared', () => {
   const missing = [];
   for (const [file, text] of [['css/kit-ui.css', CSS], ['css/tokens.css', TOKENS], ...EXAMPLES])
-    for (const [, name] of strip(text).matchAll(/var\((--[\w-]+)/g)) if (!declared.has(name)) missing.push(`${file}: ${name}`);
+    for (const [, name] of strip(text).matchAll(/var\((--[\w-]+)/g)) {
+      // a trailing - is a prefix a script completes ('var(--chart-seq-' + n + ')'): some declared token must start with it
+      const known = name.endsWith('-') ? [...declared].some((d) => d.startsWith(name)) : declared.has(name);
+      if (!known) missing.push(`${file}: ${name}`);
+    }
   assert.deepEqual([...new Set(missing)], []);
 });
 
