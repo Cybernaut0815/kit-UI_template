@@ -61,7 +61,13 @@ Everything inside inherits. An element with its own `data-theme` is an island (a
   - `.grad-kit`: the current kit's signature
   - `.grad-aurora`
   - `.grad-wash` and `.grad-glow`, for work surfaces
-- **Fonts**: Geist and Geist Mono, variable, self-hosted under the SIL Open Font License ([`css/fonts/OFL.txt`](css/fonts/OFL.txt)).
+- **Fonts**, self-hosted under the SIL Open Font License ([`css/fonts/OFL.txt`](css/fonts/OFL.txt)):
+  - Geist (body and controls)
+  - Geist Mono (code)
+  - Space Mono bold (headings)
+  - Tektur (the KIT lockup only)
+- **App bar**: solid black in every theme. The lockup sets KIT- in white and the kit word in its own gradient.
+- **Tool layout**: `.split--fill` with `.panel` sidebars and a `.viewport` runs edge to edge under the bar.
 
 Corners are square: `--radius` is `0`. Set `--radius: 2px` on `<html>` to soften a whole app, never per component. The danger button is outlined, so it never reads as the red primary.
 

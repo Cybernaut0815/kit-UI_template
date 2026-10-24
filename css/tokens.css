@@ -53,6 +53,8 @@
   /* type - fs-* names are sizes, not elements: h2 takes --fs-h1 */
   --font-primary: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Consolas, monospace;
+  --font-heading: "Space Mono", "Geist Mono", ui-monospace, monospace; /* h1-h4 and titles: technical, typewriter roots */
+  --font-mark: "Tektur", "Geist", system-ui, sans-serif; /* the kit lockup only */
   --fs-hero: 32px;
   --fs-hero-xl: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
   --fs-display: 24px;
@@ -64,6 +66,7 @@
   --fs-small: 12px;
   --fs-label: 11px;
   --tracking-display: -0.04em;
+  --tracking-heading: -0.01em; /* Space Mono crowds at the display tracking */
   --tracking-body: -0.01em;
   --tracking-label: 0.01em;
   --tracking-small: 0.01em;
@@ -84,8 +87,8 @@
     radial-gradient(ellipse 55% 55% at 90% 70%, color-mix(in srgb, var(--color-purple-500) 75%, transparent) 0%, transparent 60%);
 }
 
-/* dark - the default, shared by data-theme="dark" and data-surface="brand" */
-:root, [data-theme="dark"], [data-surface="brand"] {
+/* dark - the default, shared by data-theme="dark", data-surface="brand" and the app bar (always a black island) */
+:root, [data-theme="dark"], [data-surface="brand"], .app-bar {
   color-scheme: dark;
   --bg-page: var(--color-black);
   --bg-surface-1: var(--color-ink);
@@ -275,23 +278,27 @@
   --space-inline: 8px;
 }
 
-/* kits - one preset per product family: accent pair, gradient partner, signature gradient.
+/* kits - one preset per product family: accent pair, gradient partner, signature gradient,
+   and --grad-mark, the kit word's gradient in the lockup (every stop clears 3:1 on the black bar).
    Put data-kit on <html>, or beside a data-theme, so the fills re-resolve. */
 :root, [data-kit="forge"] { /* kit-forge - generation */
   --accent-base: var(--color-red-600); --accent-bright: var(--color-red-400); --accent-2: var(--color-burgundy-500);
   --grad-kit: linear-gradient(105deg in oklch, var(--color-red-400), var(--color-red-500), var(--color-red-600), var(--color-burgundy-500), var(--color-burgundy-600));
+  --grad-mark: linear-gradient(90deg in oklch, #FF8A95, #FF4D5E, #E01E37);
 }
 [data-kit="sim"] { /* kit-sim - simulation */
   --accent-base: var(--color-orange-600); --accent-bright: var(--color-orange-400); --accent-2: var(--color-red-500);
   --grad-kit: linear-gradient(105deg in oklch, var(--color-orange-400), var(--color-orange-500), var(--color-red-500), var(--color-red-600));
+  --grad-mark: linear-gradient(90deg in oklch, #FFB27A, #FF8A4C, #FF5C6C);
 }
 [data-kit="viz"] { /* kit-viz - visualization */
   --accent-base: var(--color-purple-600); --accent-bright: var(--color-purple-400); --accent-2: var(--color-burgundy-500);
   --grad-kit: linear-gradient(105deg in oklch, var(--color-purple-400), var(--color-purple-500), var(--color-purple-600), var(--color-burgundy-600));
+  --grad-mark: linear-gradient(90deg in oklch, #DDD3FF, #A78BFA, #8B5CF6);
 }
 
 /* accent-derived - re-declared on every themed element so they resolve against that element's fill and text */
-:root, [data-theme], [data-surface] {
+:root, [data-theme], [data-surface], .app-bar {
   --accent: var(--accent-fill);
   --accent-hover: color-mix(in srgb, var(--accent-fill) 88%, var(--text-strong));
   --accent-subtle: color-mix(in srgb, var(--accent-fill) 14%, transparent);

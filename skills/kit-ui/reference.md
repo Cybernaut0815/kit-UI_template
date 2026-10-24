@@ -13,11 +13,11 @@ Every class and the grouped variables. `css/tokens.css` is the source of truth f
 - **Chips:** `--chip-{orange,red,purple,green,amber,blue}-text`
 - **Charts:** `--chart-cat-1..8 --chart-cat-other`, `--chart-seq-1..6`, `--chart-div-neg-3..-1 --chart-div-mid --chart-div-pos-1..3`, `--chart-text --chart-text-strong --chart-grid --chart-axis`
 - **Gradients:** `--grad-spectrum --grad-ember --grad-dusk --grad-aurora --grad-kit` (multi-stop, `in oklch`; apply through the classes)
-- **Kit:** `--accent-base --accent-bright` (the kit's deep and bright tones; themes pick one as `--accent-fill`), `--accent-2`, `--grad-kit`. Set by `data-kit="sim|forge|viz"`, never by hand
+- **Kit:** `--accent-base --accent-bright` (the kit's deep and bright tones; themes pick one as `--accent-fill`), `--accent-2`, `--grad-kit`, `--grad-mark` (the kit word's gradient on the black bar). Set by `data-kit="sim|forge|viz"`, never by hand
 - **Space:** `--space-1 2 3 4 5 6 8 10 12 16` (4-64 px), tiers `--space-section --space-block --space-inline`, `--gutter`
 - **Shape:** `--radius` (0; the one corner knob)
 - **Controls:** `--control-h --control-pad-y --row-h`
-- **Type:** `--font-primary --font-mono`, `--fs-hero-xl --fs-hero --fs-display --fs-h1 --fs-h2 --fs-h3 --fs-reading --fs-body --fs-small --fs-label`, `--tracking-{display,body,label,small}`, `--leading-{display,heading,body,prose}`, `--measure`
+- **Type:** `--font-primary` (Geist: body, controls), `--font-heading` (Space Mono: h1-h4 and titles), `--font-mono` (Geist Mono: code, eyebrows), `--font-mark` (Tektur: the kit lockup only), `--fs-hero-xl --fs-hero --fs-display --fs-h1 --fs-h2 --fs-h3 --fs-reading --fs-body --fs-small --fs-label`, `--tracking-{display,heading,body,label,small}`, `--leading-{display,heading,body,prose}`, `--measure`
 - **Motion:** `--motion-fast --motion-base --motion-slow --ease-out --ease-in --ease-spring`
 - **Depth:** `--shadow-low --shadow-mid --shadow-high --scrim --z-sticky --z-toast`
 
@@ -101,10 +101,10 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 |---|---|
 | `.app-shell` | Grid of sidebar, bar and main. `[data-rail]` collapses the sidebar to 56 px; `[data-nav-open]` opens the phone drawer (≤ 768 px) |
 | `.app-main` | The shell's scrolling main region |
-| `.app-bar` | 56 px top bar with translucent chrome |
+| `.app-bar` | 56 px top bar, solid black in every theme (a dark island: its text, borders and accent take the dark values) |
 | `.app-bar__brand` | Home link: product wordmark in 600 weight, tight tracking |
 | `.kit-mark` | The kit lockup: `<span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span>` renders KIT-SIM. Type it lowercase; the class sets the caps |
-| `.kit-mark__name` | The kit word inside `.kit-mark`, in the kit's accent (follows `data-kit`) |
+| `.kit-mark__name` | The kit word inside `.kit-mark`, in the kit's `--grad-mark` gradient (follows `data-kit`); the lockup is Tektur caps |
 | `.app-bar__app` | App name beside the wordmark; muted, ellipsizes, hides ≤ 640 px |
 | `.app-bar__spacer` | Pushes the actions to the end |
 | `.app-bar__nav-toggle` | Phone drawer button (`.icon-btn--ghost`); shown ≤ 768 px only |
@@ -132,7 +132,8 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.section` | Page region with `--space-section` padding; hairline between siblings |
 | `.split` | Main column + aside up to `--split-aside` (22rem); stacks ≤ 1024 px |
 | `.split--aside-start` | Aside first (a panel left of a canvas) |
-| `.split--fill` | Full-height tool layout: the split fills its region and each column scrolls inside; nest two for three columns |
+| `.split--fill` | Full-height tool layout, edge to edge: the split fills `.app-main` (which then drops its padding), columns meet with no gap and scroll inside, a `.viewport` in it loses its border; nest two for three columns |
+| `.panel` | A tool sidebar in `.split--fill`: surface-1, padded, scrolls; a hairline on the edge it shares with the viewport. Pair with `.stack` |
 | `.viewport` | A tool's canvas well (3D view, map, plot); a child canvas or svg fills it |
 | `.viewport__bar` | The run bar pinned to the bottom of the viewport (view menus, export, the primary run action) |
 | `.viewport__info` | Quiet scene facts in the top corner; never takes the pointer |

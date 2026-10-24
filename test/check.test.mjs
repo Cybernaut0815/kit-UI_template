@@ -46,6 +46,7 @@ function matches(sel, attrs) {
   for (let rest = sel; rest; ) {
     let m;
     if ((m = rest.match(/^:root/))) { /* every scene is <html> */ }
+    else if (rest.match(/^\.[\w-]+/)) return false; // a class (the .app-bar island) is never <html>
     else if ((m = rest.match(/^\[data-(\w+)(?:="(\w+)")?\]/))) { if (m[2] === undefined ? !(m[1] in attrs) : attrs[m[1]] !== m[2]) return false; }
     else if ((m = rest.match(/^:(where|not)\(/))) {
       let depth = 1, i = m[0].length;
@@ -123,6 +124,19 @@ test('an explicit data-theme beats the system', () => {
 test('brand surface wins over data-theme="light" and the system', () => {
   assert.equal(page({ theme: 'light', surface: 'brand' }, 'light'), page({ theme: 'dark' }));
   assert.equal(page({ surface: 'brand' }, 'light'), page({ theme: 'dark' }));
+});
+
+test('every stop of each kit word gradient clears 3:1 on the black bar', () => {
+  const misses = [];
+  for (const kit of ['forge', 'sim', 'viz']) {
+    const raw = BLOCKS.filter((b) => b.sels.some((s) => matches(s, kit === 'forge' ? {} : { kit }))).flatMap((b) => b.decls).filter(([k]) => k === 'grad-mark').pop();
+    assert.ok(raw, `--grad-mark missing for ${kit}`);
+    for (const [hex] of raw[1].matchAll(/#[0-9a-f]{6}/gi)) {
+      const r = ratio(parse(hex), parse('#000000'));
+      if (r < 3) misses.push(`${kit} ${hex}: ${r.toFixed(2)} < 3`);
+    }
+  }
+  assert.deepEqual(misses, []);
 });
 
 test('the explicit and system light blocks match', () => {

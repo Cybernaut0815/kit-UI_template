@@ -89,7 +89,7 @@ Each rule has a slug so a review can cite it.
 - `danger-is-outlined`: destructive actions use `.btn--danger` (outlined); never a filled red button for anything but the primary.
 - `skip-link`: the first element in `<body>` is the skip link; `<main>` carries `id="main"`.
 - `sharp`: square corners everywhere; no per-component `border-radius`, no pills.
-- `hierarchy-without-weight`: hierarchy comes from size, `--text-*` intensity, space and position; headings 600, body 400.
+- `hierarchy-without-weight`: hierarchy comes from size, `--text-*` intensity, space and position; headings 600, body 400. Type: Geist for body and controls, Space Mono for h1-h4 and titles (set by the element defaults; never re-font a heading), Tektur only inside `.kit-mark`.
 - `card-by-role`: a `.card` is a separate object; group with `.stack`, `.section` and hairlines first; never nest cards.
 - `one-bold-element`: one expressive element per page (a hero gradient, one display number); the rest is quiet.
 - `gradients-decorate`: gradients only on heroes, decks and identity; work surfaces get `.grad-wash` or `.grad-glow`; never a gradient heading on a work surface or a gradient button.
