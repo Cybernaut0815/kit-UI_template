@@ -215,7 +215,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .app-shell > .app-main:has(> .split--fill) { padding: 0; } /* a full-height tool runs edge to edge: panels and viewport meet the bar and the window */
 /* the app bar is a black island in every theme (tokens.css puts .app-bar in the dark block), so the identity strip always dominates */
 .app-bar { display: flex; align-items: center; gap: var(--space-4); block-size: var(--app-bar-h,56px); padding-inline: var(--space-4);
-  border-block-end: 2px solid var(--border-strong); background: var(--bg-page); color: var(--text-default); } /* frame lines (bar, panel and sidebar edges) are 2px strong: they carry the layout */
+  border-block-end: 1px solid var(--border-strong); background: var(--bg-page); color: var(--text-default); } /* frame lines (bar, panel and sidebar edges) take --border-strong: they carry the layout */
 .app-bar__brand { display: inline-flex; align-items: baseline; gap: var(--space-3); min-inline-size: 0;
   font: 600 var(--fs-h2) / 1 var(--font-primary); letter-spacing: var(--tracking-display); color: var(--text-strong); text-decoration: none; }
 /* app-name slot - scoped to the bar so the class can't restyle content that reuses it */
@@ -269,10 +269,10 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .viewport { position: relative; block-size: 100%; min-block-size: 24rem; overflow: hidden; border: 1px solid var(--border-subtle); background: var(--bg-surface-2); }
 .viewport > :is(canvas, svg) { display: block; inline-size: 100%; block-size: 100%; }
 .split--fill > .viewport { border: 0; min-block-size: 0; } /* in a tool layout the scene fills its column from the bar to the window edge */
-/* panel - a tool sidebar in .split--fill: flush to the bar and the window, one strong 2px frame line on the edge it shares with the viewport */
+/* panel - a tool sidebar in .split--fill: flush to the bar and the window, one strong frame line on the edge it shares with the viewport */
 .panel { background: var(--bg-panel); padding: var(--space-5); overflow: auto; }
-.split--fill > .panel:first-child { border-inline-end: 2px solid var(--border-strong); }
-.split--fill > .panel:last-child { border-inline-start: 2px solid var(--border-strong); }
+.split--fill > .panel:first-child { border-inline-end: 1px solid var(--border-strong); }
+.split--fill > .panel:last-child { border-inline-start: 1px solid var(--border-strong); }
 .viewport__bar { position: absolute; inset-inline: 0; inset-block-end: 0; padding: var(--space-3) var(--space-4);
   background: var(--bg-surface-1); border-block-start: 1px solid var(--border-subtle); } /* the run bar: always visible under the scene */
 .viewport__info { position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2); display: grid; justify-items: end;
@@ -312,7 +312,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
   border-radius: var(--radius); background: var(--bg-surface-1); color: var(--text-strong); box-shadow: var(--shadow-mid); text-decoration: underline; }
 .skip-link:not(:focus-visible) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-.sidebar { display: flex; flex-direction: column; gap: 2px; padding: var(--space-3); background: var(--bg-panel); border-inline-end: 2px solid var(--border-strong); }
+.sidebar { display: flex; flex-direction: column; gap: 2px; padding: var(--space-3); background: var(--bg-panel); border-inline-end: 1px solid var(--border-strong); }
 .sidebar a { position: relative; display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius);
   color: var(--text-muted); text-decoration: none; font-size: var(--fs-body); white-space: nowrap; overflow: hidden; }
 .sidebar a:hover { background: var(--bg-surface-2); color: var(--text-default); }
