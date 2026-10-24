@@ -91,6 +91,7 @@
 :root, [data-theme="dark"], [data-surface="brand"], .app-bar {
   color-scheme: dark;
   --bg-page: var(--color-black);
+  --bg-panel: var(--color-black); /* tool sidebars (.panel, .sidebar): black like the bar in dark, white in light */
   --bg-surface-1: var(--color-ink);
   --bg-surface-2: #2A2826;
   --bg-surface-3: #3A3734;
@@ -155,6 +156,7 @@
   color-scheme: light;
   --bg-page: #F4F2F0;
   --bg-surface-1: #FFFFFF;
+  --bg-panel: #FFFFFF;
   --bg-surface-2: #ECEAE8;
   --bg-surface-3: #DDDCDB;
   --text-strong: var(--color-ink);
@@ -207,6 +209,7 @@
     color-scheme: light;
     --bg-page: #F4F2F0;
     --bg-surface-1: #FFFFFF;
+    --bg-panel: #FFFFFF;
     --bg-surface-2: #ECEAE8;
     --bg-surface-3: #DDDCDB;
     --text-strong: var(--color-ink);

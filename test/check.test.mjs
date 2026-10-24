@@ -88,7 +88,7 @@ for (const [scene, attrs, system] of SCENES) {
       const r = ratio(over(fg, bg), bg);
       if (r < min) misses.push(`${fgName} on ${bgName}: ${r.toFixed(2)} < ${min}`);
     };
-    for (const bg of ['bg-page', 'bg-surface-1']) { need('text-strong', bg, 4.5); need('text-default', bg, 4.5); need('text-muted', bg, 4.5); need('accent-fill', bg, 3); }
+    for (const bg of ['bg-page', 'bg-surface-1', 'bg-panel']) { need('text-strong', bg, 4.5); need('text-default', bg, 4.5); need('text-muted', bg, 4.5); need('accent-fill', bg, 3); }
     need('text-muted', 'bg-surface-2', 4.5);
     need('text-muted-strong', 'bg-surface-3', 4.5);
     need('accent-on', 'accent-fill', 4.5);

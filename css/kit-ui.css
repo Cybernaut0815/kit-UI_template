@@ -135,7 +135,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 /* ponytail: baseline print legibility - any surface prints black on white. Richer print styling can come later. */
 @media print {
   :root, [data-theme], [data-surface], .app-bar {
-    --bg-page: #fff; --bg-surface-1: #fff; --bg-surface-2: #fff; --bg-surface-3: #fff;
+    --bg-page: #fff; --bg-panel: #fff; --bg-surface-1: #fff; --bg-surface-2: #fff; --bg-surface-3: #fff;
     --text-strong: #000; --text-default: #000; --text-muted: #333;
     --border-subtle: #ccc; --border-default: #999; --border-strong: #666;
   }
@@ -262,7 +262,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
 .viewport > :is(canvas, svg) { display: block; inline-size: 100%; block-size: 100%; }
 .split--fill > .viewport { border: 0; min-block-size: 0; } /* in a tool layout the scene fills its column from the bar to the window edge */
 /* panel - a tool sidebar in .split--fill: flush to the bar and the window, one hairline on the edge it shares with the viewport */
-.panel { background: var(--bg-surface-1); padding: var(--space-5); overflow: auto; }
+.panel { background: var(--bg-panel); padding: var(--space-5); overflow: auto; }
 .split--fill > .panel:first-child { border-inline-end: 1px solid var(--border-subtle); }
 .split--fill > .panel:last-child { border-inline-start: 1px solid var(--border-subtle); }
 .viewport__bar { position: absolute; inset-inline: 0; inset-block-end: 0; padding: var(--space-3) var(--space-4);
@@ -304,7 +304,7 @@ button.chip:not([aria-pressed="true"]):not(.is-active):where(:not(:disabled)):ho
   border-radius: var(--radius); background: var(--bg-surface-1); color: var(--text-strong); box-shadow: var(--shadow-mid); text-decoration: underline; }
 .skip-link:not(:focus-visible) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-.sidebar { display: flex; flex-direction: column; gap: 2px; padding: var(--space-3); background: var(--bg-surface-1); border-inline-end: 1px solid var(--border-subtle); }
+.sidebar { display: flex; flex-direction: column; gap: 2px; padding: var(--space-3); background: var(--bg-panel); border-inline-end: 1px solid var(--border-subtle); }
 .sidebar a { position: relative; display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius);
   color: var(--text-muted); text-decoration: none; font-size: var(--fs-body); white-space: nowrap; overflow: hidden; }
 .sidebar a:hover { background: var(--bg-surface-2); color: var(--text-default); }

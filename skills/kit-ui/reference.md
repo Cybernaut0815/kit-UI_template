@@ -4,7 +4,7 @@ Every class and the grouped variables. `css/tokens.css` is the source of truth f
 
 ## Variables
 
-- **Surfaces:** `--bg-page --bg-surface-1 --bg-surface-2 --bg-surface-3`
+- **Surfaces:** `--bg-page --bg-panel --bg-surface-1 --bg-surface-2 --bg-surface-3` (`--bg-panel`: tool sidebars, black in dark, white in light)
 - **Text:** `--text-strong --text-default --text-muted --text-muted-strong --text-disabled`
 - **Borders:** `--border-subtle --border-default --border-strong`
 - **Accent:** `--accent` (lines, underlines, stripes), `--accent-fill` (button fill, links, focus ring), `--accent-on` (text on the fill), `--accent-hover`, `--accent-subtle` (tint), `--accent-2` (gradient partner). Never put text on bare `--accent`; use `.btn--primary`.
@@ -133,7 +133,7 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.split` | Main column + aside up to `--split-aside` (22rem); stacks ≤ 1024 px |
 | `.split--aside-start` | Aside first (a panel left of a canvas) |
 | `.split--fill` | Full-height tool layout, edge to edge: the split fills `.app-main` (which then drops its padding), columns meet with no gap and scroll inside, a `.viewport` in it loses its border; nest two for three columns |
-| `.panel` | A tool sidebar in `.split--fill`: surface-1, padded, scrolls; a hairline on the edge it shares with the viewport. Pair with `.stack` |
+| `.panel` | A tool sidebar in `.split--fill`: `--bg-panel` (black in dark, white in light), padded, scrolls; a hairline on the edge it shares with the viewport. Pair with `.stack` |
 | `.viewport` | A tool's canvas well (3D view, map, plot); a child canvas or svg fills it |
 | `.viewport__bar` | The run bar pinned to the bottom of the viewport (view menus, export, the primary run action) |
 | `.viewport__info` | Quiet scene facts in the top corner; never takes the pointer |
