@@ -133,7 +133,7 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.split` | Main column + aside up to `--split-aside` (22rem); stacks ≤ 1024 px |
 | `.split--aside-start` | Aside first (a panel left of a canvas) |
 | `.split--fill` | Full-height tool layout, edge to edge: the split fills `.app-main` (which then drops its padding), columns meet with no gap and scroll inside, a `.viewport` in it loses its border; nest two for three columns |
-| `.panel` | A tool sidebar in `.split--fill`: `--bg-panel` (black in dark, white in light), padded, scrolls; a hairline on the edge it shares with the viewport. Pair with `.stack` |
+| `.panel` | A tool sidebar in `.split--fill`: `--bg-panel` (black in dark, white in light), padded, scrolls; a 2px frame line on the edge it shares with the viewport. Pair with `.stack` |
 | `.viewport` | A tool's canvas well (3D view, map, plot); a child canvas or svg fills it |
 | `.viewport__bar` | The run bar pinned to the bottom of the viewport (view menus, export, the primary run action) |
 | `.viewport__info` | Quiet scene facts in the top corner; never takes the pointer |
