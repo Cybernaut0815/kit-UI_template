@@ -39,6 +39,8 @@ Each rule carries its reason, so nobody undoes one for lack of context.
 | `examples/kit-sim.html`, `kit-forge.html`, `kit-viz.html` | One test page per kit preset: simulation viewport, live generator, chart dashboard |
 | `skills/kit-ui/` | Agent skill: `SKILL.md` and `reference.md` |
 | `test/check.test.mjs` | The gate |
+| `index.html`, `.nojekyll` | GitHub Pages entry: forwards to `examples/`; Pages serves the files untouched |
+| `.github/preview.png` | README screenshot (top of `examples/index.html`, dark, 2x) |
 
 ## Work queue
 

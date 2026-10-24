@@ -3,7 +3,7 @@ name: kit-ui
 description: Build or restyle a kit-sim, kit-forge or kit-viz web app with the kit-ui design system. Installs the kit-ui CSS from git, sets the html switches (kit, theme, density), composes pages from the layout classes and uses only kit-ui classes and tokens. Use for any kit module that needs UI, styling, layout, colour, type, a page skeleton or a design check.
 compatibility: Claude Code, Codex, Cursor, GitHub Copilot and any agent that reads the Agent Skills format
 metadata:
-  source: "https://github.com/Cybernaut0815/kit-forge_UI-template/tree/main/skills/kit-ui"
+  source: "https://github.com/Cybernaut0815/kit-UI_template/tree/main/skills/kit-ui"
   version: "0.1.0"
 ---
 
@@ -14,7 +14,7 @@ You are building a kit web app on kit-ui: sharp corners, Geist type, dark by def
 ## 1. Install and load once
 
 ```jsonc
-"dependencies": { "kit-ui": "github:Cybernaut0815/kit-forge_UI-template#v0.1.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.1.0" }
 ```
 
 There is no build: the package is its `css/` folder. Load it once, before the app's own CSS:

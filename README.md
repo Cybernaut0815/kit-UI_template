@@ -1,8 +1,10 @@
 # kit-ui
 
-Design tokens and CSS primitives for the kit modules - kit-sim, kit-forge and kit-viz: square corners, Geist type, dark by default, and a warm ramp from orange over red and burgundy to deep purple. One stylesheet, no build, no dependencies.
+[![The kit-ui reference page: KIT-UI app bar, a dark hero on the orange-red-purple aurora, and the theme, kit and density switches](.github/preview.png)](https://cybernaut0815.github.io/kit-UI_template/examples/)
 
-Open [`examples/index.html`](examples/index.html) straight from disk to see every token and primitive, with live theme, kit and density switches. [`examples/app.html`](examples/app.html) is a tool page and [`examples/deck.html`](examples/deck.html) a slide deck.
+Design tokens and CSS primitives for the kit modules - kit-sim, kit-forge and kit-viz: square corners, Space Mono headings over Geist, dark by default, and a warm ramp from orange over red and burgundy to deep purple. One stylesheet, no build, no dependencies.
+
+**Live examples:** <https://cybernaut0815.github.io/kit-UI_template/examples/> (GitHub Pages). Or open [`examples/index.html`](examples/index.html) straight from disk to see every token and primitive, with live theme, kit and density switches. [`examples/app.html`](examples/app.html) is a tool page and [`examples/deck.html`](examples/deck.html) a slide deck.
 
 The three kit test pages show each family in its own preset:
 
@@ -19,7 +21,7 @@ The app-bar lockup is `<span class="kit-mark">kit-<span class="kit-mark__name">s
 ## Install
 
 ```jsonc
-"dependencies": { "kit-ui": "github:Cybernaut0815/kit-forge_UI-template#v0.1.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.1.0" }
 ```
 
 Pin a tag so an update never silently changes a page. Then load it once, before your own CSS:
@@ -78,8 +80,20 @@ The full class and variable list is [`skills/kit-ui/reference.md`](skills/kit-ui
 The agent skill in [`skills/kit-ui/`](skills/kit-ui/SKILL.md) holds the setup, page skeletons, rules and ship checklist. Install it into a project with:
 
 ```sh
-npx skills add Cybernaut0815/kit-forge_UI-template
+npx skills add Cybernaut0815/kit-UI_template
 ```
+
+## GitHub Pages
+
+The examples are static files with relative paths, so GitHub Pages serves them as they are. Over https the fonts load in every browser, Firefox included.
+
+To publish:
+
+1. Open the repo **Settings → Pages**.
+2. Under **Build and deployment**, set the source to **Deploy from a branch**.
+3. Pick **main** and **/ (root)**, then save.
+
+The root `index.html` forwards to `examples/`, and `.nojekyll` serves the files untouched.
 
 ## Develop
 

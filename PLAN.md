@@ -6,8 +6,7 @@
 ## Planned
 
 - Port kit-sim_daylight_frontend web/ to kit-ui with data-kit="sim": swap the dependency and import, drop its radius-zeroing override and its data-theme bootstrap script in favour of the system default, replace its copied cssVar helper with getComputedStyle
-- Rename the GitHub repo to kit-ui and update the install lines
-- Publish the repo and tag v0.1.0 so modules can install from the git tag
+- Tag v0.1.0 so modules can install from the git tag
 
 ## Done
 
@@ -16,3 +15,4 @@
 - 2026-10-24 .kit-mark lockup (KIT-SIM / KIT-FORGE / KIT-VIZ, kit word in the kit accent), .viewport with run bar and info, .split--fill full-height tool layout; one test page per kit (simulation, generation, visualization)
 - 2026-10-24 always-black app bar, gradient kit word (--grad-mark), Tektur lockup, Space Mono headings, edge-to-edge tool layout (.panel, gapless .split--fill, borderless viewport)
 - 2026-10-24 button fills = centre colour of each kit gradient (--accent-fill per kit, gate-checked), --accent split off for links and focus; lockup uses --grad-kit itself (--grad-mark removed) with a hover sweep over KIT-
+- 2026-10-24 README preview image (.github/preview.png); GitHub Pages entry (root index.html redirect, .nojekyll); install lines point at Cybernaut0815/kit-UI_template
