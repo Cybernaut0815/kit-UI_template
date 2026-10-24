@@ -6,7 +6,7 @@ Every class and the grouped variables. `css/tokens.css` is the source of truth f
 
 - **Surfaces:** `--bg-page --bg-panel --bg-surface-1 --bg-surface-2 --bg-surface-3` (`--bg-panel`: tool sidebars, black in dark, white in light)
 - **Text:** `--text-strong --text-default --text-muted --text-muted-strong --text-disabled`
-- **Borders:** `--border-subtle --border-default --border-strong`
+- **Borders:** `--border-subtle --border-default --border-strong`, `--border-frame` (the bar, panel and sidebar edges)
 - **Accent:** `--accent` (links, focus ring, underlines, stripes: the bright tone in dark, the deep one in light; AA on every surface), `--accent-fill` (button, pressed chip and current-page fill: the centre colour of the kit gradient, the same in every theme), `--accent-on` (text on the fill: white for forge and viz, black for sim), `--accent-hover`, `--accent-subtle` (tint), `--accent-2` (gradient partner). Never put text on `--accent-fill` except `--accent-on`; use `.btn--primary`.
 - **Intent:** `--intent-{error,success,warning,info}` (fills), `--intent-on-*` (text on those fills), `--intent-*-text` (AA text on surface-1 and page)
 - **Palette:** `--color-{orange,red,purple}-{400,500,600}`, `--color-burgundy-{500,600}` (gradients and identity, never an accent), `--color-green --color-amber --color-blue --color-black --color-ink --color-white`. Reach for a role token first; the palette is for swatches and charts.

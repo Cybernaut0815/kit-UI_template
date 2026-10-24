@@ -103,6 +103,7 @@
   --border-subtle: rgba(255,255,255,0.08);
   --border-default: rgba(255,255,255,0.14);
   --border-strong: rgba(255,255,255,0.24);
+  --border-frame: rgba(255,255,255,0.18); /* bar, panel and sidebar edges: between default and strong */
   --scrim: rgba(0,0,0,0.6);
 
   /* the line accent (links, focus ring, underlines, stripes) is the bright tone - AA on black */
@@ -166,6 +167,7 @@
   --border-subtle: rgba(29,29,27,0.08);
   --border-default: rgba(29,29,27,0.14);
   --border-strong: rgba(29,29,27,0.22);
+  --border-frame: rgba(29,29,27,0.18);
   --scrim: rgba(0,0,0,0.5);
   --accent: var(--accent-base);
   --intent-error-text: #C2143C;
@@ -218,6 +220,7 @@
     --border-subtle: rgba(29,29,27,0.08);
     --border-default: rgba(29,29,27,0.14);
     --border-strong: rgba(29,29,27,0.22);
+    --border-frame: rgba(29,29,27,0.18);
     --scrim: rgba(0,0,0,0.5);
     --accent: var(--accent-base);
     --intent-error-text: #C2143C;
@@ -266,6 +269,7 @@
   --border-subtle: rgba(255,255,255,0.10);
   --border-default: rgba(255,255,255,0.18);
   --border-strong: rgba(255,255,255,0.30);
+  --border-frame: rgba(255,255,255,0.24);
   --scrim: rgba(0,0,0,0.7);
 }
 
