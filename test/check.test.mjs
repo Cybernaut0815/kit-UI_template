@@ -195,7 +195,7 @@ test('no trace of the former company identity', () => {
   const walk = (dir) => {
     for (const name of readdirSync(join(ROOT, dir))) {
       const p = join(dir, name);
-      if (SKIP.has(name) || p === self || /\.(png|jpe?g|webp|woff2)$/i.test(name)) continue; // binaries can hold any byte run
+      if (SKIP.has(name) || p === self || /\.(png|jpe?g|webp|woff2|pdf)$/i.test(name)) continue; // binaries can hold any byte run (a PDF font subset tag is six random capitals)
       if (statSync(join(ROOT, p)).isDirectory()) walk(p);
       else if (LEAK.test(name) || LEAK.test(read(p))) hits.push(p);
     }

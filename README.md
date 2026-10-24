@@ -4,7 +4,7 @@
 
 Design tokens and CSS primitives for the kit modules - kit-sim, kit-forge and kit-viz: square corners, Space Mono headings over Geist, dark by default, and a warm ramp from orange over red and burgundy to deep purple. One stylesheet, no build, no dependencies.
 
-**Live examples:** <https://cybernaut0815.github.io/kit-UI_template/examples/> (GitHub Pages). Or open [`examples/index.html`](examples/index.html) straight from disk to see every token and primitive, with live theme, kit and density switches. [`examples/app.html`](examples/app.html) is a tool page and [`examples/deck.html`](examples/deck.html) a slide deck.
+**Live examples:** <https://cybernaut0815.github.io/kit-UI_template/examples/> (GitHub Pages). Or open [`examples/index.html`](examples/index.html) straight from disk to see every token and primitive, with live theme, kit and density switches. [`examples/app.html`](examples/app.html) is a tool page, [`examples/deck.html`](examples/deck.html) a slide deck and [`examples/report.html`](examples/report.html) a PDF report ([rendered](examples/report.pdf)).
 
 The three kit test pages show each family in its own preset:
 
@@ -81,6 +81,12 @@ The agent skill in [`skills/kit-ui/`](skills/kit-ui/SKILL.md) holds the setup, p
 
 ```sh
 npx skills add Cybernaut0815/kit-UI_template
+```
+
+The second skill, [`skills/kit-report/`](skills/kit-report/SKILL.md), turns results an app has calculated into a PDF report in the same look: one HTML page on kit-ui with `<main class="report">` (A4, page numbers, break control), printed by Chromium:
+
+```sh
+chrome --headless --no-pdf-header-footer --print-to-pdf=/abs/report.pdf file:///abs/report.html
 ```
 
 ## GitHub Pages

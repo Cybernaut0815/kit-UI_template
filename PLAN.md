@@ -7,6 +7,9 @@
 
 - Port kit-sim_daylight_frontend web/ to kit-ui with data-kit="sim": swap the dependency and import, drop its radius-zeroing override and its data-theme bootstrap script in favour of the system default, replace its copied cssVar helper with getComputedStyle
 - Tag v0.1.0 so modules can install from the git tag
+- Report footer: a running report title beside the page number (Chrome has no string-set; a position: fixed element repeats per printed page)
+- Print light chart tokens on an unthemed dark page: fold print into the system-light block (@media (prefers-color-scheme: light), print) so Ctrl+P of a dark app keeps charts legible on white
+- examples/index.html app bar overflows at 390 px (six nav links): collapse them below 640 px
 
 ## Done
 
@@ -16,3 +19,4 @@
 - 2026-10-24 always-black app bar, gradient kit word (--grad-mark), Tektur lockup, Space Mono headings, edge-to-edge tool layout (.panel, gapless .split--fill, borderless viewport)
 - 2026-10-24 button fills = centre colour of each kit gradient (--accent-fill per kit, gate-checked), --accent split off for links and focus; lockup uses --grad-kit itself (--grad-mark removed) with a hover sweep over KIT-
 - 2026-10-24 README preview image (.github/preview.png); GitHub Pages entry (root index.html redirect, .nojekyll); install lines point at Cybernaut0815/kit-UI_template
+- 2026-10-24 kit-report skill (skills/kit-report): PDF reports as one kit-ui page printed by Chromium; .report (A4 named page, n / N page numbers, break control, sheet preview) and .page-break in kit-ui.css; examples/report.html (kit-sim daylight results) with its render examples/report.pdf

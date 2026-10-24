@@ -127,6 +127,6 @@ An eyebrow above every heading; identical cards chopping a dashboard; nested car
 
 ## 8. Free with the stylesheet
 
-- `@media print`: any surface prints black on white.
+- `@media print`: any surface prints black on white. For a PDF report of computed results, use the kit-report skill.
 - `prefers-reduced-motion`, `prefers-reduced-transparency` and forced colours are handled.
 - Native widgets (scrollbars, checkboxes, range inputs) follow the theme and kit accent.

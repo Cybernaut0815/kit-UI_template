@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-kit="sim" data-theme="light" data-density="compact">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daylight report - Harbour Quarter, Block 4</title>
+  <link rel="stylesheet" href="../css/kit-ui.css">
+</head>
+<!-- PDF report (kit-report skill): light paper, A4. Print it with
+     chrome --headless --no-pdf-header-footer --print-to-pdf=report.pdf report.html -->
+<body>
+  <main class="report stack" id="main">
+    <header class="page-header">
+      <div class="stack stack--tight">
+        <span class="kit-mark">kit-<span class="kit-mark__name">sim</span></span>
+        <h1 class="page-header__title">Daylight report: Harbour Quarter, Block 4</h1>
+      </div>
+    </header>
+    <div class="cluster"><span class="badge badge--success"><span class="dot"></span>Run complete</span><span class="text-muted">Run R-0724 · 24 Oct 2026, 14:32 · kit-sim 0.4.2 · kit-ui 0.1.0</span></div>
+
+    <div class="grid" style="--grid-min: 8rem">
+      <div class="stat"><span class="stat__label">Mean DA</span><span class="stat__value">62%</span><span class="stat__delta">Area-weighted</span></div>
+      <div class="stat"><span class="stat__label">sDA 300/50</span><span class="stat__value">66%</span><span class="stat__delta stat__delta--up">Target 55%</span></div>
+      <div class="stat"><span class="stat__label">Zones passing</span><span class="stat__value">4 / 6</span><span class="stat__delta stat__delta--down">Core fails</span></div>
+      <div class="stat"><span class="stat__label">Grid points</span><span class="stat__value">6 508</span><span class="stat__delta">1 627 m² at 0.5 m</span></div>
+    </div>
+
+    <section class="section stack">
+      <h2>Summary</h2>
+      <div class="prose">
+        <p>Block 4 reaches a spatial daylight autonomy of 66% across its 1 627 m² of floor area, above the 55% target. Four of six zones pass. The core falls well short at 22% and needs either a deeper light well or a change of use; the courtyard wing sits just under the target and is flagged for review.</p>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Inputs</h2>
+      <div class="grid" style="--grid-min: 16rem">
+        <div class="table-wrap">
+          <table class="data-table data-table--wrap">
+            <caption>Site and model</caption>
+            <thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><td class="text-muted">Location</td><td>Hamburg, 53.55° N 9.99° E</td></tr>
+              <tr><td class="text-muted">Weather file</td><td>Hamburg TMYx, WMO 101470</td></tr>
+              <tr><td class="text-muted">Model</td><td>block4_v12.glb, 12.4 MB</td></tr>
+              <tr><td class="text-muted">Floors</td><td>4, ground to third</td></tr>
+              <tr><td class="text-muted">Glazing</td><td>Visible transmittance 0.62</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table data-table--wrap">
+            <caption>Simulation</caption>
+            <thead><tr><th scope="col">Parameter</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><td class="text-muted">Analysis grid</td><td>0.5 m, 0.85 m above floor</td></tr>
+              <tr><td class="text-muted">Occupied hours</td><td>08:00-18:00, Mon-Fri</td></tr>
+              <tr><td class="text-muted">DA threshold</td><td>300 lx</td></tr>
+              <tr><td class="text-muted">Ambient bounces</td><td>5</td></tr>
+              <tr><td class="text-muted">Sky model</td><td>Perez all-weather, hourly</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Results</h2>
+      <div class="grid" style="--grid-min: 16rem">
+        <figure class="card stack stack--tight">
+          <svg id="bars" viewBox="0 0 320 180" role="img" aria-label="Bar chart of mean daylight autonomy per zone"></svg>
+          <figcaption class="text-muted">Figure 1. Mean daylight autonomy per zone: share of occupied hours at or above 300 lx.</figcaption>
+        </figure>
+        <figure class="card stack stack--tight">
+          <svg id="heat" viewBox="0 0 320 180" role="img" aria-label="Heatmap of mean illuminance by hour and month"></svg>
+          <figcaption class="text-muted">Figure 2. Mean illuminance over the block by hour and month.</figcaption>
+        </figure>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>Table 1. Results per zone. sDA passes at 55%; 40-55% is flagged for review.</caption>
+          <thead>
+            <tr><th scope="col">Zone</th><th scope="col" class="num">Area <span class="th-unit">(m²)</span></th><th scope="col" class="num">Mean DA <span class="th-unit">(%)</span></th><th scope="col" class="num">sDA 300/50 <span class="th-unit">(%)</span></th><th scope="col">Result</th></tr>
+          </thead>
+          <tbody id="zones"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section stack">
+      <h2>Method and assumptions</h2>
+      <div class="prose">
+        <p>Illuminance is computed hourly for every grid point with a Perez sky from the weather file. Daylight autonomy (DA) is the share of occupied hours a point reaches 300 lx on daylight alone; spatial daylight autonomy (sDA 300/50) is the share of a zone's points with a DA of at least 50%.</p>
+        <p>Blinds are not modelled and neighbouring buildings are taken from the site model as delivered. Results for the core assume the light well finishes at a reflectance of 0.7.</p>
+      </div>
+    </section>
+
+    <section class="section stack page-break">
+      <h2>Appendix</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption>Table A1. Mean DA per zone and floor (%). Every floor holds the same grid points per zone.</caption>
+          <thead><tr><th scope="col">Zone</th><th scope="col" class="num">Points per floor</th><th scope="col" class="num">Floor 0</th><th scope="col" class="num">Floor 1</th><th scope="col" class="num">Floor 2</th><th scope="col" class="num">Floor 3</th></tr></thead>
+          <tbody id="floors"></tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table data-table--wrap">
+          <caption>Table A2. Provenance</caption>
+          <thead><tr><th scope="col">Item</th><th scope="col">Value</th></tr></thead>
+          <tbody>
+            <tr><td class="text-muted">Run</td><td>R-0724, started 24 Oct 2026 14:26, finished 14:32 (6 min 12 s)</td></tr>
+            <tr><td class="text-muted">Application</td><td>kit-sim 0.4.2 (Daylight), kit-ui 0.1.0</td></tr>
+            <tr><td class="text-muted">Engine</td><td>Radiance 5.4, rtrace -ab 5 -ad 2048</td></tr>
+            <tr><td class="text-muted">Model hash</td><td><code>sha256:4f1c9e…a20b</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // one source: every table and chart below is drawn from these rows
+    var zones = [ // name, short, area m², mean DA %, sDA %
+      ['North office', 'N off', 412, 64, 71], ['South office', 'S off', 398, 78, 88], ['East studio', 'E stu', 236, 69, 76],
+      ['West studio', 'W stu', 241, 58, 61], ['Core', 'Core', 188, 31, 22], ['Courtyard', 'Court', 152, 44, 47]
+    ];
+    var NS = 'http://www.w3.org/2000/svg';
+    var $ = function (id) { return document.getElementById(id); };
+    function el(parent, tag, attrs, style) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      for (var s in style || {}) e.style[s] = style[s];
+      return parent.appendChild(e);
+    }
+    function label(svg, x, y, text, anchor, strong) {
+      el(svg, 'text', { x: x, y: y, 'text-anchor': anchor || 'middle', 'font-size': 9 }, { fill: strong ? 'var(--chart-text-strong)' : 'var(--chart-text)' }).textContent = text;
+    }
+    function row(tbody, cells) { tbody.insertAdjacentHTML('beforeend', '<tr>' + cells.join('') + '</tr>'); }
+    var td = function (v, num) { return '<td' + (num ? ' class="num"' : '') + '>' + v + '</td>'; };
+
+    // table 1 - the result badge always carries its word, never colour alone
+    zones.forEach(function (z) {
+      var r = z[4] >= 55 ? ['success', 'Pass'] : z[4] >= 40 ? ['warning', 'Review'] : ['error', 'Fail'];
+      row($('zones'), [td(z[0]), td(z[2], 1), td(z[3], 1), td(z[4], 1), td('<span class="badge badge--' + r[0] + '"><span class="dot"></span>' + r[1] + '</span>')]);
+    });
+
+    // table A1 - each floor holds a quarter of the zone's points (4 per m² at 0.5 m); DA rises with height, the mean stays the zone's
+    zones.forEach(function (z) {
+      row($('floors'), [td(z[0]), td(z[2], 1)].concat([-6, -2, 2, 6].map(function (d) { return td(z[3] + d, 1); })));
+    });
+
+    // figure 1 - one measure, one series colour; gridlines every 25%
+    var bars = $('bars');
+    for (var t = 0; t <= 4; t++) {
+      var y = 150 - t * 33.75;
+      el(bars, 'line', { x1: 32, x2: 315, y1: y, y2: y }, { stroke: t ? 'var(--chart-grid)' : 'var(--chart-axis)' });
+      label(bars, 26, y + 3, t * 25 + '%', 'end');
+    }
+    zones.forEach(function (z, i) {
+      var h = z[3] / 100 * 135, x = 40 + i * 46;
+      el(bars, 'rect', { x: x, y: 150 - h, width: 32, height: h }, { fill: 'var(--chart-cat-1)' });
+      label(bars, x + 16, 146 - h, z[3] + '%', 'middle', true);
+      label(bars, x + 16, 165, z[1]);
+    });
+
+    // figure 2 - 12 months x daylight hours on the sequential ramp, with its legend
+    var heat = $('heat'), months = 'JFMAMJJASOND'.split(''), bands = ['100', '300', '750', '1.5k', '3k', 'lx'];
+    months.forEach(function (m, mi) {
+      label(heat, 40 + mi * 23 + 11, 131, m);
+      for (var h = 4; h < 21; h++) {
+        var day = Math.sin(Math.PI * (h - 4) / 16), season = 0.45 + 0.55 * Math.sin(Math.PI * (mi + 0.5) / 12);
+        var band = Math.max(1, Math.min(6, Math.round(day * season * 6)));
+        if (day > 0) el(heat, 'rect', { x: 40 + mi * 23, y: 5 + (h - 4) * 7, width: 22, height: 6 }, { fill: 'var(--chart-seq-' + band + ')' });
+      }
+    });
+    [6, 12, 18].forEach(function (h) { label(heat, 34, 10 + (h - 4) * 7, h + ':00', 'end'); });
+    bands.forEach(function (b, i) { // labels sit on the band edges: 0 | 100 | 300 … lx
+      el(heat, 'rect', { x: 40 + i * 46, y: 146, width: 45, height: 8 }, { fill: 'var(--chart-seq-' + (i + 1) + ')' });
+      label(heat, 85.5 + i * 46, 166, b, i === 5 ? 'end' : 'middle');
+    });
+    label(heat, 40, 166, '0', 'start');
+  </script>
+</body>
+</html>

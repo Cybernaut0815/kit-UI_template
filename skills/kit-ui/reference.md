@@ -162,6 +162,12 @@ The seven inline knobs: `--container-w --grid-min --stack-gap --split-aside --co
 | `.menu__separator` | Hairline between groups |
 | `.menu__footer` | Sticky bottom row |
 
+### Report (PDF, see the kit-report skill)
+| Class | What it is |
+|---|---|
+| `.report` | On `<main>` of a report page: the A4 named page with `n / N` page numbers, break control (cards, stats, figures and rows never split; headings never strand), exact fills in print; a white sheet on screen |
+| `.page-break` | Starts a new printed page; only before a major part such as the appendix |
+
 ### Gradients (decorative only)
 | Class | What it is |
 |---|---|

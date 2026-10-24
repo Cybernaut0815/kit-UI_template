@@ -530,3 +530,20 @@ html:has(dialog.dialog[open]) { overflow: hidden; } /* scroll lock while a modal
   }
 }
 @media (forced-colors: active) { .menu { border: 1px solid CanvasText; } }
+
+/* ── report ───────────────────────────────────────────────────────────────── */
+/* A PDF report: one page of kit-ui printed by Chromium (see the kit-report skill). <main class="report"> carries the named page,
+   so @page never touches app pages. On screen it previews as a white sheet; in print the page margins take over. */
+.report { page: report; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+@page report { size: A4; margin: 16mm 16mm 18mm;
+  @bottom-right { content: counter(page) " / " counter(pages); font: 8pt var(--font-mono); color: var(--text-muted); } }
+.page-break { break-before: page; }
+@media screen { .report { max-inline-size: 210mm; margin: var(--space-8) auto; padding: 16mm; background: var(--bg-surface-1); border: 1px solid var(--border-subtle); } }
+@media print {
+  .report :is(.card, .stat, .alert, figure, tr) { break-inside: avoid; }
+  .report :is(h1, h2, h3, h4) { break-after: avoid; }
+  .report .table-wrap { overflow: visible; } /* print clips a scroller */
+  .report .data-table thead th { position: static; } /* the header row repeats on each page by itself */
+  .report .section + .section { border-block-start: 0; } /* a section pushed to the next page would leave its hairline at the foot of this one */
+  .report .page-break { padding-block-start: 0; } /* a forced break starts its page at the margin */
+}
