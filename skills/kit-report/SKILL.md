@@ -4,7 +4,7 @@ description: Create a PDF report of results a kit-sim, kit-forge or kit-viz app 
 compatibility: Claude Code, Codex, Cursor, GitHub Copilot and any agent that reads the Agent Skills format; needs Chrome, Edge or Playwright's Chromium to render
 metadata:
   source: "https://github.com/Cybernaut0815/kit-UI_template/tree/main/skills/kit-report"
-  version: "0.2.0"
+  version: "0.2.1"
 ---
 
 # kit-report

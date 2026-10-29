@@ -20,3 +20,4 @@
 - 2026-10-24 README preview image (.github/preview.png); GitHub Pages entry (root index.html redirect, .nojekyll); install lines point at Cybernaut0815/kit-UI_template
 - 2026-10-24 kit-report skill (skills/kit-report): PDF reports as one kit-ui page printed by Chromium; .report (A4 named page, n / N page numbers, break control, sheet preview) and .page-break in kit-ui.css; examples/report.html (kit-sim daylight results) with its render examples/report.pdf
 - 2026-10-24 v0.2.0: first git tag (0.1.0 was never tagged), with the kit-report skill; install lines, package and skill versions point at #v0.2.0
+- 2026-10-29 v0.2.1: skills/ ships in the package (files and the "./skills/*" export), so apps read both skills from node_modules; install lines, package and skill versions point at #v0.2.1

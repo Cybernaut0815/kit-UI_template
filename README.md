@@ -21,7 +21,7 @@ The app-bar lockup is `<span class="kit-mark">kit-<span class="kit-mark__name">s
 ## Install
 
 ```jsonc
-"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.2.0" }
+"dependencies": { "kit-ui": "github:Cybernaut0815/kit-UI_template#v0.2.1" }
 ```
 
 Pin a tag so an update never silently changes a page. Then load it once, before your own CSS:
@@ -88,6 +88,8 @@ The second skill, [`skills/kit-report/`](skills/kit-report/SKILL.md), turns resu
 ```sh
 chrome --headless --no-pdf-header-footer --print-to-pdf=/abs/report.pdf file:///abs/report.html
 ```
+
+Both skills also ship in the package, so an app that drives an agent can hand them over from `node_modules`, e.g. `import skill from 'kit-ui/skills/kit-report/SKILL.md?raw'` in Vite.
 
 ## GitHub Pages
 
