@@ -74,6 +74,9 @@
 .btn--danger { background: transparent; border-color: var(--intent-error-text); color: var(--intent-error-text); }
 .btn--danger:where(:not(:disabled)):hover { background: color-mix(in srgb, var(--intent-error-text) 10%, transparent); }
 /* Shared press + disabled states. Hovers carry :where(:not(:disabled)) so a disabled control never answers the pointer, at no specificity cost. */
+/* controls are not text: a quick double-click or press-drag must not select the label (or swallow the click) */
+.btn, .icon-btn, .chip, .chip__remove, .tabs__tab, .pagination :is(a, button), .segmented label,
+.menu__item, .accordion summary, .card--interactive, .data-table thead th button { -webkit-user-select: none; user-select: none; }
 .btn:active, .icon-btn:active, button.chip:active, .tabs__tab:active, .pagination button:active { transform: translateY(1px); }
 .btn:disabled, .icon-btn:disabled, button.chip:disabled, .chip__remove:disabled, .tabs__tab:disabled, .input:disabled, .select:disabled { opacity: .45; cursor: default; }
 .btn[aria-disabled="true"], .icon-btn[aria-disabled="true"] { opacity: .45; cursor: default; pointer-events: none; } /* a link cannot be :disabled; drop its href too, or the keyboard still follows it */
